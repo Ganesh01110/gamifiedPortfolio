@@ -6,22 +6,22 @@
     "education": [
         {
             "institution": "Aurora's PG College",
-            "degree": "Bachelor's Degree",
-            "year": "2022 - Present",
+            "degree": "master's Degree",
+            "year": "2022 - 2024",
             "description": "Pursuing degree with focus on software development and system design"
         }
     ],
     "contact": {
-        "email": "your.email@example.com",
-        "phone": "+91 XXXXXXXXXX"
+        "email": "ganeshsahu0108@gmail.com",
+        "phone": "+91 8658040407"
     },
     "socials": {
-        "Email": "your.email@example.com",
-        "whatsapp": "+91 XXXXXXXXXX",
-        "github": "https://github.com/yourusername",
+        "Email": "ganeshsahu0108@gmail.com",
+        "whatsapp": "+91 8658040407",
+        "github": "https://github.com/ganesh01110",
         "linkedin": "https://linkedin.com/in/yourusername",
         "twitter": "https://twitter.com/yourusername"
     },
-    "resumeLink": "/resume.pdf",
-    "profileImage": "/profile.jpg"
+    "resumeLink": "/assets/ganeshsahuresume291225.pdf",
+    "profileImage": "/assets/the sage.jpg"
 }

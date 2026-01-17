@@ -63,6 +63,13 @@
         },
         "encounter": "The Unstable Server was chaos incarnate - random crashes, failed deployments, and broken builds plagued every release. The DevOps Wizard responded by casting his containers like shields, each one isolated and resilient. With automated pipelines and continuous integration, he tamed the chaos and brought stability to the realm.",
         "assetPath": "/assets/wizard/wizardwithStaff.png",
+        "assets": {
+            "idle": "/assets/wizard/wizardWalk.gif",
+            "walk": "/assets/wizard/wizardWalk.gif",
+            "attack1": "/assets/wizard/wizardAttack1.gif",
+            "attack2": "/assets/wizard/wizardAttack2.gif",
+            "dodge": "/assets/wizard/wizard dodge.gif"
+        },
         "skills": "devops"
     },
     {
