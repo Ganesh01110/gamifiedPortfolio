@@ -271,14 +271,17 @@ export class BattleScene extends Phaser.Scene {
     }
 
     private handlePlayerInput() {
-        if (this.isAttacking || !this.player || !this.cursors) return;
+        if (this.isAttacking || !this.player || !this.cursors || !this.keys) return;
 
         // Movement
-        if (this.cursors.left?.isDown || this.keys.left.isDown) {
+        const left = this.cursors.left?.isDown || this.keys.left?.isDown;
+        const right = this.cursors.right?.isDown || this.keys.right?.isDown;
+
+        if (left) {
             this.player.setVelocityX(-250);
             this.player.setFlipX(true);
             if (!this.isDodging) this.player.setTexture('player-walk');
-        } else if (this.cursors.right?.isDown || this.keys.right.isDown) {
+        } else if (right) {
             this.player.setVelocityX(250);
             this.player.setFlipX(false);
             if (!this.isDodging) this.player.setTexture('player-walk');
@@ -287,7 +290,7 @@ export class BattleScene extends Phaser.Scene {
             if (!this.isDodging) this.player.setTexture('player-idle');
         }
 
-        if ((this.cursors.up?.isDown || this.keys.up.isDown) && this.player.body?.touching.down) {
+        if ((this.cursors.up?.isDown || this.keys.up?.isDown) && this.player.body?.touching.down) {
             this.player.setVelocityY(-500);
         }
 
@@ -295,17 +298,17 @@ export class BattleScene extends Phaser.Scene {
         const now = this.time.now;
 
         // Attack 1 (Space)
-        if (Phaser.Input.Keyboard.JustDown(this.cursors.space!) && now > this.lastAttackTime + 500) {
+        if (this.cursors.space && Phaser.Input.Keyboard.JustDown(this.cursors.space) && now > this.lastAttackTime + 500) {
             this.performAttack(1);
         }
 
-        // Attack 2 (K or Shift)
-        if ((Phaser.Input.Keyboard.JustDown(this.keys.attack2) || Phaser.Input.Keyboard.JustDown(this.keys.shift)) && now > this.lastAttackTime + 1500) {
+        // Attack 2 (K)
+        if (this.keys.attack2 && Phaser.Input.Keyboard.JustDown(this.keys.attack2) && now > this.lastAttackTime + 800) {
             this.performAttack(2);
         }
 
         // Dodge (L)
-        if (Phaser.Input.Keyboard.JustDown(this.keys.dodge) && now > this.lastDodgeTime + 1000) {
+        if (this.keys.dodge && Phaser.Input.Keyboard.JustDown(this.keys.dodge) && now > this.lastDodgeTime + 1000) {
             this.performDodge();
         }
     }
@@ -333,7 +336,7 @@ export class BattleScene extends Phaser.Scene {
             const arcadeSprite = enemy as Phaser.Physics.Arcade.Sprite;
             if (!arcadeSprite.active) return true;
 
-            const dist = Phaser.Math.Distance.Between(this.player!.x, this.player!.y, enemy.x, enemy.y);
+            const dist = Phaser.Math.Distance.Between(this.player!.x, this.player!.y, arcadeSprite.x, arcadeSprite.y);
             if (dist < range) {
                 this.applyDamageToMonster(arcadeSprite, damage, type);
             }
