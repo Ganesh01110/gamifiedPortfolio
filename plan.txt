@@ -1,0 +1,19 @@
+here i want to create a modern portfolio based on something like game .
+the landing page will have 2 buttons i.e normal view and gamified view(side by side for laptop and desktop view and down by down for mobile) , on clicking normal view a normal static web page with 3 section will popup 
+
+normal view::
+   1:hero section (intro about me and a photo by side)
+   2: skill section devided into cards like(frontend : html,css , js, react, redux), (backend:java-springboot , typescript , nodejs , python, sql , mongodb, redis, api creation) , (devops: docker , github action), (others: agentic developement , system degisn, manual testing , scriptig etc)
+   3:project section (should be saved in json format in project name , what problem it solves , tech stack used , description , mockup:screenshot or live link)
+   4:contact section (a form with email, number , name , message etc will be taken from anyone who want to contact me , will be send to my email , and in side my email , contact number , resume (attached to a button and ready to be downloaded), linkedln, github link etc should be mentioned)
+
+gamified view::
+   1:a character selection section like entering a game (characters should be shown in a stylised card (given in assets folder)) like shadow fight style in 2d format for making it smooth running and light weight
+   2:there should be 3 charater cards(make a component thet can be extend) one for frontend like the painter(holding a blade that cuts reality and css-html-rect codes showing in that cut like a trail), one for backend like the architect(holding a map or something) , one for devops like devops wizard(depicting like holding floting container like docker) , and generalist (full stack)
+   3:cards are side by side slidable like a carousal when a card is in front(left side of the screen in right side the sill section where each skill will be shown for the character)
+   4:when charater is selected the story of charater begins like a scene from a boy with bag entering a college through a gate , and in right side story pops up (in 2022 ganesh sahu entered the college of auroras pg college wit a dream ....then he tried to create a project where he encouter a messy bug (reality glitch type effect for frontend with some story),(logic misinterpretation or bug for backend/db for backend architect story) like that i.e each villain encouter story a lil different from each other like the characters apperance and weapons)
+   5:then playing mode (im a bit confused how to create these 2d characters and some villain like creature with whom each charater will fight with their own weapons(each weapon should have different effect) and controls will be given in screen like the charater like arrow key for swing the sword(for painter) or arrow(throw the container for devops wizard) like that and some smoky effect when hit to the villain them point of villain reduces and point of character increases  )
+   6: end of level one i.e 1st villain dies a prize comes like gen your treasure chest(see the projects), for front end 2 projects with details of applied tech stack, description of project , mockups and live link if availavel , similarly for the character of backend and devops and fullstack
+
+
+create an step by step implementation plan for project setup, folder arrangement , etc etc and then follow that plan to develope this project , i have attached some characters card (painter and monster1 /monster2 are available in assests folder in gif format and cards i.e for character selection (painter-architest-sage-wizard-background-monster etc i have added ), music will be added later analyse and approprietely make json for using those)

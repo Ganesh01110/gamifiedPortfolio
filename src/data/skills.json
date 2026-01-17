@@ -1,0 +1,42 @@
+{
+    "frontend": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "React",
+        "Redux",
+        "TypeScript",
+        "Tailwind CSS",
+        "Next.js",
+        "Responsive Design",
+        "UI/UX Design"
+    ],
+    "backend": [
+        "Java Spring Boot",
+        "Node.js",
+        "TypeScript",
+        "Python",
+        "SQL",
+        "MongoDB",
+        "Redis",
+        "REST API",
+        "GraphQL",
+        "Microservices"
+    ],
+    "devops": [
+        "Docker",
+        "GitHub Actions",
+        "CI/CD",
+        "Git",
+        "Linux",
+        "Cloud Deployment"
+    ],
+    "others": [
+        "Agentic Development",
+        "System Design",
+        "Manual Testing",
+        "Scripting",
+        "Problem Solving",
+        "Agile Methodology"
+    ]
+}

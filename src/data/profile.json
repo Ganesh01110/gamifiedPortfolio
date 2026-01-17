@@ -1,0 +1,27 @@
+{
+    "name": "Ganesh Sahu",
+    "title": "Full Stack Developer",
+    "bio": "Passionate Full Stack Developer with expertise in modern web technologies, system design, and agentic development. Experienced in building scalable applications from frontend to backend, with a strong focus on clean code and best practices.",
+    "tagline": "Transforming ideas into reality through code",
+    "education": [
+        {
+            "institution": "Aurora's PG College",
+            "degree": "Bachelor's Degree",
+            "year": "2022 - Present",
+            "description": "Pursuing degree with focus on software development and system design"
+        }
+    ],
+    "contact": {
+        "email": "your.email@example.com",
+        "phone": "+91 XXXXXXXXXX"
+    },
+    "socials": {
+        "Email": "your.email@example.com",
+        "call/whatsapp": "+91 XXXXXXXXXX",
+        "github": "https://github.com/yourusername",
+        "linkedin": "https://linkedin.com/in/yourusername",
+        "twitter": "https://twitter.com/yourusername"
+    },
+    "resumeLink": "/resume.pdf",
+    "profileImage": "/profile.jpg"
+}

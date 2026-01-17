@@ -1,0 +1,104 @@
+[
+    {
+        "id": "project-1",
+        "name": "Smart Car Parking System",
+        "category": "fullstack",
+        "problem": "Inefficient parking management and lack of real-time slot availability",
+        "techStack": [
+            "Java Spring Boot",
+            "React",
+            "Redux",
+            "MariaDB",
+            "REST API"
+        ],
+        "description": "A comprehensive parking management system with admin controls, real-time slot tracking, billing, and payment processing. Features include vehicle entry/exit management, automated billing, and dashboard analytics.",
+        "mockup": "/projects/parking-mockup.png",
+        "liveLink": "",
+        "repoLink": "https://github.com/yourusername/project-1"
+    },
+    {
+        "id": "project-2",
+        "name": "Travel UI Website",
+        "category": "frontend",
+        "problem": "Creating an engaging and pixel-perfect travel booking interface",
+        "techStack": [
+            "React",
+            "Vite",
+            "Tailwind CSS",
+            "Redux",
+            "Framer Motion"
+        ],
+        "description": "A stunning travel website with immersive UI sections, community features, and tour selection. Implements custom fonts (Satoshi, Playfair Display) and smooth animations for enhanced user experience.",
+        "mockup": "/projects/travel-mockup.png",
+        "liveLink": "",
+        "repoLink": "https://github.com/yourusername/project-2"
+    },
+    {
+        "id": "project-3",
+        "name": "Sworm Multi-Country Simulation",
+        "category": "fullstack",
+        "problem": "Simulating complex multi-country economic and social systems",
+        "techStack": [
+            "Python",
+            "Flask",
+            "React",
+            "SQLite",
+            "WebSockets"
+        ],
+        "description": "A sophisticated simulation system managing multiple countries with real-time data updates, historical tracking, and interactive UI with tab switching and sidebar responsiveness.",
+        "mockup": "/projects/sworm-mockup.png",
+        "liveLink": "",
+        "repoLink": "https://github.com/yourusername/project-3"
+    },
+    {
+        "id": "project-4",
+        "name": "Library Management System",
+        "category": "fullstack",
+        "problem": "Streamlining book borrowing and library operations",
+        "techStack": [
+            "Django",
+            "React",
+            "TypeScript",
+            "Redux",
+            "Tailwind CSS",
+            "PostgreSQL"
+        ],
+        "description": "Full-stack library management with CRUD operations for books, users, and borrow records. Features secure API integration, modern responsive UI, and comprehensive testing.",
+        "mockup": "/projects/library-mockup.png",
+        "liveLink": "",
+        "repoLink": "https://github.com/yourusername/project-4"
+    },
+    {
+        "id": "project-5",
+        "name": "Fitness Tracker PWA",
+        "category": "frontend",
+        "problem": "Tracking workouts, health metrics, and fitness progress",
+        "techStack": [
+            "React",
+            "Firebase",
+            "PWA",
+            "Chart.js",
+            "Local Storage"
+        ],
+        "description": "Progressive web app for fitness tracking with workout streak visualization, health metrics, supplement tracking, and dynamic exercise sets. Includes GitHub Actions CI/CD pipeline.",
+        "mockup": "/projects/fitness-mockup.png",
+        "liveLink": "",
+        "repoLink": "https://github.com/yourusername/project-5"
+    },
+    {
+        "id": "project-6",
+        "name": "Docker Containerization Setup",
+        "category": "devops",
+        "problem": "Simplifying multi-service deployment and environment consistency",
+        "techStack": [
+            "Docker",
+            "Docker Compose",
+            "MariaDB",
+            "GitHub Actions"
+        ],
+        "description": "Complete containerization setup for multi-service applications with Docker Compose orchestration, CI/CD pipeline, and automated testing workflows.",
+        "mockup": "/projects/docker-mockup.png",
+        "liveLink": "",
+        "repoLink": "https://github.com/yourusername/project-6"
+    }
+]

@@ -1,0 +1,128 @@
+i want the normal view and gamified view to be two different folder with the datas like json files for project and my details like contact education etc at root so both can access at any modification , and if need to change the view of normal view i can modify it easily , and the normal view i will implement later or parallely sometime , but 1st the landing page i.e 2 selection button and then the character selection and game logic thing , so accrodingly give the prompt and some folder setup as idea for the agentic developement
+
+
+
+This is a smart structural decision. By decoupling the data from the view, you are following the **Separation of Concerns** principle. Your "Agentic AI" will work much better if the folder structure is strictly defined from the start.
+
+### 1. Production-Grade Folder Structure
+
+This structure ensures that your **Data Layer** is the "Source of Truth" for both the static and game versions.
+
+```text
+/my-portfolio
+├── /public               # Assets (Images, Sounds, Sprites)
+│   ├── /assets/characters # Painter, Architect, Wizard silhouettes
+│   ├── /assets/icons      # Tech stack icons
+│   └── /assets/sfx        # Hit sounds, background music
+├── /src
+│   ├── /data             # SHARED DATA LAYER
+│   │   ├── projects.json  # Project details, links, tech stack
+│   │   ├── profile.json   # Education, Contact, Socials
+│   │   └── skills.json    # Grouped skills for the skill section
+│   ├── /components       # Shared UI components (Buttons, Toggles)
+│   ├── /views
+│   │   ├── /normal       # Static Web Page logic (to be built later)
+│   │   └── /gamified     # Phaser/Pixi Game Engine logic
+│   │       ├── /scenes    # MenuScene, BattleScene, RewardScene
+│   │       ├── /entities  # Player.ts, Enemy.ts, Weapon.ts
+│   │       └── /systems   # CombatSystem.ts, AnimationSystem.ts
+│   ├── /store            # Zustand state (shared view state)
+│   └── App.tsx           # Entry point with View Toggle logic
+├── tailwind.config.js
+└── package.json
+
+```
+
+---
+
+### 2. Character Generation Prompts (Refined)
+
+For the "Shadow Fight" style, consistency is key. Use these prompts in **Leonardo.ai** or **Midjourney**. Use the **"Absolute Reality"** or **"RPG 4.0"** models.
+
+**The Base Prompt Formula:**
+
+> "2D side-view silhouette character, [CHARACTER DESCRIPTION], sharp clean edges, black body, [COLOUR] neon glowing outlines, holding [WEAPON], standing on flat ground, game asset style, white background for easy transparency, 8k resolution --v 6.0"
+
+* **For The Painter (Frontend):** > "...slender agile silhouette holding a giant glowing neon-cyan katana made of digital paint strokes, trailing binary code pixels."
+* **For The Architect (Backend):** > "...sturdy armored silhouette holding a heavy glowing amber hammer, floating gears and database symbols around the head."
+* **For The DevOps Wizard (DevOps):** > "...hooded mysterious silhouette holding a glowing violet staff, surrounded by 3 floating glowing cubes (Docker containers)."
+* **For The Villain (The "Bug"):**
+> "A chaotic, glitchy shadow monster silhouette, red glowing glitch effects, multiple jagged limbs, pixelated smoke aura."
+
+
+
+---
+
+### 3. Agentic AI Prompt (To start development)
+
+Copy and paste this to your AI agent (like Cursor, Claude, or GPT-4) to begin the "Agentic" build process:
+
+> "I am building a dual-view portfolio. I need you to act as a Senior Full Stack Developer.
+> **Task 1:** Create a `src/data` folder with `projects.json` and `profile.json` containing placeholder data for a Full Stack Developer.
+> **Task 2:** Create a landing page in `App.tsx` that uses Tailwind CSS to show two large side-by-side cards: 'Professional View' and 'Gamified View'.
+> **Task 3:** Set up a Zustand store in `src/store/viewStore.ts` to manage the `currentView` state.
+> **Task 4:** In the `src/views/gamified` folder, initialize a basic Character Selection component that reads from `src/data/skills.json`. When a character is hovered, it should display the skills associated with that role (Painter = Frontend, etc.).
+> **Coding Standard:** Use TypeScript, implement an Interface for all Data, and ensure the UI is responsive for mobile (stacked view)."
+
+---
+
+### 4. Code Logic: The Selection Component (Example)
+
+This is how your "Professional Grade" component should look, utilizing the shared data:
+
+```typescript
+// src/views/gamified/CharacterSelection.tsx
+import React, { useState } from 'react';
+import skillsData from '@/data/skills.json'; 
+import { useViewStore } from '@/store/viewStore';
+
+const characters = [
+  { id: 'painter', name: 'The Painter', role: 'Frontend', color: 'text-cyan-400' },
+  { id: 'architect', name: 'The Architect', role: 'Backend', color: 'text-amber-400' },
+  { id: 'wizard', name: 'The Wizard', role: 'DevOps', color: 'text-purple-400' }
+];
+
+export const CharacterSelection = () => {
+  const [selected, setSelected] = useState(characters[0]);
+
+  return (
+    <div className="flex h-screen bg-black text-white p-10">
+      {/* Character Carousel */}
+      <div className="w-1/2 flex items-center justify-center gap-4">
+        {characters.map((char) => (
+          <div 
+            key={char.id}
+            onClick={() => setSelected(char)}
+            className={`cursor-pointer transition-all duration-300 ${selected.id === char.id ? 'scale-110 border-2' : 'opacity-50'}`}
+            style={{ borderColor: selected.id === char.id ? 'cyan' : 'transparent' }}
+          >
+            <img src={`/assets/characters/${char.id}.png`} alt={char.name} className="h-80" />
+          </div>
+        ))}
+      </div>
+
+      {/* Stats/Skills Side Panel */}
+      <div className="w-1/2 flex flex-col justify-center">
+        <h2 className={`text-5xl font-bold ${selected.color}`}>{selected.name}</h2>
+        <p className="text-xl mb-4 italic">{selected.role} Specialist</p>
+        <div className="grid grid-cols-2 gap-4">
+          {skillsData[selected.role.toLowerCase()].map(skill => (
+            <div key={skill} className="p-2 border border-gray-700 rounded bg-gray-900">
+              {skill}
+            </div>
+          ))}
+        </div>
+        <button className="mt-8 px-6 py-3 bg-white text-black font-bold rounded hover:bg-cyan-500 transition-colors">
+          ENTER LEVEL
+        </button>
+      </div>
+    </div>
+  );
+};
+
+```
+
+---
+
+**Next Step:**
+Would you like me to generate the **Phaser.js BattleScene template** that handles the player movement and the "smoky hit" effect logic?

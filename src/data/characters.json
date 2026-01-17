@@ -1,0 +1,86 @@
+[
+    {
+        "id": "1",
+        "name": "The Painter",
+        "role": "Frontend",
+        "color": "cyan",
+        "colorHex": "#06b6d4",
+        "weapon": "Pixel Brush",
+        "weaponDescription": "A digital brush that slices through bad UI",
+        "villain": {
+            "name": "The Layout Breaker",
+            "description": "A chaotic entity that shifts elements randomly",
+            "weakness": "Clean, semantic code and proper CSS architecture"
+        },
+        "encounter": "The Painter faced his first challenge when a messy bug created reality glitches across the interface. Layouts broke, colors clashed, and users were lost in a maze of broken UI. With precise slashes of his Brush Blade, he cut through the chaos, revealing clean, responsive designs beneath.",
+        "assetPath": "/assets/painter/thepainter(1).jpg",
+        "assets": {
+            "idle": "/assets/painter/startwalk.gif",
+            "walk": "/assets/painter/walk.gif",
+            "attack1": "/assets/painter/attack1.gif",
+            "attack2": "/assets/painter/attack2.gif",
+            "dodge": "/assets/painter/defend.gif"
+        },
+        "skills": "frontend"
+    },
+    {
+        "id": "2",
+        "name": "The Architect",
+        "role": "Backend",
+        "color": "amber",
+        "colorHex": "#f59e0b",
+        "weapon": "Database Hammer",
+        "weaponDescription": "A heavy hammer that crushes latency and data leaks",
+        "villain": {
+            "name": "The Data Corruptor",
+            "description": "A silent creeper that steals and mixes user data",
+            "weakness": "Strong encryption and ACID compliant transactions"
+        },
+        "encounter": "Deep in the server room, The Data Corruptor was weaving its dark web, tangling foreign keys and injecting malicious queries. The Architect, armed with the Database Hammer, stood firm. Each swing resonated with optimization, crushing latency and restoring integrity to the system core.",
+        "assetPath": "/assets/architect with hammer.png",
+        "assets": {
+            "idle": "/assets/architect/architectWalk.gif",
+            "walk": "/assets/architect/architectWalk.gif",
+            "attack1": "/assets/architect/ArchitectHammerAttack1.gif",
+            "attack2": "/assets/architect/ArchitectAttack2.gif",
+            "dodge": "/assets/architect/ArchitectDodge.gif"
+        },
+        "skills": "backend"
+    },
+    {
+        "id": "3",
+        "name": "The DevOps Wizard",
+        "role": "DevOps",
+        "color": "purple",
+        "colorHex": "#a855f7",
+        "weapon": "Container Staff",
+        "weaponDescription": "A mystical staff that summons floating Docker containers, each one a self-contained world of possibilities",
+        "story": "The DevOps Wizard is a master of automation and orchestration. His Container Staff doesn't just deploy applications - it creates entire ecosystems. With a wave of his staff, he summons containers that work in perfect harmony, scaling and adapting to any challenge.",
+        "villain": {
+            "name": "The Unstable Server",
+            "description": "A volatile entity that crashes without warning, corrupting deployments and breaking pipelines",
+            "weakness": "Containerization, automated testing, and robust CI/CD pipelines"
+        },
+        "encounter": "The Unstable Server was chaos incarnate - random crashes, failed deployments, and broken builds plagued every release. The DevOps Wizard responded by casting his containers like shields, each one isolated and resilient. With automated pipelines and continuous integration, he tamed the chaos and brought stability to the realm.",
+        "assetPath": "/assets/wizard/wizardwithStaff.png",
+        "skills": "devops"
+    },
+    {
+        "id": "generalist",
+        "name": "The Generalist",
+        "role": "Full Stack",
+        "color": "green",
+        "colorHex": "#10b981",
+        "weapon": "Omni-Tool",
+        "weaponDescription": "A versatile weapon that transforms between blade, hammer, and staff, adapting to any challenge",
+        "story": "The Generalist walks the path of balance, mastering all disciplines. His Omni-Tool shifts form based on the challenge at hand - a blade for frontend battles, a hammer for backend foundations, and a staff for DevOps orchestration. He is the bridge between all worlds.",
+        "villain": {
+            "name": "The Integration Nightmare",
+            "description": "A multi-headed beast where each head represents a different layer of the stack, all fighting each other",
+            "weakness": "Seamless integration, API design, and full-stack understanding"
+        },
+        "encounter": "The Integration Nightmare was unlike any foe - its frontend head clashed with its backend body, while its DevOps tail thrashed wildly. Only someone who understood all layers could defeat it. The Generalist transformed his Omni-Tool rapidly, addressing each layer with expertise, until the beast finally integrated into a harmonious whole.",
+        "assetPath": "/assets/the sage.jpg",
+        "skills": "frontend"
+    }
+]

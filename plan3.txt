@@ -1,0 +1,19 @@
+now focus on the monster spawnand fight dynamics like , in level one for every character there are 2 or 3 monsters are being spawn and they move towards the character and try to eliminate him (by attack), every attack of monster should cause the damage to charatcers health , and if the characters health goes to zero then game over 
+but character also attack the monster i.e attack1 and attack2 by user and dodge 
+ideal action by monster should 
+spawn->monster1-runningToLeft.gif to attack user->monster1-readyToAttack.gif or monster1-jumpingToAttack.gif ->monster1-attack.gif -> if attack is successful then (health of hero decreases) if hero attacks (attack of hero successful health of monster decreases while no damage to hero) , if hero defends(painter-dodge.gif or architect-dodge.gif or wizard-dodge.gif or generalist-dodge.gif) then neither hero's nor monsters health decreases , if monster defend to heros attacks (no decrease in monster health)-> when monster health goes to zero then it screamsit should be removed from the screen 
+similarly monster 2 has 2 attack mode , may be random (monster2-attack1Lefthand.gif, monster2-scream.gif to intimidate hero,)
+
+in level 1 , 2 or 3 monster will come one after another to fight wth hero all dies level ends , a chest(box opens (no asset now so use an emoji for now) and details about a project being shown)
+
+mobile responsiveness i.e for andriod the landing page and proffesional view is okay ,but for gamified view from character selection page i think it will be better if we keep the page rotated vertical to horizontal with a suggestion (rotate the phone to horizontal to play or for better experience) , and unlike the instruction pannel of control for game , there should be button for attack1, attack2 and dodge, walk in circular format like any mobile game (shadow fight or pubg style) , so analyse and say if its possible or not if possible prepare a implementaion plan/task.md to implement it 
+
+i dont know how to deploy this , i never used vercel , as github action file is ready and the github repo i created and i just opened new vercel account now tell me step by step process what i have to do to deploy it ? or will it be automated/ mannual ??
+do something like this everytime i push to github all the check happens i.e ci.yml and iff passed the new feature will be deployed in vercel automatically ..is it possible ??
+
+github repo "git remote add origin https://github.com/Ganesh01110/gamifiedPortfolio.git
+git branch -M main
+git push -u origin main"
+
+committer name: ganesh sahu
+committer email: ganeshsahu0108@gmail.com

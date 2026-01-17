@@ -1,0 +1,7 @@
+so inside public folder there are the assets folder where i had separate folders for architect, painter, monsters and wizard , and 2 background setting , 2 background should run one after another in different level , 
+there are two monsters i have given , monster 1 and monster 2(some other monster i will introduce later per diffrent character but for now add these two common for all)
+in level one each character has to face 2 or 3 monster 1 , which is less powerful than monster 2 , and in level 2 each character has to face 1 OR monster 2 , which is more powerful than monster 1 , each time a character passes one level gats more power ful , and as a reward a project of respective discipline will be shown.
+i have given the gif files for each charater for walking , lunching attack(two type of attack , attack1 and attack 2 ), 
+attack 2 is more brutal and dangerous for the monsters , a dodging sequence for dodging from attack of monsetrs and some character has auxilliary actions also
+
+so according to that set the buttons (show the controls in screen as instruction for game control for user)i.e in top left or something like that ...and a back button at every point of game to navigate home (i.e toggle scene) , also attach the images to respective image div component to character selection from the assets folder
