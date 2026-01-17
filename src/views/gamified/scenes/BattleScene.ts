@@ -645,6 +645,7 @@ export class BattleScene extends Phaser.Scene {
                 this.currentLevel = 2;
                 this.waveCount = 0;
                 this.setupLevel();
+            } else {
                 this.scene.start('RewardScene', { characterId: this.characterId });
             }
         });
