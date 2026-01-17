@@ -28,6 +28,12 @@ export class BattleScene extends Phaser.Scene {
     private lastAttackTime: number = 0;
     private lastDodgeTime: number = 0;
 
+    // Mobile/Touch State
+    private touchStates = {
+        left: false,
+        right: false
+    };
+
     constructor() {
         super({ key: 'BattleScene' });
     }
@@ -694,9 +700,9 @@ export class BattleScene extends Phaser.Scene {
                 .setInteractive();
             this.add.text(x, y, label, { fontSize: '40px' }).setOrigin(0.5).setScrollFactor(0).setDepth(1001);
 
-            btn.on('pointerdown', () => this.setData(`touch-${direction}`, true));
-            btn.on('pointerup', () => this.setData(`touch-${direction}`, false));
-            btn.on('pointerout', () => this.setData(`touch-${direction}`, false));
+            btn.on('pointerdown', () => this.touchStates[direction] = true);
+            btn.on('pointerup', () => this.touchStates[direction] = false);
+            btn.on('pointerout', () => this.touchStates[direction] = false);
         };
 
         createArrow(padding + 60, height - padding - 60, '←', 'left');
@@ -728,8 +734,8 @@ export class BattleScene extends Phaser.Scene {
     private handleVirtualControls() {
         if (!this.player || !this.sys.game.device.input.touch) return;
 
-        const leftDown = this.getData('touch-left');
-        const rightDown = this.getData('touch-right');
+        const leftDown = this.touchStates.left;
+        const rightDown = this.touchStates.right;
 
         if (leftDown && !this.isAttacking && !this.isDodging) {
             this.player.setVelocityX(-250);
