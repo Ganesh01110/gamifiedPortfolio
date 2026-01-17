@@ -565,12 +565,12 @@ export class BattleScene extends Phaser.Scene {
             fontSize: '24px', color: '#333333'
         }).setOrigin(0.5).setDepth(102).setName('level-clear-text');
 
-        // Chest spawn
-        const chest = this.add.text(1100, 640, '📦', { fontSize: '80px' })
+        // Chest spawn - Moved to center below text and increased depth to be visible on overlay
+        const chest = this.add.text(640, 520, '📦', { fontSize: '100px' })
             .setInteractive({ useHandCursor: true })
-            .setOrigin(0.5, 1)
+            .setOrigin(0.5)
             .setName('chest')
-            .setDepth(20);
+            .setDepth(200);
 
         this.physics.add.existing(chest);
         (chest.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);

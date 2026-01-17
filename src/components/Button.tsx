@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 interface ButtonProps {
     children: React.ReactNode;
     onClick?: () => void;
-    variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'neon-cyan' | 'neon-amber' | 'neon-purple';
+    variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'neon-cyan' | 'neon-amber' | 'neon-purple' | 'neon-green';
     size?: 'sm' | 'md' | 'lg';
     className?: string;
     disabled?: boolean;
