@@ -11,7 +11,7 @@ const formSchema = z.object({
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function sendEmail(prevState: any, formData: FormData) {
+export async function sendEmail(prevState: unknown, formData: FormData) {
     const validatedFields = formSchema.safeParse({
         name: formData.get('name'),
         email: formData.get('email'),

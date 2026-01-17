@@ -9,7 +9,7 @@ export class RewardScene extends Phaser.Scene {
     }
 
     init(data: { characterId: string }) {
-        this.characterId = data.characterId || 'painter';
+        this.characterId = data.characterId;
     }
 
     create() {

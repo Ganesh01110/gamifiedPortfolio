@@ -19,7 +19,7 @@ interface Character {
     id: string;
     name: string;
     role: string;
-    color: string;
+    color: 'cyan' | 'amber' | 'purple' | 'green';
     colorHex: string;
     weapon: string;
     weaponDescription: string;
@@ -128,7 +128,7 @@ export const CharacterSelection: React.FC = () => {
                                     className="p-8"
                                 >
                                     <Card
-                                        glowColor={selectedCharacter.color as any}
+                                        glowColor={selectedCharacter.color}
                                         className="text-center"
                                     >
                                         {/* Character Image Placeholder */}
@@ -231,7 +231,7 @@ export const CharacterSelection: React.FC = () => {
                                 </div>
 
                                 <Button
-                                    variant={`neon-${selectedCharacter.color}` as any}
+                                    variant={`neon-${selectedCharacter.color}` as const}
                                     className="w-full"
                                     onClick={handleStartStory}
                                 >

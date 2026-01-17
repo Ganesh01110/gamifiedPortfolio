@@ -3,11 +3,20 @@ import charactersData from '@/src/data/characters.json';
 import monstersData from '@/src/data/monsters.json';
 import projectsData from '@/src/data/projects.json';
 
+interface Project {
+    id: string;
+    name: string;
+    description: string;
+    mockup: string;
+    liveLink: string;
+    repoLink: string;
+}
+
 export class BattleScene extends Phaser.Scene {
     private player?: Phaser.Physics.Arcade.Sprite;
     private enemies?: Phaser.Physics.Arcade.Group;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-    private keys?: any; // For WASD, Shift, etc.
+    private keys?: { [key: string]: Phaser.Input.Keyboard.Key };
     private ground?: Phaser.GameObjects.Rectangle; // Invisible floor
 
     // Stats
@@ -73,7 +82,7 @@ export class BattleScene extends Phaser.Scene {
         this.load.image('slash-effect', '/assets/slash arc.jpg');
 
         // Load project mockups
-        projectsData.forEach((project: any) => {
+        projectsData.forEach((project: Project) => {
             if (project.mockup) {
                 this.load.image(project.id, project.mockup);
             }
@@ -194,10 +203,11 @@ export class BattleScene extends Phaser.Scene {
     }
 
     private setupControls() {
-        this.cursors = this.input.keyboard?.createCursorKeys();
+        if (!this.input.keyboard) return;
+        this.cursors = this.input.keyboard.createCursorKeys();
 
         // Add WASD + Skills
-        this.keys = this.input.keyboard?.addKeys({
+        this.keys = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
@@ -205,7 +215,7 @@ export class BattleScene extends Phaser.Scene {
             attack2: Phaser.Input.Keyboard.KeyCodes.K,
             dodge: Phaser.Input.Keyboard.KeyCodes.L,
             shift: Phaser.Input.Keyboard.KeyCodes.SHIFT
-        });
+        }) as { [key: string]: Phaser.Input.Keyboard.Key };
     }
 
     private setupUI() {
@@ -248,9 +258,10 @@ export class BattleScene extends Phaser.Scene {
         this.handleVirtualControls(); // Add this line
 
         // Enemy Logic
-        this.enemies?.children.iterate((enemy: any) => {
-            if (enemy.active) {
-                this.updateEnemyAI(enemy);
+        this.enemies?.children.iterate((enemy) => {
+            const arcadeSprite = enemy as Phaser.Physics.Arcade.Sprite;
+            if (arcadeSprite.active) {
+                this.updateEnemyAI(arcadeSprite);
             }
             return true;
         });
@@ -318,12 +329,13 @@ export class BattleScene extends Phaser.Scene {
         const range = type === 1 ? 150 : 250;
 
         // Check hits
-        this.enemies?.children.iterate((enemy: any) => {
-            if (!enemy.active) return true;
+        this.enemies?.children.iterate((enemy) => {
+            const arcadeSprite = enemy as Phaser.Physics.Arcade.Sprite;
+            if (!arcadeSprite.active) return true;
 
             const dist = Phaser.Math.Distance.Between(this.player!.x, this.player!.y, enemy.x, enemy.y);
             if (dist < range) {
-                this.applyDamageToMonster(enemy, damage, type);
+                this.applyDamageToMonster(arcadeSprite, damage, type);
             }
             return true;
         });
@@ -334,7 +346,7 @@ export class BattleScene extends Phaser.Scene {
         });
     }
 
-    private applyDamageToMonster(enemy: any, amount: number, type: 1 | 2) {
+    private applyDamageToMonster(enemy: Phaser.Physics.Arcade.Sprite, amount: number, type: 1 | 2) {
         const isDefending = enemy.getData('state') === 'defend';
         const finalDamage = isDefending ? Math.floor(amount * 0.4) : amount;
 
@@ -626,7 +638,7 @@ export class BattleScene extends Phaser.Scene {
         };
 
         const liveBtn = createButton(500, 520, "LIVE WEBSITE", project.liveLink || "https://example.com");
-        const repoBtn = createButton(780, 520, "VISIT REPO", (project as any).repoLink || "https://github.com");
+        const repoBtn = createButton(780, 520, "VISIT REPO", project.repoLink || "https://github.com");
 
         const closeText = this.add.text(640, 600, "PRESS [ESC] TO CONTINUE JOURNEY", {
             fontSize: '22px', color: '#8b4513', fontStyle: 'italic'
@@ -661,7 +673,7 @@ export class BattleScene extends Phaser.Scene {
         this.physics.pause();
         this.player?.setTint(0xff0000);
 
-        const overlay = this.add.rectangle(640, 360, 1280, 720, 0x000000, 0.8).setDepth(1000);
+        this.add.rectangle(640, 360, 1280, 720, 0x000000, 0.8).setDepth(1000);
         this.add.text(640, 250, 'GAME OVER', {
             fontSize: '80px', color: '#ff0000', fontStyle: 'bold'
         }).setOrigin(0.5).setDepth(1001);
@@ -689,7 +701,6 @@ export class BattleScene extends Phaser.Scene {
         if (!this.sys.game.device.input.touch) return;
 
         const { width, height } = this.scale;
-        const btnSize = 80;
         const padding = 40;
 
         // Movement Buttons (Bottom Left)

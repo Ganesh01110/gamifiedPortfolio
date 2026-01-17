@@ -17,14 +17,6 @@ export const ProfessionalView: React.FC = () => {
         transition: { duration: 0.6 }
     };
 
-    const staggerContainer = {
-        animate: {
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
-
     return (
         <div style={{ zoom: '80%' }} className="min-h-[125vh] bg-black text-white selection:bg-cyan-500/30">
             {/* Navigation */}

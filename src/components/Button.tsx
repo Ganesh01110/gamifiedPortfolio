@@ -38,6 +38,7 @@ export const Button: React.FC<ButtonProps> = ({
         'neon-cyan': 'bg-cyan-500 text-black hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]',
         'neon-amber': 'bg-amber-500 text-black hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.6)]',
         'neon-purple': 'bg-purple-500 text-white hover:bg-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.6)]',
+        'neon-green': 'bg-green-500 text-black hover:bg-green-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.6)]',
     };
 
     return (
