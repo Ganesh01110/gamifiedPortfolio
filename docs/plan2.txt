@@ -9,3 +9,24 @@ so according to that set the buttons (show the controls in screen as instruction
 
 for proffesional view the project cards i want to add a bigger card on clicking those smaller card , where the description about the project , skills , and if multiple images avaible for that project then images will be shown in carousal manner , also a close button to close that popup (make that popup a component so every project card can use that), i had once created an portfolio with html,css and minimal js , i want to pick certain features from that like a trail of a circle follows the cursor and causes colour inversion , a criss cross div inside which some quotes are flowing slowly in a loop , i have attached the old portfolio github link here add those styles wherever you see fit while acting as a proffesional senior website designer
 githubrepo link:https://github.com/Ganesh01110/portfolio-mk-1.git
+
+
+the walk level isnt fixed yet , in that case dont spawn them from any higher height that may be causing the problem , after character selection character only be spawned from invisible to visible on same height i.e the ground where(at the height level) he will stand , walk , run, fight and dodge the monster , monsters will also be spawn on same level(ground level as hero character) almost(+ or - 20 pixel to add some perspective) and will walk , run , jump from , land to attack , dodge and when die just dissapear thiis is the ground logic , like the real world
+
+
+the game should look like 
+
+level 1 : fight sequence between protagonist and monster 1 (3 monsters) with some spawn delay at same ground level , all monster defeated and the
+
+level complete screen should be shown with some animation (while game pauses)and on clicking the box project card with details about one project should shown, when close button is clicked the project card and level complete pop up should be removed and game should resume
+
+then level 2 should start: fight sequence with monster 2 (2 monsters, moree damage than monster 1 with the spawn delay between 2 monster), irrespective of the health of protagonist when 2 monsters die 
+
+the level complete screen should be shown with some animation (while game pauses)and on clicking the box project card with details about one project should shown, when close button is clicked the scorll type pop up i.e brief about two projects will be shown with back to character selection button to the end
+
+
+now: after level 1 complete-> game pauses and level clear popup comes ->clicking on box 1 project reveal (closing that)->level clear popup of of level1 -> clicking box 2nd project reveal (closing that)-> open chest (clicking that) -> victory brief(final summary with character selection button)
+
+ideal(should be):level 1 complete->game pauses and level clear popup comes ->clicking on box 1 project 1 reveal (closing that)->level clear popup of of level1 (with button to start level 2)->level 2 game with monster 2(2 monster with spawn delay) -> level 2 complete->game pauses and level clear popup comes ->clicking on box 1 project (2nd project) reveal (closing that)-> victory brief(final summary(should be mobile responsive) with back character selection button)
+
+as protagonist is jumping now , so add a jumping instruction and jump control(up arrow at left) for mobile

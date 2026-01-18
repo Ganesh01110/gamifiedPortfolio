@@ -6,6 +6,7 @@ import { gameConfig } from './gameConfig';
 import { BattleScene } from './scenes/BattleScene';
 import { RewardScene } from './scenes/RewardScene';
 import { ProjectModal } from '@/src/components/ProjectModal';
+import { MobileControls } from '@/src/components/MobileControls';
 
 interface Project {
     id: string;
@@ -32,6 +33,7 @@ export const GameComponent: React.FC<GameComponentProps> = ({
     const gameRef = useRef<Phaser.Game | null>(null);
     const [selectedProject, setSelectedProject] = React.useState<Project | null>(null);
     const [isPortrait, setIsPortrait] = React.useState(false);
+    const [isGameOver, setIsGameOver] = React.useState(false);
 
     useEffect(() => {
         const checkOrientation = () => {
@@ -48,36 +50,62 @@ export const GameComponent: React.FC<GameComponentProps> = ({
         };
     }, []);
 
+    // React Effect to initialize Phaser Game
     useEffect(() => {
-        // Initialize Phaser game
-        const config: Phaser.Types.Core.GameConfig = {
-            ...gameConfig,
-            scene: [BattleScene, RewardScene],
-        };
+        let gameInstance: Phaser.Game | null = null;
 
-        gameRef.current = new Phaser.Game(config);
+        if (typeof window !== 'undefined') {
+            // Import Phaser dynamically to avoid SSR issues
+            import('phaser').then((Phaser) => {
+                // Prevent duplicate game instances
+                if (gameRef.current) return;
 
-        // Start the battle scene with the selected character
-        gameRef.current.scene.start('BattleScene', { characterId });
+                console.log('Initializing Phaser Game');
+                const config = {
+                    ...gameConfig,
+                    scene: [BattleScene, RewardScene] // Register all scenes here
+                };
 
-        // Listen for return to selection event
-        const handleReturn = () => {
-            onReturnToSelection();
-        };
+                // Create Phaser Game Instance
+                gameInstance = new Phaser.Game(config);
+                gameRef.current = gameInstance;
 
-        // Listen for reward modal event from Phaser
-        const handleShowReward = (e: Event) => {
-            const customEvent = e as CustomEvent;
-            setSelectedProject(customEvent.detail.project);
-        };
+                // Pass initial data to the scene once it's ready
+                gameInstance.events.once('ready', () => {
+                    const scene = gameInstance?.scene.getScene('BattleScene');
+                    if (scene) {
+                        scene.data.set('characterId', characterId);
+                        // Trigger init manually if needed, or rely on scene flow
+                        if (scene.scene.key === 'BattleScene') {
+                            scene.scene.start('BattleScene', { characterId: characterId });
+                        }
+                    }
+                });
 
-        window.addEventListener('return-to-selection', handleReturn);
-        window.addEventListener('show-reward-modal', handleShowReward);
+                // Listen for 'open-project-modal' event from Phaser Scene
+                window.addEventListener('open-project-modal', ((e: CustomEvent) => {
+                    const project = e.detail;
+                    setSelectedProject(project);
+                }) as EventListener);
 
-        // Cleanup
+                // Listen for 'game-over' event from Phaser Scene
+                window.addEventListener('game-over', () => {
+                    setIsGameOver(true);
+                });
+
+                // Listen for 'return-to-selection' from RewardScene
+                window.addEventListener('return-to-selection', () => {
+                    if (gameRef.current) {
+                        gameRef.current.destroy(true);
+                        gameRef.current = null;
+                    }
+                    onReturnToSelection();
+                });
+            });
+        }
+
+        // Cleanup Function
         return () => {
-            window.removeEventListener('return-to-selection', handleReturn);
-            window.removeEventListener('show-reward-modal', handleShowReward);
             if (gameRef.current) {
                 gameRef.current.destroy(true);
                 gameRef.current = null;
@@ -91,6 +119,10 @@ export const GameComponent: React.FC<GameComponentProps> = ({
         window.dispatchEvent(new CustomEvent('resume-game'));
     };
 
+    const handleRefresh = () => {
+        window.location.reload();
+    };
+
     return (
         <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
             {isPortrait && (
@@ -101,6 +133,22 @@ export const GameComponent: React.FC<GameComponentProps> = ({
                 </div>
             )}
             <div id="game-container" className="w-full h-full" />
+
+            {isGameOver && (
+                <div className="absolute inset-0 z-[200] flex flex-col items-center justify-center bg-[#0a192f]/85 backdrop-blur-sm animate-in fade-in duration-500">
+                    <h2 className="text-8xl font-black text-red-500 mb-8 drop-shadow-[4px_4px_4px_rgba(0,0,0,1)] tracking-widest font-mono border-b-4 border-red-600 pb-2">
+                        GAME OVER
+                    </h2>
+                    <button
+                        onClick={handleRefresh}
+                        className="text-4xl font-bold text-cyan-400 hover:text-cyan-300 hover:scale-110 transition-all duration-300 font-mono tracking-wider drop-shadow-lg animate-pulse"
+                    >
+                        Click to Refresh
+                    </button>
+                </div>
+            )}
+
+            <MobileControls isVisible={!isPortrait && !isGameOver} />
 
             {selectedProject && (
                 <ProjectModal

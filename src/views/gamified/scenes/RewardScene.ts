@@ -45,15 +45,25 @@ export class RewardScene extends Phaser.Scene {
     }
 
     private showRewards() {
+        // Detect if mobile viewport
+        const isMobile = window.innerWidth < 768;
+        const titleSize = isMobile ? '48px' : '64px';
+        const subtitleSize = isMobile ? '18px' : '24px';
+        const headingSize = isMobile ? '24px' : '32px';
+        const projectNameSize = isMobile ? '20px' : '24px';
+        const descSize = isMobile ? '14px' : '16px';
+        const techSize = isMobile ? '12px' : '14px';
+        const buttonSize = isMobile ? '18px' : '20px';
+
         // Victory text
         this.add.text(640, 100, 'VICTORY!', {
-            fontSize: '64px',
+            fontSize: titleSize,
             color: '#00ff00',
             fontStyle: 'bold',
         }).setOrigin(0.5);
 
-        this.add.text(640, 180, 'You have defeated the villain!', {
-            fontSize: '24px',
+        this.add.text(640, isMobile ? 160 : 180, 'You have defeated the villain!', {
+            fontSize: subtitleSize,
             color: '#ffffff',
         }).setOrigin(0.5);
 
@@ -64,39 +74,45 @@ export class RewardScene extends Phaser.Scene {
         );
 
         // Display projects
-        this.add.text(640, 250, 'Your Rewards:', {
-            fontSize: '32px',
+        this.add.text(640, isMobile ? 210 : 250, 'Your Rewards:', {
+            fontSize: headingSize,
             color: '#ffaa00',
             fontStyle: 'bold',
         }).setOrigin(0.5);
 
+        const startY = isMobile ? 260 : 320;
+        const spacing = isMobile ? 100 : 120;
+        const wrapWidth = isMobile ? 600 : 800;
+
         characterProjects.slice(0, 2).forEach((project, index) => {
-            const yPos = 320 + index * 120;
+            const yPos = startY + index * spacing;
 
             this.add.text(640, yPos, project.name, {
-                fontSize: '24px',
+                fontSize: projectNameSize,
                 color: '#ffffff',
                 fontStyle: 'bold',
             }).setOrigin(0.5);
 
             this.add.text(640, yPos + 30, project.description, {
-                fontSize: '16px',
+                fontSize: descSize,
                 color: '#cccccc',
-                wordWrap: { width: 800 },
+                wordWrap: { width: wrapWidth },
             }).setOrigin(0.5);
 
-            this.add.text(640, yPos + 70, `Tech: ${project.techStack.join(', ')}`, {
-                fontSize: '14px',
+            this.add.text(640, yPos + (isMobile ? 60 : 70), `Tech: ${project.techStack.join(', ')}`, {
+                fontSize: techSize,
                 color: '#888888',
+                wordWrap: { width: wrapWidth },
             }).setOrigin(0.5);
         });
 
-        // Return button
-        const returnButton = this.add.text(640, 650, 'Return to Character Selection', {
-            fontSize: '20px',
+        // Return button - positioned lower on mobile
+        const buttonY = isMobile ? 600 : 650;
+        const returnButton = this.add.text(640, buttonY, 'Return to Character Selection', {
+            fontSize: buttonSize,
             color: '#00ffff',
             backgroundColor: '#333333',
-            padding: { x: 20, y: 10 },
+            padding: { x: isMobile ? 15 : 20, y: isMobile ? 8 : 10 },
         }).setOrigin(0.5).setInteractive();
 
         returnButton.on('pointerdown', () => {

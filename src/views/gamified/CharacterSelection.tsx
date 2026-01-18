@@ -85,7 +85,7 @@ export const CharacterSelection: React.FC = () => {
     }
 
     return (
-        <div style={{ zoom: '70%' }} className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white p-4 md:p-8">
+        <div style={{ zoom: '67%' }} className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white p-4 md:p-8">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <motion.div

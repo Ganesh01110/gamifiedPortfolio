@@ -6,6 +6,8 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
     height: 720,
     parent: 'game-container',
     backgroundColor: '#000000',
+    // Enable DOM Container to allow HTML elements (like GIFs) to overlay the canvas
+    // This is crucial for our hybrid rendering approach (Physics Sprite + DOM Image)
     dom: {
         createContainer: true
     },
