@@ -1,6 +1,28 @@
 [
     {
         "id": "project-1",
+        "name": "Sworm Multi-Country Simulation",
+        "category": "fullstack",
+        "problem": "Simulating complex multi-country economic and social systems",
+        "techStack": [
+            "Python",
+            "Flask",
+            "React",
+            "SQLite",
+            "WebSockets"
+        ],
+        "description": "A sophisticated simulation system managing multiple states in a country with real-time data updates,sworm election, historical tracking, and interactive UI with tab switching and sidebar responsiveness.",
+        "mockup": "/projects/sworm-mockup.png",
+        "images": [
+            "/projects/sworm-mockup.png",
+            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1470&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1470&auto=format&fit=crop"
+        ],
+        "liveLink": "",
+        "repoLink": "https://github.com/Ganesh01110/socio-political-multiagent-swarm"
+    },
+    {
+        "id": "project-2",
         "name": "Smart Car Parking System",
         "category": "fullstack",
         "problem": "Inefficient parking management and lack of real-time slot availability",
@@ -19,10 +41,10 @@
             "https://images.unsplash.com/photo-1590674899484-13da0d1b58f5?q=80&w=1470&auto=format&fit=crop"
         ],
         "liveLink": "",
-        "repoLink": "https://github.com/yourusername/project-1"
+        "repoLink": "https://github.com/Ganesh01110/projects"
     },
     {
-        "id": "project-2",
+        "id": "project-3",
         "name": "Travel UI Website",
         "category": "frontend",
         "problem": "Creating an engaging and pixel-perfect travel booking interface",
@@ -41,29 +63,7 @@
             "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1442&auto=format&fit=crop"
         ],
         "liveLink": "",
-        "repoLink": "https://github.com/yourusername/project-2"
-    },
-    {
-        "id": "project-3",
-        "name": "Sworm Multi-Country Simulation",
-        "category": "fullstack",
-        "problem": "Simulating complex multi-country economic and social systems",
-        "techStack": [
-            "Python",
-            "Flask",
-            "React",
-            "SQLite",
-            "WebSockets"
-        ],
-        "description": "A sophisticated simulation system managing multiple countries with real-time data updates, historical tracking, and interactive UI with tab switching and sidebar responsiveness.",
-        "mockup": "/projects/sworm-mockup.png",
-        "images": [
-            "/projects/sworm-mockup.png",
-            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1470&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1470&auto=format&fit=crop"
-        ],
-        "liveLink": "",
-        "repoLink": "https://github.com/yourusername/project-3"
+        "repoLink": "https://github.com/Ganesh01110/projects"
     },
     {
         "id": "project-4",
@@ -86,7 +86,7 @@
             "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1590&auto=format&fit=crop"
         ],
         "liveLink": "",
-        "repoLink": "https://github.com/yourusername/project-4"
+        "repoLink": "https://github.com/Ganesh01110/projects"
     },
     {
         "id": "project-5",
@@ -107,8 +107,8 @@
             "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1470&auto=format&fit=crop"
         ],
-        "liveLink": "",
-        "repoLink": "https://github.com/yourusername/project-5"
+        "liveLink": "https://workout-tracking-39e60-beta.web.app",
+        "repoLink": "https://github.com/Ganesh01110/workout-tracker"
     },
     {
         "id": "project-6",
@@ -129,6 +129,6 @@
             "https://images.unsplash.com/photo-1667375639058-bf7c980314e3?q=80&w=1470&auto=format&fit=crop"
         ],
         "liveLink": "",
-        "repoLink": "https://github.com/yourusername/project-6"
+        "repoLink": "https://github.com/Ganesh01110/projects"
     }
 ]

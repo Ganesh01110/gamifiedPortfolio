@@ -11,6 +11,7 @@ export class Player extends BaseEntity {
     // Stats
     public health: number = 100;
     private walkSpeed: number = 250;
+    private currentAnim: string = 'idle'; // Track current animation state
     private character: { id: string; assets?: { idle: string; walk: string; attack1: string; attack2: string; dodge: string }; timings?: { walkSpeed: number; attack1Duration: number; attack2Duration: number; attack1HitDelay: number; attack2HitDelay: number; dodgeDuration: number } } | undefined;
 
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -137,6 +138,9 @@ export class Player extends BaseEntity {
 
     private setAnimation(key: 'idle' | 'walk' | 'atk1' | 'atk2' | 'dodge') {
         if (!this.character?.assets) return;
+        if (this.currentAnim === key) return; // Prevent restarting same animation
+
+        this.currentAnim = key; // Update state
 
         let asset = this.character.assets.idle;
         if (key === 'walk') asset = this.character.assets.walk;
@@ -155,7 +159,7 @@ export class Player extends BaseEntity {
         this.lastAttackTime = time;
 
         const timings = this.character?.timings || {
-            attack1Duration: 800,
+            attack1Duration: 1200,
             attack2Duration: 1200,
             walkSpeed: 250,
             attack1HitDelay: 400,
@@ -164,6 +168,9 @@ export class Player extends BaseEntity {
         };
         const duration = type === 1 ? timings.attack1Duration : timings.attack2Duration;
         const hitDelay = type === 1 ? timings.attack1HitDelay : timings.attack2HitDelay;
+
+        // Debug: Log duration to help user tune characters.json
+        // console.log(`Performing Attack ${type} for ${this.character?.name || 'Unknown'}: Duration ${duration}ms`);
 
         this.setAnimation(type === 1 ? 'atk1' : 'atk2');
 

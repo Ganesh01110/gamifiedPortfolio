@@ -7,6 +7,7 @@
         "colorHex": "#06b6d4",
         "weapon": "Pixel Brush",
         "weaponDescription": "A digital brush that slices through bad UI",
+        "story": "The Painter was once a humble designer, until the day the Pixels rebelled. Now, he travels the digital realm, restoring color and harmony to a world consumed by grayscale chaos. His mission: to paint a brighter future, one line of code at a time.",
         "villain": {
             "name": "The Layout Breaker",
             "description": "A chaotic entity that shifts elements randomly",
@@ -22,7 +23,7 @@
             "dodge": "/assets/painter/defend.gif"
         },
         "timings": {
-            "attack1Duration": 2000,
+            "attack1Duration": 3000,
             "attack1HitDelay": 1000,
             "attack2Duration": 3000,
             "attack2HitDelay": 1500,
@@ -39,6 +40,7 @@
         "colorHex": "#f59e0b",
         "weapon": "Database Hammer",
         "weaponDescription": "A heavy hammer that crushes latency and data leaks",
+        "story": "Forged in the fires of high-traffic servers, The Architect is the guardian of structure. When data streams turn into chaotic torrents, he stands firm, ensuring integrity and speed. His hammer doesn't just destroy bugs; it rebuilds the very foundations of the web.",
         "villain": {
             "name": "The Data Corruptor",
             "description": "A silent creeper that steals and mixes user data",

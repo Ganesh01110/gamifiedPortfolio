@@ -19,27 +19,32 @@
         "Email": "ganeshsahu0108@gmail.com",
         "whatsapp": "+91 8658040407",
         "github": "https://github.com/ganesh01110",
-        "linkedin": "https://linkedin.com/in/yourusername",
+        "linkedin": "https://www.linkedin.com/in/ganesh-sahu-59a00b223",
         "twitter": "https://twitter.com/yourusername"
     },
     "experience": [
         {
             "company": "Taksh software",
-            "role": "full stack dev intern",
-            "description": "Passionate Full Stack Developer with expertise in modern web technologies, system design, and agentic development. Experienced in building scalable applications from frontend to backend, with a strong focus on clean code and best practices.",
-            "duration": "Current",
+            "role": "Full Stack Developer Intern",
+            "description": "Led the implementation of a Hospital Management System that streamlined patient, doctor, and appointment management. Implemented secure authentication, RESTful APIs, and real-time notifications.",
+            "duration": "11/2024 – 05/2025",
             "project": {
-                "name": "Full Stack Application Development",
+                "name": "Hospital Management System",
                 "techStack": [
                     "React",
-                    "Express",
-                    "MongoDB",
+                    "Redux",
                     "Node.js",
-                    "Tailwind CSS"
+                    "TailwindCSS",
+                    "Express.js",
+                    "SQL",
+                    "WebSockets",
+                    "Python"
                 ],
-                "description": "Collaborated on building highly scalable and responsive web applications. Focused on optimizing frontend performance and architecting robust backend services.",
-                "problem": "Developing complex web solutions that maintain high performance and code quality during rapid scaling."
-            }
+                "description": "Built a comprehensive system with secure role-based access, real-time WebSocket notifications for doctors, and financial tracking modules. Optimized backend performance by resolving CLOSE_WAIT issues and implementing automation scripts.",
+                "problem": "Inefficient hospital workflows and lack of real-time coordination between departments."
+            },
+            "image": "/projects/hospital-mockup.png",
+            "demo": "https://www.linkedin.com/posts/ganesh-sahu-59a00b223_node-frontend-backend-activity-7369750031064608771-WSoz?utm_source=share&utm_medium=member_desktop&rcm=ACoAADgQfYYBbU_VZi93TdyoBiRMzBIH-1seu-8"
         },
         {
             "company": "Taksh software",

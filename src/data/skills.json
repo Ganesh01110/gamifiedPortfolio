@@ -14,11 +14,17 @@
     "backend": [
         "Java Spring Boot",
         "Node.js",
+        "Express.js",
         "TypeScript",
         "Python",
         "SQL",
+        "PostgreSQL",
+        "MySQL",
         "MongoDB",
+        "Prisma",
         "Redis",
+        "RabbitMQ",
+        "Kafka",
         "REST API",
         "GraphQL",
         "Microservices"

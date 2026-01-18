@@ -37,8 +37,13 @@ export class BattleScene extends Phaser.Scene {
 
     // Fixed Gameplay Constants
     // Adjusted for visual ground level
-    private readonly GROUND_Y = 650;
-    private readonly SPAWN_Y = 560;
+    // Separate ground heights for protagonist and monsters as requested
+    private readonly ENEMY_GROUND_Y = 460;
+    private readonly PLAYER_GROUND_Y = 440; // Protagonist higher up
+    private readonly SPAWN_Y = 400; // Default spawn, gravity will settle them
+
+    private playerGround?: Phaser.GameObjects.Rectangle;
+    private enemyGround?: Phaser.GameObjects.Rectangle;
 
     constructor() {
         super({ key: 'BattleScene' });
@@ -98,10 +103,18 @@ export class BattleScene extends Phaser.Scene {
         bg.setDisplaySize(1280, 720);
         bg.setScrollFactor(0);
 
-        // Ground Logic
-        if (this.ground) this.ground.destroy();
-        this.ground = this.add.rectangle(640, this.GROUND_Y, 1280, 56, 0x000000, 0); // Invisible ground
-        this.physics.add.existing(this.ground, true);
+        // Ground Logic - Separate grounds for Player and Enemies
+        if (this.ground) this.ground.destroy(); // Cleanup old
+        if (this.playerGround) this.playerGround.destroy();
+        if (this.enemyGround) this.enemyGround.destroy();
+
+        // Player Ground (Higher)
+        this.playerGround = this.add.rectangle(640, this.PLAYER_GROUND_Y, 1280, 56, 0x000000, 0);
+        this.physics.add.existing(this.playerGround, true);
+
+        // Enemy Ground (Lower/Standard)
+        this.enemyGround = this.add.rectangle(640, this.ENEMY_GROUND_Y, 1280, 56, 0x000000, 0);
+        this.physics.add.existing(this.enemyGround, true);
 
         // Spawn Enemies
         if (this.currentLevel === 1) {
@@ -111,7 +124,7 @@ export class BattleScene extends Phaser.Scene {
         }
 
         // Collisions
-        this.physics.add.collider(this.enemies.getChildren(), this.ground);
+        this.physics.add.collider(this.enemies.getChildren(), this.enemyGround);
     }
 
     private spawnWave() {
@@ -121,7 +134,7 @@ export class BattleScene extends Phaser.Scene {
         enemy.on('death', () => this.handleEnemyDeath(enemy, 'minion'));
 
         this.enemies?.add(enemy);
-        this.physics.add.collider(enemy, this.ground!);
+        this.physics.add.collider(enemy, this.enemyGround!);
 
         this.minionsSpawned++;
 
@@ -140,7 +153,7 @@ export class BattleScene extends Phaser.Scene {
         enemy.on('death', () => this.handleEnemyDeath(enemy, 'boss'));
 
         this.enemies?.add(enemy);
-        this.physics.add.collider(enemy, this.ground!);
+        this.physics.add.collider(enemy, this.enemyGround!);
 
         this.minionsSpawned++;
 
@@ -159,7 +172,7 @@ export class BattleScene extends Phaser.Scene {
         }
 
         this.player = new Player(this, 200, this.SPAWN_Y, this.characterId);
-        this.physics.add.collider(this.player, this.ground!);
+        this.physics.add.collider(this.player, this.playerGround!);
 
         // Restore controls
         if (this.cursors && this.keys) {
@@ -243,12 +256,18 @@ export class BattleScene extends Phaser.Scene {
         if (!this.player) return;
         const damage = type === 1 ? 25 : 50;
         const range = type === 1 ? 150 : 250;
+        const yTolerance = 50; // Allow 30-50px difference in Y (height) per drawing
 
         this.enemies?.children.iterate((child) => {
             const enemy = child as Enemy;
             if (enemy.active && this.player) {
-                const dist = Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y);
-                if (dist < range) {
+                // Check X distance
+                const dx = Math.abs(this.player.x - enemy.x);
+                // Check Y difference (height/ground level diff)
+                const dy = Math.abs(this.player.y - enemy.y);
+
+                // Attack hits if within horizontal range AND vertical tolerance
+                if (dx < range && dy <= yTolerance) {
                     enemy.takeDamage(damage);
                     this.createHitEffect(enemy.x, enemy.y);
                 }
