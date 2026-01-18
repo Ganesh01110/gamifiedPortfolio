@@ -5,3 +5,7 @@ i have given the gif files for each charater for walking , lunching attack(two t
 attack 2 is more brutal and dangerous for the monsters , a dodging sequence for dodging from attack of monsetrs and some character has auxilliary actions also
 
 so according to that set the buttons (show the controls in screen as instruction for game control for user)i.e in top left or something like that ...and a back button at every point of game to navigate home (i.e toggle scene) , also attach the images to respective image div component to character selection from the assets folder
+
+
+for proffesional view the project cards i want to add a bigger card on clicking those smaller card , where the description about the project , skills , and if multiple images avaible for that project then images will be shown in carousal manner , also a close button to close that popup (make that popup a component so every project card can use that), i had once created an portfolio with html,css and minimal js , i want to pick certain features from that like a trail of a circle follows the cursor and causes colour inversion , a criss cross div inside which some quotes are flowing slowly in a loop , i have attached the old portfolio github link here add those styles wherever you see fit while acting as a proffesional senior website designer
+githubrepo link:https://github.com/Ganesh01110/portfolio-mk-1.git

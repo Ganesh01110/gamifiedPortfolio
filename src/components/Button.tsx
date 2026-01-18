@@ -11,6 +11,8 @@ interface ButtonProps {
     className?: string;
     disabled?: boolean;
     type?: "button" | "submit" | "reset";
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -20,7 +22,9 @@ export const Button: React.FC<ButtonProps> = ({
     size = 'md',
     className = '',
     disabled = false,
-    type = "button"
+    type = "button",
+    onMouseEnter,
+    onMouseLeave
 }) => {
     const baseStyles = 'rounded-lg font-bold transition-all duration-300 transform disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center';
 
@@ -46,6 +50,8 @@ export const Button: React.FC<ButtonProps> = ({
             whileHover={disabled ? {} : { scale: 1.05 }}
             whileTap={disabled ? {} : { scale: 0.95 }}
             onClick={onClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
             disabled={disabled}
             type={type}
             className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}

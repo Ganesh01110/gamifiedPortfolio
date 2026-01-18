@@ -1,0 +1,19 @@
+﻿src/components/VerticalBlindTransition.tsx(50,21): error TS2322: Type '{ solid: { scaleX: number; transition: { duration: number; }; }; shrink: (i: number) => { scaleX: number; transition: { duration: number; ease: string; delay: number; }; }; }' is not assignable to type 'Variants'.
+  Property 'shrink' is incompatible with index signature.
+    Type '(i: number) => { scaleX: number; transition: { duration: number; ease: string; delay: number; }; }' is not assignable to type 'Variant'.
+      Type '(i: number) => { scaleX: number; transition: { duration: number; ease: string; delay: number; }; }' is not assignable to type 'TargetResolver'.
+        Type '{ scaleX: number; transition: { duration: number; ease: string; delay: number; }; }' is not assignable to type 'string | TargetAndTransition'.
+          Type '{ scaleX: number; transition: { duration: number; ease: string; delay: number; }; }' is not assignable to type 'TargetAndTransition'.
+            Type '{ scaleX: number; transition: { duration: number; ease: string; delay: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+              Types of property 'transition' are incompatible.
+                Type '{ duration: number; ease: string; delay: number; }' is not assignable to type 'Transition<any> | undefined'.
+                  Type '{ duration: number; ease: string; delay: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                    Type '{ duration: number; ease: string; delay: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                      Types of property 'ease' are incompatible.
+                        Type 'string' is not assignable to type 'Easing | Easing[] | undefined'.
+src/views/gamified/scenes/BattleScene.ts(336,30): error TS2339: Property 'style' does not exist on type 'Element'.
+src/views/gamified/scenes/BattleScene.ts(693,35): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/views/gamified/scenes/BattleScene.ts(695,31): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/views/normal/ProfessionalView.tsx(290,53): error TS2353: Object literal may only specify known properties, and 'company' does not exist in type 'Project | ((prevState: Project | null) => Project | null)'.

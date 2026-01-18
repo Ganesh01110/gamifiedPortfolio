@@ -5,12 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "dev:fresh": "rd /s /q .next && next dev",
+    "kill": "taskkill /F /IM node.exe /T",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "framer-motion": "^12.26.2",
+    "lucide-react": "^0.562.0",
     "next": "16.1.3",
     "phaser": "^3.90.0",
     "react": "19.2.3",

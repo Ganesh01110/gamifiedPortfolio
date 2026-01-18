@@ -5,6 +5,20 @@ import * as Phaser from 'phaser';
 import { gameConfig } from './gameConfig';
 import { BattleScene } from './scenes/BattleScene';
 import { RewardScene } from './scenes/RewardScene';
+import { ProjectModal } from '@/src/components/ProjectModal';
+
+interface Project {
+    id: string;
+    name: string;
+    category: string;
+    problem: string;
+    techStack: string[];
+    description: string;
+    mockup: string;
+    images?: string[];
+    liveLink: string;
+    repoLink: string;
+}
 
 interface GameComponentProps {
     characterId: string;
@@ -16,7 +30,7 @@ export const GameComponent: React.FC<GameComponentProps> = ({
     onReturnToSelection
 }) => {
     const gameRef = useRef<Phaser.Game | null>(null);
-
+    const [selectedProject, setSelectedProject] = React.useState<Project | null>(null);
     const [isPortrait, setIsPortrait] = React.useState(false);
 
     useEffect(() => {
@@ -51,17 +65,31 @@ export const GameComponent: React.FC<GameComponentProps> = ({
             onReturnToSelection();
         };
 
+        // Listen for reward modal event from Phaser
+        const handleShowReward = (e: Event) => {
+            const customEvent = e as CustomEvent;
+            setSelectedProject(customEvent.detail.project);
+        };
+
         window.addEventListener('return-to-selection', handleReturn);
+        window.addEventListener('show-reward-modal', handleShowReward);
 
         // Cleanup
         return () => {
             window.removeEventListener('return-to-selection', handleReturn);
+            window.removeEventListener('show-reward-modal', handleShowReward);
             if (gameRef.current) {
                 gameRef.current.destroy(true);
                 gameRef.current = null;
             }
         };
     }, [characterId, onReturnToSelection]);
+
+    const handleCloseModal = () => {
+        setSelectedProject(null);
+        // Signal Phaser to resume and go to level 2
+        window.dispatchEvent(new CustomEvent('resume-game'));
+    };
 
     return (
         <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
@@ -73,6 +101,13 @@ export const GameComponent: React.FC<GameComponentProps> = ({
                 </div>
             )}
             <div id="game-container" className="w-full h-full" />
+
+            {selectedProject && (
+                <ProjectModal
+                    project={selectedProject}
+                    onClose={handleCloseModal}
+                />
+            )}
         </div>
     );
 };

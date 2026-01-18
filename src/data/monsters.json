@@ -4,7 +4,7 @@
         "name": "The Glitch Minion",
         "level": 1,
         "hp": 30,
-        "damage": 5,
+        "damage": 7,
         "speed": 80,
         "scale": 1.0,
         "assets": {
@@ -14,6 +14,12 @@
             "prepare": "/assets/monster/monster1-jumpingToAttack.gif",
             "hit": "/assets/monster/Monster1-defending.gif",
             "death": "/assets/monster/monster2-scream.gif"
+        },
+        "timings": {
+            "prepareDuration": 1500,
+            "attackDuration": 2000,
+            "hitDelay": 1000,
+            "deathDuration": 3000
         }
     },
     {
@@ -21,7 +27,7 @@
         "name": "The System Boss",
         "level": 2,
         "hp": 150,
-        "damage": 15,
+        "damage": 20,
         "speed": 120,
         "scale": 1.2,
         "assets": {
@@ -30,6 +36,12 @@
             "attack": "/assets/monster/monster2-attack1Lefthand.gif",
             "special": "/assets/monster/monster2-scream.gif",
             "death": "/assets/monster/monster2-scream.gif"
+        },
+        "timings": {
+            "prepareDuration": 2000,
+            "attackDuration": 3000,
+            "hitDelay": 1500,
+            "deathDuration": 4000
         }
     }
 ]

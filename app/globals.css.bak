@@ -77,3 +77,27 @@ body {
 .professional-view [role="button"] {
   cursor: none;
 }
+
+/* Responsive adjustments for Criss-Cross */
+@media (max-width: 768px) {
+  .criss-cross-container {
+    opacity: 0.15;
+    gap: 4rem;
+  }
+
+  .criss-cross-item {
+    font-size: 1.5rem !important;
+    /* text-2xl */
+    line-height: 1;
+  }
+
+  .criss-cross-top {
+    rotate: 15deg !important;
+    scale: 2 !important;
+  }
+
+  .criss-cross-bottom {
+    rotate: -15deg !important;
+    scale: 2 !important;
+  }
+}

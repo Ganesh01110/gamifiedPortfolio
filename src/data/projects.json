@@ -13,6 +13,11 @@
         ],
         "description": "A comprehensive parking management system with admin controls, real-time slot tracking, billing, and payment processing. Features include vehicle entry/exit management, automated billing, and dashboard analytics.",
         "mockup": "/projects/parking-mockup.png",
+        "images": [
+            "/projects/parking-mockup.png",
+            "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1470&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1590674899484-13da0d1b58f5?q=80&w=1470&auto=format&fit=crop"
+        ],
         "liveLink": "",
         "repoLink": "https://github.com/yourusername/project-1"
     },
@@ -30,6 +35,11 @@
         ],
         "description": "A stunning travel website with immersive UI sections, community features, and tour selection. Implements custom fonts (Satoshi, Playfair Display) and smooth animations for enhanced user experience.",
         "mockup": "/projects/travel-mockup.png",
+        "images": [
+            "/projects/travel-mockup.png",
+            "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1470&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1442&auto=format&fit=crop"
+        ],
         "liveLink": "",
         "repoLink": "https://github.com/yourusername/project-2"
     },
@@ -47,6 +57,11 @@
         ],
         "description": "A sophisticated simulation system managing multiple countries with real-time data updates, historical tracking, and interactive UI with tab switching and sidebar responsiveness.",
         "mockup": "/projects/sworm-mockup.png",
+        "images": [
+            "/projects/sworm-mockup.png",
+            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1470&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1470&auto=format&fit=crop"
+        ],
         "liveLink": "",
         "repoLink": "https://github.com/yourusername/project-3"
     },
@@ -65,6 +80,11 @@
         ],
         "description": "Full-stack library management with CRUD operations for books, users, and borrow records. Features secure API integration, modern responsive UI, and comprehensive testing.",
         "mockup": "/projects/library-mockup.png",
+        "images": [
+            "/projects/library-mockup.png",
+            "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1528&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1590&auto=format&fit=crop"
+        ],
         "liveLink": "",
         "repoLink": "https://github.com/yourusername/project-4"
     },
@@ -82,6 +102,11 @@
         ],
         "description": "Progressive web app for fitness tracking with workout streak visualization, health metrics, supplement tracking, and dynamic exercise sets. Includes GitHub Actions CI/CD pipeline.",
         "mockup": "/projects/fitness-mockup.png",
+        "images": [
+            "/projects/fitness-mockup.png",
+            "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1470&auto=format&fit=crop"
+        ],
         "liveLink": "",
         "repoLink": "https://github.com/yourusername/project-5"
     },
@@ -98,6 +123,11 @@
         ],
         "description": "Complete containerization setup for multi-service applications with Docker Compose orchestration, CI/CD pipeline, and automated testing workflows.",
         "mockup": "/projects/docker-mockup.png",
+        "images": [
+            "/projects/docker-mockup.png",
+            "https://images.unsplash.com/photo-1605745341112-85968b193ef5?q=80&w=1471&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1667375639058-bf7c980314e3?q=80&w=1470&auto=format&fit=crop"
+        ],
         "liveLink": "",
         "repoLink": "https://github.com/yourusername/project-6"
     }

@@ -21,6 +21,14 @@
             "attack2": "/assets/painter/attack2.gif",
             "dodge": "/assets/painter/defend.gif"
         },
+        "timings": {
+            "attack1Duration": 2000,
+            "attack1HitDelay": 1000,
+            "attack2Duration": 3000,
+            "attack2HitDelay": 1500,
+            "dodgeDuration": 1500,
+            "walkSpeed": 250
+        },
         "skills": "frontend"
     },
     {
@@ -44,6 +52,14 @@
             "attack1": "/assets/architect/ArchitectHammerAttack1.gif",
             "attack2": "/assets/architect/ArchitectAttack2.gif",
             "dodge": "/assets/architect/ArchitectDodge.gif"
+        },
+        "timings": {
+            "attack1Duration": 2500,
+            "attack1HitDelay": 1200,
+            "attack2Duration": 3500,
+            "attack2HitDelay": 1800,
+            "dodgeDuration": 1500,
+            "walkSpeed": 200
         },
         "skills": "backend"
     },
@@ -69,6 +85,14 @@
             "attack1": "/assets/wizard/wizardAttack1.gif",
             "attack2": "/assets/wizard/wizardAttack2.gif",
             "dodge": "/assets/wizard/wizard dodge.gif"
+        },
+        "timings": {
+            "attack1Duration": 2800,
+            "attack1HitDelay": 900,
+            "attack2Duration": 2800,
+            "attack2HitDelay": 1400,
+            "dodgeDuration": 2000,
+            "walkSpeed": 120
         },
         "skills": "devops"
     },

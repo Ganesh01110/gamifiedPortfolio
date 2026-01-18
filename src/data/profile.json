@@ -22,6 +22,42 @@
         "linkedin": "https://linkedin.com/in/yourusername",
         "twitter": "https://twitter.com/yourusername"
     },
+    "experience": [
+        {
+            "company": "Taksh software",
+            "role": "full stack dev intern",
+            "description": "Passionate Full Stack Developer with expertise in modern web technologies, system design, and agentic development. Experienced in building scalable applications from frontend to backend, with a strong focus on clean code and best practices.",
+            "duration": "Current",
+            "project": {
+                "name": "Full Stack Application Development",
+                "techStack": [
+                    "React",
+                    "Express",
+                    "MongoDB",
+                    "Node.js",
+                    "Tailwind CSS"
+                ],
+                "description": "Collaborated on building highly scalable and responsive web applications. Focused on optimizing frontend performance and architecting robust backend services.",
+                "problem": "Developing complex web solutions that maintain high performance and code quality during rapid scaling."
+            }
+        },
+        {
+            "company": "Taksh software",
+            "role": "full stack dev intern (Project Phase)",
+            "description": "Focused on creating innovative solutions using modern tech stacks.",
+            "duration": "Previous",
+            "project": {
+                "name": "Cloud Integration System",
+                "techStack": [
+                    "Next.js",
+                    "Azure",
+                    "PostgreSQL"
+                ],
+                "description": "Implemented complex cloud integration patterns to ensure high availability and seamless data flow across distributed systems.",
+                "problem": "Synchronizing real-time data across multiple cloud providers with minimal latency."
+            }
+        }
+    ],
     "resumeLink": "/assets/ganeshsahuresume291225.pdf",
     "profileImage": "/assets/the sage.jpg"
 }
