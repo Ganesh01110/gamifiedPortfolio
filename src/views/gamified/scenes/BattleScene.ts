@@ -155,10 +155,11 @@ export class BattleScene extends Phaser.Scene {
         enemy.setVisible(false); // Hide sprite, show DOM
 
         // Create DOM element for GIF
-        const enemyDom = this.add.dom(x, y, 'img', {
-            src: monsterData.assets.idle,
-            style: 'width: auto; height: auto;'
-        });
+        const img = document.createElement('img');
+        img.src = monsterData.assets.idle;
+        img.style.width = 'auto';
+        img.style.height = 'auto';
+        const enemyDom = this.add.dom(x, y, img);
         enemyDom.setDepth(100);
         enemy.setData('dom', enemyDom);
 
@@ -199,10 +200,11 @@ export class BattleScene extends Phaser.Scene {
         const enemy = this.physics.add.sprite(1100, 672, 'monster2-idle');
         enemy.setVisible(false);
 
-        const enemyDom = this.add.dom(1100, 672, 'img', {
-            src: monsterData.assets.idle,
-            style: 'width: auto; height: auto;'
-        });
+        const img = document.createElement('img');
+        img.src = monsterData.assets.idle;
+        img.style.width = 'auto';
+        img.style.height = 'auto';
+        const enemyDom = this.add.dom(1100, 672, img);
         enemyDom.setDepth(10);
         enemy.setData('dom', enemyDom);
         enemy.setOrigin(0.5, 1);
@@ -235,10 +237,13 @@ export class BattleScene extends Phaser.Scene {
         // Create DOM element for Player GIF
         const character = charactersData.find(c => c.id === this.characterId);
         const idleSrc = character?.assets?.idle || '';
-        this.playerDom = this.add.dom(200, 672, 'img', {
-            src: idleSrc,
-            style: 'width: auto; height: auto;'
-        });
+
+        const img = document.createElement('img');
+        img.src = idleSrc;
+        img.style.width = 'auto';
+        img.style.height = 'auto';
+
+        this.playerDom = this.add.dom(200, 672, img);
         this.playerDom.setOrigin(0.5, 1);
         this.playerDom.setScale(0.8);
         this.playerDom.setDepth(10);
