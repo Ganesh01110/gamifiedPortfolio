@@ -12,7 +12,7 @@
             "WebSockets"
         ],
         "description": "A sophisticated simulation system managing multiple states in a country with real-time data updates,sworm election, historical tracking, and interactive UI with tab switching and sidebar responsiveness.",
-        "mockup": "/projects/sworm-mockup.png",
+        "mockup": "/projects/sworm-sc.png",
         "images": [
             "/projects/sworm-mockup.png",
             "/projects/sworm-sc.png",
@@ -23,6 +23,29 @@
     },
     {
         "id": "project-2",
+        "name": "Gamified Portfolio",
+        "category": "fullstack",
+        "problem": "Boring resumes and traditional portfolios lack engagement",
+        "techStack": [
+            "React",
+            "Phaser",
+            "Tailwind CSS",
+            "Framer Motion",
+            "Next.js"
+        ],
+        "description": "An interactive 2D RPG-style portfolio where users can select characters, explore a story, and battle monsters to reveal project details. Features custom mobile controls and responsive game design.",
+        "mockup": "/projects/game1.png",
+        "images": [
+            "/projects/game1.png",
+            "/projects/game2.png",
+            "/projects/game3.png",
+            "/projects/game4.png"
+        ],
+        "liveLink": "",
+        "repoLink": "https://github.com/Ganesh01110/gamifiedPortfolio"
+    },
+    {
+        "id": "project-3",
         "name": "Smart Car Parking System",
         "category": "fullstack",
         "problem": "Inefficient parking management and lack of real-time slot availability",
@@ -40,28 +63,6 @@
             "/projects/parking-mockup.png",
             "/projects/carpark.png",
             "/projects/carpark2.png"
-        ],
-        "liveLink": "",
-        "repoLink": "https://github.com/Ganesh01110/projects"
-    },
-    {
-        "id": "project-3",
-        "name": "Travel UI Website",
-        "category": "frontend",
-        "problem": "Creating an engaging and pixel-perfect travel booking interface",
-        "techStack": [
-            "React",
-            "Vite",
-            "Tailwind CSS",
-            "Redux",
-            "Framer Motion"
-        ],
-        "description": "A stunning travel website with immersive UI sections, community features, and tour selection. Implements custom fonts (Satoshi, Playfair Display) and smooth animations for enhanced user experience.",
-        "mockup": "/projects/travel-mockup.png",
-        "images": [
-            "/projects/travel-mockup.png",
-            "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1470&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1442&auto=format&fit=crop"
         ],
         "liveLink": "",
         "repoLink": "https://github.com/Ganesh01110/projects"

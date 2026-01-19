@@ -1,0 +1,24 @@
+[
+    {
+        "id": "project-3",
+        "name": "Travel UI Website",
+        "category": "frontend",
+        "problem": "Creating an engaging and pixel-perfect travel booking interface",
+        "techStack": [
+            "React",
+            "Vite",
+            "Tailwind CSS",
+            "Redux",
+            "Framer Motion"
+        ],
+        "description": "A stunning travel website with immersive UI sections, community features, and tour selection. Implements custom fonts (Satoshi, Playfair Display) and smooth animations for enhanced user experience.",
+        "mockup": "/projects/travel-mockup.png",
+        "images": [
+            "/projects/travel-mockup.png",
+            "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1470&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1442&auto=format&fit=crop"
+        ],
+        "liveLink": "",
+        "repoLink": "https://github.com/Ganesh01110/projects"
+    }
+]

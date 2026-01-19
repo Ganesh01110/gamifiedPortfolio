@@ -397,13 +397,27 @@ export const ProfessionalView: React.FC = () => {
                                     onMouseLeave={cardLeave}
                                     className="group bg-black border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-colors cursor-pointer"
                                 >
-                                    <div className="h-48 bg-gray-800 relative overflow-hidden">
-                                        {/* Placeholder for project image when actual images aren't available */}
-                                        <div className="absolute inset-0 flex items-center justify-center text-4xl bg-gradient-to-br from-gray-800 to-gray-900 group-hover:scale-105 transition-transform duration-500">
+                                    <div className="h-48 bg-gray-800 relative overflow-hidden flex items-center justify-center">
+                                        {/* Project Mockup Image */}
+                                        {project.mockup ? (
+                                            <img
+                                                src={project.mockup}
+                                                alt={project.name}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                        ) : (
+                                            <div className="absolute inset-0 flex items-center justify-center text-4xl bg-gradient-to-br from-gray-800 to-gray-900 group-hover:scale-105 transition-transform duration-500">
+                                                🌩️
+                                            </div>
+                                        )}
+
+                                        {/* Category Emoji at Corner */}
+                                        <div className="absolute top-3 left-3 text-xl bg-black/60 backdrop-blur-md rounded-full w-10 h-10 flex items-center justify-center z-20 border border-white/10 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                                             {project.category === 'frontend' && '🎨'}
                                             {project.category === 'backend' && '⚙️'}
                                             {project.category === 'fullstack' && '⚡'}
                                             {project.category === 'devops' && '🐳'}
+                                            {project.category === 'experience' && '💼'}
                                         </div>
                                     </div>
                                     <div className="p-6">
