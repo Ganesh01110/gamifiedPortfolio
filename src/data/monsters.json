@@ -20,6 +20,10 @@
             "attackDuration": 2000,
             "hitDelay": 1000,
             "deathDuration": 3000
+        },
+        "sounds": {
+            "attack": "/assets/sounds/monster-attack.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
         }
     },
     {
@@ -42,6 +46,11 @@
             "attackDuration": 3000,
             "hitDelay": 1500,
             "deathDuration": 4000
+        },
+        "sounds": {
+            "attack": "/assets/sounds/monster-attack.mp3",
+            "roar": "/assets/sounds/monster-roar.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
         }
     }
 ]

@@ -12,7 +12,7 @@ export class Player extends BaseEntity {
     public health: number = 100;
     private walkSpeed: number = 250;
     private currentAnim: string = 'idle'; // Track current animation state
-    private character: { id: string; assets?: { idle: string; walk: string; attack1: string; attack2: string; dodge: string }; timings?: { walkSpeed: number; attack1Duration: number; attack2Duration: number; attack1HitDelay: number; attack2HitDelay: number; dodgeDuration: number } } | undefined;
+    private character: { id: string; assets?: { idle: string; walk: string; attack1: string; attack2: string; dodge: string }; timings?: { walkSpeed: number; attack1Duration: number; attack2Duration: number; attack1HitDelay: number; attack2HitDelay: number; dodgeDuration: number }; sounds?: { attack: string; death: string } } | undefined;
 
     private mobileMoveDir: 'left' | 'right' | 'none' = 'none';
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -166,6 +166,11 @@ export class Player extends BaseEntity {
 
         this.setAnimation(type === 1 ? 'atk1' : 'atk2');
 
+        // Audio
+        if (this.character?.sounds?.attack) {
+            this.scene.sound.play(`player-attack-${this.character.id}`);
+        }
+
         // Camera shake
         if (type === 2) {
             this.scene.cameras.main.shake(100, 0.01);
@@ -207,5 +212,9 @@ export class Player extends BaseEntity {
         this.health -= amount;
         this.setTint(0xff0000);
         this.scene.time.delayedCall(200, () => this.clearTint());
+
+        if (this.health <= 0) {
+            this.scene.sound.play('player-death');
+        }
     }
 }

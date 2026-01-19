@@ -18,6 +18,7 @@ export class Enemy extends BaseEntity {
         assets?: { idle: string; walk?: string; attack?: string; special?: string;[key: string]: string | undefined };
         timings?: { prepareDuration?: number; hitDelay?: number; attackDuration?: number; deathDuration?: number };
         scale?: number;
+        sounds?: { attack?: string; roar?: string; death?: string };
     } | undefined;
 
     // AI State
@@ -101,6 +102,14 @@ export class Enemy extends BaseEntity {
 
         this.setAnimation(attackKey as 'attack' | 'prepare' | 'idle' | 'walk' | 'death');
 
+        // Audio
+        if (this.monsterData?.sounds?.attack) {
+            this.scene.sound.play(`monster-attack-${this.id}`);
+        }
+        if (isSpecial && this.monsterData?.sounds?.roar) {
+            this.scene.sound.play(`monster-roar-${this.id}`);
+        }
+
         const timings = this.monsterData?.timings;
         const hitDelay = timings?.hitDelay || 500;
         const duration = timings?.attackDuration || 1000;
@@ -150,6 +159,12 @@ export class Enemy extends BaseEntity {
     private die() {
         if (this.aiState === 'death') return;
         this.aiState = 'death';
+
+        // Audio
+        if (this.monsterData?.sounds?.death) {
+            this.scene.sound.play(`monster-death-${this.id}`);
+        }
+
         this.setVelocity(0, 0);
         this.setAnimation('death');
 

@@ -30,6 +30,10 @@
             "dodgeDuration": 1500,
             "walkSpeed": 250
         },
+        "sounds": {
+            "attack": "/assets/sounds/sword-slash.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
+        },
         "skills": "frontend"
     },
     {
@@ -63,6 +67,10 @@
             "dodgeDuration": 1500,
             "walkSpeed": 200
         },
+        "sounds": {
+            "attack": "/assets/sounds/hammer-hit.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
+        },
         "skills": "backend"
     },
     {
@@ -95,6 +103,10 @@
             "attack2HitDelay": 1400,
             "dodgeDuration": 2000,
             "walkSpeed": 120
+        },
+        "sounds": {
+            "attack": "/assets/sounds/wizard-staff-attack.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
         },
         "skills": "devops"
     },

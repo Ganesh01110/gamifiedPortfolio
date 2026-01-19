@@ -25,6 +25,6 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
         height: 720
     },
     audio: {
-        noAudio: true
+        disableWebAudio: false
     }
 };

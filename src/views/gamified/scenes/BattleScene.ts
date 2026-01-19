@@ -1,5 +1,7 @@
 import * as Phaser from 'phaser';
 import projectsData from '@/src/data/projects.json';
+import charactersData from '@/src/data/characters.json';
+import monstersData from '@/src/data/monsters.json';
 import { Player } from '../entities/Player';
 import { Enemy } from '../entities/Enemy';
 
@@ -45,6 +47,8 @@ export class BattleScene extends Phaser.Scene {
     private playerGround?: Phaser.GameObjects.Rectangle;
     private enemyGround?: Phaser.GameObjects.Rectangle;
 
+    private bgMusic?: Phaser.Sound.BaseSound;
+
     constructor() {
         super({ key: 'BattleScene' });
     }
@@ -65,6 +69,26 @@ export class BattleScene extends Phaser.Scene {
         if (!this.textures.exists('bg-level2')) this.load.image('bg-level2', '/assets/gamebackground3.png');
         if (!this.textures.exists('slash-effect')) this.load.image('slash-effect', '/assets/slash arc.jpg');
 
+        // Sounds
+        this.load.audio('bg-music', '/assets/sounds/background-music-piono.mp3');
+        this.load.audio('level-complete', '/assets/sounds/level-complete.mp3');
+
+        // Load character specific sounds
+        const char = (charactersData as any[]).find(c => c.id === this.characterId);
+        if (char?.sounds?.attack) {
+            this.load.audio(`player-attack-${this.characterId}`, char.sounds.attack);
+        }
+        if (char?.sounds?.death) {
+            this.load.audio(`player-death`, char.sounds.death);
+        }
+
+        // Load monster sounds
+        (monstersData as any[]).forEach(m => {
+            if (m.sounds?.attack) this.load.audio(`monster-attack-${m.id}`, m.sounds.attack);
+            if (m.sounds?.roar) this.load.audio(`monster-roar-${m.id}`, m.sounds.roar);
+            if (m.sounds?.death) this.load.audio(`monster-death-${m.id}`, m.sounds.death);
+        });
+
         // Note: Actual character assets are loaded via IMG tags in DOM, 
         // but we load placeholders here to avoid Phaser warning if needed.
         if (!this.textures.exists('player-idle')) this.load.image('player-idle', '/assets/characters/hero1/Idle.gif');
@@ -83,6 +107,12 @@ export class BattleScene extends Phaser.Scene {
         this.setupPlayer();
         this.setupControls();
         this.setupUI();
+
+        // Music
+        if (!this.bgMusic) {
+            this.bgMusic = this.sound.add('bg-music', { loop: true, volume: 0.5 });
+            this.bgMusic.play();
+        }
 
         window.addEventListener('resume-game', () => {
             this.projectShown = true;
@@ -314,6 +344,7 @@ export class BattleScene extends Phaser.Scene {
             this.isLevelClearing = true;
             this.isPaused = true;
             this.physics.pause();
+            this.sound.play('level-complete');
             this.spawnRewardChest();
         }
     }
@@ -425,6 +456,7 @@ export class BattleScene extends Phaser.Scene {
     private showGameOver() {
         this.physics.pause();
         this.isPaused = true;
+        if (this.bgMusic) this.bgMusic.stop();
 
         // Dispatch event to GameComponent.tsx to show React Overlay
         // This solves Z-index issues with DOM elements (GIFs) overlaying Canvas
