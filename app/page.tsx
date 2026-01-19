@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useViewStore, ViewType } from '@/src/store/viewStore';
+import { useViewStore } from '@/src/store/viewStore';
 import { Button } from '@/src/components/Button';
 import { CharacterSelection } from '@/src/views/gamified/CharacterSelection';
 import { ProfessionalView } from '@/src/views/normal/ProfessionalView';

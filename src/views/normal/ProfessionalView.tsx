@@ -9,6 +9,7 @@ import projectsData from '@/src/data/projects.json';
 import skillsData from '@/src/data/skills.json';
 import { ProjectModal } from '@/src/components/ProjectModal';
 import { ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface Project {
     id: string;
@@ -400,10 +401,11 @@ export const ProfessionalView: React.FC = () => {
                                     <div className="h-48 bg-gray-800 relative overflow-hidden flex items-center justify-center">
                                         {/* Project Mockup Image */}
                                         {project.mockup ? (
-                                            <img
+                                            <Image
                                                 src={project.mockup}
                                                 alt={project.name}
-                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                fill
+                                                className="object-cover group-hover:scale-105 transition-transform duration-500"
                                             />
                                         ) : (
                                             <div className="absolute inset-0 flex items-center justify-center text-4xl bg-gradient-to-br from-gray-800 to-gray-900 group-hover:scale-105 transition-transform duration-500">

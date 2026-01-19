@@ -43,7 +43,7 @@ export async function sendEmail(prevState: unknown, formData: FormData) {
         });
 
         return { success: true, message: 'Email sent successfully!' };
-    } catch (error) {
+    } catch {
         return {
             message: 'Database Error: Failed to send email.',
         };

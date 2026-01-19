@@ -14,6 +14,23 @@ interface Project {
     repoLink: string;
 }
 
+interface Character {
+    id: string;
+    sounds?: {
+        attack?: string;
+        death?: string;
+    };
+}
+
+interface Monster {
+    id: string;
+    sounds?: {
+        attack?: string;
+        roar?: string;
+        death?: string;
+    };
+}
+
 export class BattleScene extends Phaser.Scene {
     private player?: Player;
     private enemies?: Phaser.GameObjects.Group;
@@ -74,7 +91,7 @@ export class BattleScene extends Phaser.Scene {
         this.load.audio('level-complete', '/assets/sounds/level-complete.mp3');
 
         // Load character specific sounds
-        const char = (charactersData as any[]).find(c => c.id === this.characterId);
+        const char = (charactersData as unknown as Character[]).find(c => c.id === this.characterId);
         if (char?.sounds?.attack) {
             this.load.audio(`player-attack-${this.characterId}`, char.sounds.attack);
         }
@@ -83,7 +100,7 @@ export class BattleScene extends Phaser.Scene {
         }
 
         // Load monster sounds
-        (monstersData as any[]).forEach(m => {
+        (monstersData as unknown as Monster[]).forEach(m => {
             if (m.sounds?.attack) this.load.audio(`monster-attack-${m.id}`, m.sounds.attack);
             if (m.sounds?.roar) this.load.audio(`monster-roar-${m.id}`, m.sounds.roar);
             if (m.sounds?.death) this.load.audio(`monster-death-${m.id}`, m.sounds.death);
