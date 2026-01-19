@@ -15,7 +15,7 @@
         "mockup": "/projects/sworm-mockup.png",
         "images": [
             "/projects/sworm-mockup.png",
-            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1470&auto=format&fit=crop",
+            "/projects/sworm-sc.png",
             "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1470&auto=format&fit=crop"
         ],
         "liveLink": "",
@@ -29,6 +29,7 @@
         "techStack": [
             "Java Spring Boot",
             "React",
+            "low-level-system-design",
             "Redux",
             "MariaDB",
             "REST API"
@@ -37,8 +38,8 @@
         "mockup": "/projects/parking-mockup.png",
         "images": [
             "/projects/parking-mockup.png",
-            "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1470&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1590674899484-13da0d1b58f5?q=80&w=1470&auto=format&fit=crop"
+            "/projects/carpark.png",
+            "/projects/carpark2.png"
         ],
         "liveLink": "",
         "repoLink": "https://github.com/Ganesh01110/projects"

@@ -14,6 +14,7 @@ export class Player extends BaseEntity {
     private currentAnim: string = 'idle'; // Track current animation state
     private character: { id: string; assets?: { idle: string; walk: string; attack1: string; attack2: string; dodge: string }; timings?: { walkSpeed: number; attack1Duration: number; attack2Duration: number; attack1HitDelay: number; attack2HitDelay: number; dodgeDuration: number } } | undefined;
 
+    private mobileMoveDir: 'left' | 'right' | 'none' = 'none';
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private keys?: { [key: string]: Phaser.Input.Keyboard.Key };
 
@@ -38,18 +39,9 @@ export class Player extends BaseEntity {
         window.addEventListener('mobile-move', ((e: CustomEvent) => {
             const { direction, active } = e.detail;
             if (active) {
-                if (direction === 'left') {
-                    this.setVelocityX(-this.walkSpeed);
-                    this.setFlipX(true);
-                    if (!this.isDodging) this.setAnimation('walk');
-                } else if (direction === 'right') {
-                    this.setVelocityX(this.walkSpeed);
-                    this.setFlipX(false);
-                    if (!this.isDodging) this.setAnimation('walk');
-                }
+                this.mobileMoveDir = direction as 'left' | 'right';
             } else {
-                this.setVelocityX(0);
-                if (!this.isDodging) this.setAnimation('idle');
+                this.mobileMoveDir = 'none';
             }
         }) as EventListener);
 
@@ -97,8 +89,8 @@ export class Player extends BaseEntity {
         if (this.isAttacking || !this.cursors || !this.keys) return;
 
         // --- Movement ---
-        const left = this.cursors.left?.isDown || this.keys.left?.isDown;
-        const right = this.cursors.right?.isDown || this.keys.right?.isDown;
+        const left = this.cursors.left?.isDown || this.keys.left?.isDown || this.mobileMoveDir === 'left';
+        const right = this.cursors.right?.isDown || this.keys.right?.isDown || this.mobileMoveDir === 'right';
         const up = this.cursors.up?.isDown || this.keys.up?.isDown;
 
         if (left) {

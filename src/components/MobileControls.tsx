@@ -50,64 +50,70 @@ export const MobileControls: React.FC<MobileControlsProps> = ({ isVisible = true
 
     if (!isMobile || !isVisible) return null;
 
+    const controlBtnClass = "w-16 h-16 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg border border-white/20 bg-green-500/20 backdrop-blur-sm active:bg-green-600/40 active:scale-95 transition-all pointer-events-auto select-none touch-none";
+
     return (
         <div className="fixed inset-0 z-[105] pointer-events-none">
-            {/* Left Side Controls - Movement + Jump */}
-            <div className="absolute left-4 bottom-20 flex flex-col gap-3 pointer-events-auto">
-                {/* Jump Button */}
+            {/* Left Side Controls - Movement + Jump (PUBG Style) */}
+            <div className="absolute left-10 bottom-10 flex flex-col items-center gap-2">
+                {/* Jump Button - Top Center */}
                 <button
-                    onTouchStart={handleJump}
-                    className="w-16 h-16 bg-blue-500/70 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg active:bg-blue-600/90 active:scale-95 transition-all"
+                    onTouchStart={(e) => { e.preventDefault(); handleJump(); }}
+                    className={controlBtnClass}
                     aria-label="Jump"
                 >
-                    ⬆️
+                    ^
                 </button>
-
-                {/* Movement Controls */}
-                <div className="flex gap-2">
+                <div className="flex gap-16 -mt-2">
+                    {/* Move Left */}
                     <button
-                        onTouchStart={handleMoveLeft}
-                        onTouchEnd={handleStopMove}
-                        className="w-16 h-16 bg-gray-700/70 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg active:bg-gray-800/90 active:scale-95 transition-all"
+                        onTouchStart={(e) => { e.preventDefault(); handleMoveLeft(); }}
+                        onTouchEnd={(e) => { e.preventDefault(); handleStopMove(); }}
+                        className={controlBtnClass}
                         aria-label="Move Left"
                     >
-                        ⬅️
+                        &lt;
                     </button>
+                    {/* Move Right */}
                     <button
-                        onTouchStart={handleMoveRight}
-                        onTouchEnd={handleStopMove}
-                        className="w-16 h-16 bg-gray-700/70 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg active:bg-gray-800/90 active:scale-95 transition-all"
+                        onTouchStart={(e) => { e.preventDefault(); handleMoveRight(); }}
+                        onTouchEnd={(e) => { e.preventDefault(); handleStopMove(); }}
+                        className={controlBtnClass}
                         aria-label="Move Right"
                     >
-                        ➡️
+                        &gt;
                     </button>
                 </div>
             </div>
 
-            {/* Right Side Controls - Combat */}
-            <div className="absolute right-4 bottom-20 flex flex-col gap-3 pointer-events-auto">
-                {/* Attack Buttons */}
+            {/* Right Side Controls - Combat (PUBG Style) */}
+            <div className="absolute right-10 bottom-10 flex flex-col items-center gap-2">
+                {/* Dodge Button - Top Center */}
                 <button
-                    onTouchStart={handleAttack}
-                    className="w-16 h-16 bg-red-500/70 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg active:bg-red-600/90 active:scale-95 transition-all"
-                    aria-label="Attack"
-                >
-                    ⚔️
-                </button>
-                <button
-                    onTouchStart={handleHeavyAttack}
-                    className="w-16 h-16 bg-orange-500/70 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg active:bg-orange-600/90 active:scale-95 transition-all"
-                    aria-label="Heavy Attack"
-                >
-                    💥
-                </button>
-                <button
-                    onTouchStart={handleDodge}
-                    className="w-16 h-16 bg-purple-500/70 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg active:bg-purple-600/90 active:scale-95 transition-all"
+                    onTouchStart={(e) => { e.preventDefault(); handleDodge(); }}
+                    className={controlBtnClass}
                     aria-label="Dodge"
                 >
-                    🌀
+                    🛡️
                 </button>
+                <div className="flex gap-16 -mt-2">
+                    {/* Attack 2 - Left */}
+                    <button
+                        onTouchStart={(e) => { e.preventDefault(); handleHeavyAttack(); }}
+                        className={controlBtnClass}
+                        aria-label="Heavy Attack"
+                    >
+                        🔥
+                    </button>
+                    {/* Attack 1 - Right */}
+                    <button
+                        onTouchStart={(e) => { e.preventDefault(); handleAttack(); }}
+                        className={controlBtnClass}
+                        aria-label="Attack"
+                    >
+                        ⚔️
+                    </button>
+                </div>
             </div>
         </div>
     );
