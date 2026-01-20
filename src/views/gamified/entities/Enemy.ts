@@ -1,10 +1,12 @@
 import * as Phaser from 'phaser';
 import { BaseEntity } from './BaseEntity';
 import monstersData from '@/src/data/monsters.json';
+import type { Player } from './Player';
 
 export class Enemy extends BaseEntity {
     public id: string;
     public type: 'minion' | 'boss';
+    public spawnLevel: number;
 
     // Stats
     public hp: number = 100;
@@ -15,7 +17,7 @@ export class Enemy extends BaseEntity {
         hp: number;
         damage: number;
         speed?: number;
-        assets?: { idle: string; walk?: string; attack?: string; special?: string;[key: string]: string | undefined };
+        assets?: { idle: string; walk?: string; attack?: string; attack2?: string; special?: string;[key: string]: string | undefined };
         timings?: { prepareDuration?: number; hitDelay?: number; attackDuration?: number; deathDuration?: number };
         scale?: number;
         sounds?: { attack?: string; roar?: string; death?: string };
@@ -26,15 +28,16 @@ export class Enemy extends BaseEntity {
     private lastAttackTime: number = 0;
     private target?: Player; // Reference to player for tracking
 
-    constructor(scene: Phaser.Scene, x: number, y: number, monsterId: string) {
+    constructor(scene: Phaser.Scene, x: number, y: number, monsterId: string, level: number = 1) {
         // Determine size based on ID
-        const isBoss = monsterId === 'monster2'; // simplistic check
+        const isBoss = monsterId === 'monster2' || level === 2;
         const w = isBoss ? 100 : 80;
         const h = isBoss ? 180 : 120;
 
         super(scene, x, y, `${monsterId}-idle`, w, h);
 
         this.id = monsterId;
+        this.spawnLevel = level;
         this.type = isBoss ? 'boss' : 'minion';
         this.setDepth(isBoss ? 10 : 100);
 
@@ -97,10 +100,19 @@ export class Enemy extends BaseEntity {
 
     private performAttack() {
         this.aiState = 'attack';
-        const isSpecial = this.type === 'boss' && Phaser.Math.Between(0, 1) === 1;
-        const attackKey = isSpecial ? 'special' : 'attack'; // Need asset mapping
 
-        this.setAnimation(attackKey as 'attack' | 'prepare' | 'idle' | 'walk' | 'death');
+        // Level 1 restriction: No special/heavy attacks (except for the Painter's specific minion if needed)
+        // Architect and DevOps monsters (4 and 3) should only use Attack1 in Level 1
+        const canUseSpecial = this.spawnLevel > 1;
+        const isSpecial = canUseSpecial && this.type === 'boss' && Phaser.Math.Between(0, 1) === 1;
+
+        let attackKey: 'attack' | 'attack2' | 'special' = 'attack';
+        if (isSpecial) {
+            attackKey = this.monsterData?.assets?.attack2 ? 'attack2' : 'special';
+        }
+
+        this.setAnimation(attackKey as 'attack' | 'attack2');
+        // 'special' fallback is handled by setAnimation if needed, or we can add it to the type
 
         // Audio
         if (this.monsterData?.sounds?.attack) {
@@ -125,7 +137,6 @@ export class Enemy extends BaseEntity {
                 // Deal Damage
                 const dmg = isSpecial ? 20 : this.damage;
                 this.target.takeDamage(dmg);
-                // Camera shake handled by scene usually, but can do here
                 this.scene.cameras.main.shake(100, 0.01);
             }
         });
@@ -147,7 +158,7 @@ export class Enemy extends BaseEntity {
         this.scene.time.delayedCall(150, () => this.clearTint());
 
         // Knockback
-        const dir = this.flipX ? 1 : -1; // Push back opposite to facing? simple logic
+        const dir = this.flipX ? 1 : -1;
         this.setVelocityX(dir * 200);
         this.setVelocityY(-200);
 
@@ -170,21 +181,19 @@ export class Enemy extends BaseEntity {
 
         const deathDuration = this.monsterData?.timings?.deathDuration || 800;
 
-        // Immediate visual feedback + cleanup
-        this.emit('death', this); // Notify scene
+        this.emit('death', this);
 
         this.scene.time.delayedCall(deathDuration, () => {
-            this.destroy(); // BaseEntity cleans up DOM
+            this.destroy();
         });
     }
 
-    private setAnimation(key: 'idle' | 'walk' | 'attack' | 'prepare' | 'death') {
+    private setAnimation(key: 'idle' | 'walk' | 'attack' | 'attack2' | 'prepare' | 'death') {
         if (!this.monsterData?.assets) return;
 
-        // Simple mapping
         let asset = this.monsterData.assets[key];
-        // Fallbacks
         if (!asset && key === 'prepare') asset = this.monsterData.assets.idle;
+        if (!asset && key === 'attack2') asset = this.monsterData.assets.attack;
 
         if (asset) {
             this.updateGif(asset);
@@ -192,5 +201,4 @@ export class Enemy extends BaseEntity {
     }
 }
 
-// Circular dependency fix helper logic if needed, but here simple types
-import { Player } from './Player';
+// import { Player } from './Player';

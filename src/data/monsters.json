@@ -52,5 +52,92 @@
             "roar": "/assets/sounds/monster-roar.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
         }
+    },
+    {
+        "id": "monster3",
+        "name": "The DevOps Crawler",
+        "level": 1,
+        "hp": 60,
+        "damage": 12,
+        "speed": 90,
+        "scale": 1.0,
+        "assets": {
+            "idle": "/assets/monster/monster3/gifs/monster3intemedate.gif",
+            "walk": "/assets/monster/monster3/gifs/monster3intemedate.gif",
+            "attack": "/assets/monster/monster3/gifs/monster3attck.gif",
+            "attack2": "/assets/monster/monster3/gifs/monster3attack2.gif",
+            "special": "/assets/monster/monster3/gifs/monster3intemedate.gif",
+            "dodge": "/assets/monster/monster3/gifs/monster3defend.gif",
+            "death": "/assets/monster/monster3/gifs/monster3die.gif"
+        },
+        "timings": {
+            "prepareDuration": 1200,
+            "attackDuration": 1500,
+            "hitDelay": 800,
+            "deathDuration": 2000
+        },
+        "sounds": {
+            "attack": "/assets/sounds/monster-attack.mp3",
+            "roar": "/assets/sounds/monster-roar.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
+        }
+    },
+    {
+        "id": "monster4",
+        "name": "The Architect Golem",
+        "level": 2,
+        "hp": 180,
+        "damage": 25,
+        "speed": 70,
+        "scale": 1.3,
+        "assets": {
+            "idle": "/assets/monster/monster4/gifs/monster4screaming.gif",
+            "walk": "/assets/monster/monster4/gifs/monster4Walk.gif",
+            "attack": "/assets/monster/monster4/gifs/monster4attack1.gif",
+            "attack2": "/assets/monster/monster4/gifs/monster4attack2.gif",
+            "special": "/assets/monster/monster4/gifs/monster4screaming.gif",
+            "dodge": "/assets/monster/monster4/gifs/monster4dodge.gif",
+            "death": "/assets/monster/monster4/gifs/monster4death.gif"
+        },
+        "timings": {
+            "prepareDuration": 1800,
+            "attackDuration": 2500,
+            "hitDelay": 1200,
+            "deathDuration": 3000
+        },
+        "sounds": {
+            "attack": "/assets/sounds/monster-attack.mp3",
+            "roar": "/assets/sounds/monster-roar.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
+        }
+    },
+    {
+        "id": "monster5",
+        "name": "The Generalist Entity",
+        "level": 2,
+        "hp": 200,
+        "damage": 30,
+        "speed": 100,
+        "scale": 1.4,
+        "assets": {
+            "idle": "/assets/monster/monster5/gifs/monster5scream.gif",
+            "walk": "/assets/monster/monster5/gifs/monster5walk.gif",
+            "attack": "/assets/monster/monster5/gifs/monster5attack1.gif",
+            "attack2": "/assets/monster/monster5/gifs/monster5attack2.gif",
+            "special": "/assets/monster/monster5/gifs/monster5scream.gif",
+            "dodge": "/assets/monster/monster5/gifs/monster5dodge.gif",
+            "death": "/assets/monster/monster5/gifs/monster5death.gif"
+        },
+        "timings": {
+            "prepareDuration": 2000,
+            "attackDuration": 3000,
+            "hitDelay": 1500,
+            "deathDuration": 3000
+        },
+        "sounds": {
+            "attack": "/assets/sounds/monster-attack.mp3",
+            "roar": "/assets/sounds/monster-roar.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
+        }
     }
 ]
