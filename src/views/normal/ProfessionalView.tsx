@@ -331,38 +331,40 @@ export const ProfessionalView: React.FC = () => {
                     <div className="max-w-7xl mx-auto px-4">
                         <h2 className="text-6xl font-bold mb-12 text-center">Technical Arsenal</h2>
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {Object.entries(skillsData).map(([category, skills]) => (
-                                <motion.div
-                                    key={category}
-                                    initial="initial"
-                                    whileInView="animate"
-                                    viewport={{ once: true }}
-                                    variants={fadeInUp}
-                                    onMouseEnter={headerEnter}
-                                    onMouseLeave={headerLeave}
-                                    className="bg-gray-900 border border-gray-800 rounded-xl p-6"
-                                >
-                                    <h3
-                                        onMouseEnter={textEnter}
-                                        onMouseLeave={textLeave}
-                                        className="text-xl font-semibold mb-4 capitalize text-cyan-400"
+                            {Object.entries(skillsData)
+                                .filter(([category]) => category !== 'fullstack')
+                                .map(([category, skills]) => (
+                                    <motion.div
+                                        key={category}
+                                        initial="initial"
+                                        whileInView="animate"
+                                        viewport={{ once: true }}
+                                        variants={fadeInUp}
+                                        onMouseEnter={headerEnter}
+                                        onMouseLeave={headerLeave}
+                                        className="bg-gray-900 border border-gray-800 rounded-xl p-6"
                                     >
-                                        {category.replace(/([A-Z])/g, ' $1').trim()}
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {(skills as string[]).map((skill) => (
-                                            <span
-                                                key={skill}
-                                                onMouseEnter={textEnter}
-                                                onMouseLeave={textLeave}
-                                                className="px-3 py-1 bg-gray-800 rounded-full text-sm text-gray-300 hover:bg-gray-700 transition-colors"
-                                            >
-                                                {skill}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            ))}
+                                        <h3
+                                            onMouseEnter={textEnter}
+                                            onMouseLeave={textLeave}
+                                            className="text-xl font-semibold mb-4 capitalize text-cyan-400"
+                                        >
+                                            {category.replace(/([A-Z])/g, ' $1').trim()}
+                                        </h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {(skills as string[]).map((skill) => (
+                                                <span
+                                                    key={skill}
+                                                    onMouseEnter={textEnter}
+                                                    onMouseLeave={textLeave}
+                                                    className="px-3 py-1 bg-gray-800 rounded-full text-sm text-gray-300 hover:bg-gray-700 transition-colors"
+                                                >
+                                                    {skill}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                ))}
                         </div>
                     </div>
                 </section>
