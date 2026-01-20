@@ -66,7 +66,7 @@ export class Player extends BaseEntity {
     }
 
     private loadCharacterData(id: string) {
-        this.character = charactersData.find(c => c.id === id) as any;
+        this.character = charactersData.find(c => c.id === id) as typeof this.character;
         if (this.character) {
             // Initialize DOM with Idle asset
             if (this.character.assets?.idle) {

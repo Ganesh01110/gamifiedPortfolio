@@ -48,7 +48,7 @@ export class Enemy extends BaseEntity {
     }
 
     private loadMonsterData(id: string) {
-        this.monsterData = monstersData.find(m => m.id === id) as any;
+        this.monsterData = monstersData.find(m => m.id === id) as typeof this.monsterData;
         if (this.monsterData) {
             this.hp = this.monsterData.hp;
             this.damage = this.monsterData.damage;
