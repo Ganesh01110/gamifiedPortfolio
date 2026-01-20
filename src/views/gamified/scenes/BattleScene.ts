@@ -130,7 +130,10 @@ export class BattleScene extends Phaser.Scene {
             const isMuted = !!window.localStorage.getItem('game-muted');
             this.bgMusic = this.sound.add('bg-music', { loop: true, volume: 0.5 });
             this.bgMusic.play();
-            if (isMuted) this.bgMusic.pause();
+            if (isMuted) {
+                this.bgMusic.pause();
+                this.sound.mute = true;
+            }
         }
 
         window.addEventListener('resume-game', () => {
@@ -140,6 +143,7 @@ export class BattleScene extends Phaser.Scene {
 
         window.addEventListener('toggle-sound', (e: Event) => {
             const muted = (e as CustomEvent).detail.muted;
+            this.sound.mute = muted;
             if (this.bgMusic) {
                 if (muted) this.bgMusic.pause();
                 else if (!this.isPaused) this.bgMusic.resume();
@@ -201,7 +205,7 @@ export class BattleScene extends Phaser.Scene {
         }
 
         const enemy = new Enemy(this, 1200, this.SPAWN_Y, currentMonster, this.currentLevel);
-        enemy.on('death', () => this.handleEnemyDeath(enemy, 'minion'));
+        enemy.on('vanished', () => this.handleEnemyDeath(enemy, 'minion'));
 
         this.enemies?.add(enemy);
         this.physics.add.collider(enemy, this.enemyGround!);
@@ -219,7 +223,7 @@ export class BattleScene extends Phaser.Scene {
         if (this.minionsSpawned >= this.totalMinionsThisLevel) return;
 
         const enemy = new Enemy(this, 1100, this.SPAWN_Y, monsterId, this.currentLevel);
-        enemy.on('death', () => this.handleEnemyDeath(enemy, 'boss'));
+        enemy.on('vanished', () => this.handleEnemyDeath(enemy, 'boss'));
 
         this.enemies?.add(enemy);
         this.physics.add.collider(enemy, this.enemyGround!);
@@ -239,7 +243,7 @@ export class BattleScene extends Phaser.Scene {
                 case '1': return 'monster1'; // Painter: 3-monster1
                 case '2': return 'monster4'; // Architect: 2-monster1 + 1-monster4
                 case '3': return 'monster3'; // DevOps: 2-monster1 + 1-monster3
-                case 'generalist':
+                // case 'generalist':
                 case '4': return 'monster5'; // Generalist: 2-monster1 + 1-monster5
                 default: return 'monster1';
             }
@@ -248,7 +252,7 @@ export class BattleScene extends Phaser.Scene {
                 case '1': return 'monster2'; // Painter: 2-monster2
                 case '2': return 'monster4'; // Architect: 2-monster4
                 case '3': return 'monster3'; // DevOps: 2-monster3
-                case 'generalist':
+                // case 'generalist':
                 case '4': return 'monster5'; // Generalist: 2-monster5
                 default: return 'monster2';
             }
@@ -304,7 +308,7 @@ export class BattleScene extends Phaser.Scene {
             fontSize: '16px', color: '#cccccc', backgroundColor: '#00000088', padding: { x: 10, y: 10 }
         });
 
-        this.add.text(1150, 20, '⏸ PAUSE', {
+        this.add.text(1100, 20, '⏸ PAUSE', {
             fontSize: '24px', color: '#ffff00', fontStyle: 'bold', backgroundColor: '#000000'
         })
             .setOrigin(1, 0)
@@ -422,15 +426,20 @@ export class BattleScene extends Phaser.Scene {
             fontSize: '64px', color: '#ffffff', fontStyle: 'bold'
         }).setOrigin(0.5).setDepth(3001);
 
-        const chest = this.add.text(640, 500, '📦', { fontSize: '100px' })
+        const chest = this.add.text(640, 500, '🎁', { fontSize: '100px' })
             .setInteractive({ useHandCursor: true })
             .setOrigin(0.5)
             .setDepth(3005);
+
+        const chestHint = this.add.text(640, 580, "Click on box for reward", {
+            fontSize: '24px', color: '#ffffff', fontStyle: 'bold italic'
+        }).setOrigin(0.5).setDepth(3001);
 
         chest.once('pointerdown', () => {
             bg.destroy();
             title.destroy();
             chest.destroy();
+            chestHint.destroy();
             this.projectShown = false;
             this.showProjectDetails();
         });

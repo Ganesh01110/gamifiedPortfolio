@@ -15,6 +15,14 @@
             "hit": "/assets/monster/Monster1-defending.gif",
             "death": "/assets/monster/monster2-scream.gif"
         },
+        "animationScales": {
+            "idle": 1.0,
+            "walk": 1.0,
+            "attack": 1.0,
+            "prepare": 1.0,
+            "hit": 1.0,
+            "death": 1.0
+        },
         "timings": {
             "prepareDuration": 1500,
             "attackDuration": 2000,
@@ -24,7 +32,8 @@
         "sounds": {
             "attack": "/assets/sounds/monster-attack.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
-        }
+        },
+        "facing": "left"
     },
     {
         "id": "monster2",
@@ -41,6 +50,13 @@
             "special": "/assets/monster/monster2-scream.gif",
             "death": "/assets/monster/monster2-scream.gif"
         },
+        "animationScales": {
+            "idle": 1.0,
+            "walk": 1.0,
+            "attack": 1.0,
+            "special": 1.0,
+            "death": 1.0
+        },
         "timings": {
             "prepareDuration": 2000,
             "attackDuration": 3000,
@@ -51,7 +67,8 @@
             "attack": "/assets/sounds/monster-attack.mp3",
             "roar": "/assets/sounds/monster-roar.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
-        }
+        },
+        "facing": "left"
     },
     {
         "id": "monster3",
@@ -70,17 +87,27 @@
             "dodge": "/assets/monster/monster3/gifs/monster3defend.gif",
             "death": "/assets/monster/monster3/gifs/monster3die.gif"
         },
+        "animationScales": {
+            "idle": 1.0,
+            "walk": 1.0,
+            "attack": 1.0,
+            "attack2": 1.0,
+            "special": 1.0,
+            "dodge": 1.0,
+            "death": 1.0
+        },
         "timings": {
-            "prepareDuration": 1200,
-            "attackDuration": 1500,
+            "prepareDuration": 2000,
+            "attackDuration": 2100,
             "hitDelay": 800,
             "deathDuration": 2000
         },
         "sounds": {
             "attack": "/assets/sounds/monster-attack.mp3",
             "roar": "/assets/sounds/monster-roar.mp3",
-            "death": "/assets/sounds/hero-death-sound.mp3"
-        }
+            "death": "/assets/sounds/glasssmash.mp3"
+        },
+        "facing": "left"
     },
     {
         "id": "monster4",
@@ -99,8 +126,20 @@
             "dodge": "/assets/monster/monster4/gifs/monster4dodge.gif",
             "death": "/assets/monster/monster4/gifs/monster4death.gif"
         },
+        "animationScales": {
+            "idle": 1.0,
+            "walk": 1.0,
+            "attack": {
+                "start": 1.0,
+                "end": 1.1
+            },
+            "attack2": 1.0,
+            "special": 1.0,
+            "dodge": 1.0,
+            "death": 1.0
+        },
         "timings": {
-            "prepareDuration": 1800,
+            "prepareDuration": 2000,
             "attackDuration": 2500,
             "hitDelay": 1200,
             "deathDuration": 3000
@@ -109,7 +148,8 @@
             "attack": "/assets/sounds/monster-attack.mp3",
             "roar": "/assets/sounds/monster-roar.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
-        }
+        },
+        "facing": "left"
     },
     {
         "id": "monster5",
@@ -128,6 +168,15 @@
             "dodge": "/assets/monster/monster5/gifs/monster5dodge.gif",
             "death": "/assets/monster/monster5/gifs/monster5death.gif"
         },
+        "animationScales": {
+            "idle": 1.0,
+            "walk": 1.0,
+            "attack": 1.0,
+            "attack2": 1.0,
+            "special": 1.0,
+            "dodge": 1.0,
+            "death": 1.0
+        },
         "timings": {
             "prepareDuration": 2000,
             "attackDuration": 3000,
@@ -135,9 +184,10 @@
             "deathDuration": 3000
         },
         "sounds": {
-            "attack": "/assets/sounds/monster-attack.mp3",
+            "attack": "/assets/sounds/giantaxe.mp3",
             "roar": "/assets/sounds/monster-roar.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
-        }
+        },
+        "facing": "left"
     }
 ]
