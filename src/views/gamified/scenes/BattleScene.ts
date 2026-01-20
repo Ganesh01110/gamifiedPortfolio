@@ -43,7 +43,7 @@ export class BattleScene extends Phaser.Scene {
     private currentLevel: number = 1;
     private minionsSpawned: number = 0;
     private minionsKilled: number = 0;
-    private totalMinionsPerLevel: number = 3;
+    private totalMinionsThisLevel: number = 3;
     private isLevelClearing: boolean = false;
     private isPaused: boolean = false;
     private projectShown: boolean = false;
@@ -127,13 +127,27 @@ export class BattleScene extends Phaser.Scene {
 
         // Music
         if (!this.bgMusic) {
+            const isMuted = !!window.localStorage.getItem('game-muted');
             this.bgMusic = this.sound.add('bg-music', { loop: true, volume: 0.5 });
             this.bgMusic.play();
+            if (isMuted) {
+                this.bgMusic.pause();
+                this.sound.mute = true;
+            }
         }
 
         window.addEventListener('resume-game', () => {
             this.projectShown = true;
             this.resumeGame();
+        });
+
+        window.addEventListener('toggle-sound', (e: Event) => {
+            const muted = (e as CustomEvent).detail.muted;
+            this.sound.mute = muted;
+            if (this.bgMusic) {
+                if (muted) this.bgMusic.pause();
+                else if (!this.isPaused) this.bgMusic.resume();
+            }
         });
     }
 
@@ -164,51 +178,84 @@ export class BattleScene extends Phaser.Scene {
         this.physics.add.existing(this.enemyGround, true);
 
         // Spawn Enemies
+        const monsterId = this.getMonsterIdForCurrentLevel();
         if (this.currentLevel === 1) {
-            this.spawnWave();
+            this.totalMinionsThisLevel = this.characterId === '1' ? 3 : 3; // Painter has 3, Others have 2+1
+            this.spawnWave(monsterId);
         } else {
-            this.spawnLevel2();
+            this.totalMinionsThisLevel = 2;
+            this.spawnLevel2(monsterId);
         }
 
         // Collisions
         this.physics.add.collider(this.enemies.getChildren(), this.enemyGround);
     }
 
-    private spawnWave() {
-        if (this.minionsSpawned >= this.totalMinionsPerLevel) return;
+    private spawnWave(monsterId: string) {
+        if (this.minionsSpawned >= this.totalMinionsThisLevel) return;
 
-        const enemy = new Enemy(this, 1200, this.SPAWN_Y, 'monster1');
-        enemy.on('death', () => this.handleEnemyDeath(enemy, 'minion'));
+        // Custom logic for 2xM1 + 1xSpec logic in Level 1
+        let currentMonster = monsterId;
+        if (this.currentLevel === 1 && this.characterId !== '1') {
+            if (this.minionsSpawned < 2) {
+                currentMonster = 'monster1';
+            } else {
+                currentMonster = monsterId; // The special monster (3, 4, or 5)
+            }
+        }
+
+        const enemy = new Enemy(this, 1200, this.SPAWN_Y, currentMonster, this.currentLevel);
+        enemy.on('vanished', () => this.handleEnemyDeath(enemy, 'minion'));
 
         this.enemies?.add(enemy);
         this.physics.add.collider(enemy, this.enemyGround!);
 
         this.minionsSpawned++;
 
-        if (this.minionsSpawned < this.totalMinionsPerLevel) {
+        if (this.minionsSpawned < this.totalMinionsThisLevel) {
             this.time.delayedCall(5000, () => {
-                if (!this.isPaused && !this.isLevelClearing) this.spawnWave();
+                if (!this.isPaused && !this.isLevelClearing) this.spawnWave(monsterId);
             });
         }
     }
 
-    private spawnLevel2() {
-        // Level 2: Spawn 2 stronger monsters with delay
-        if (this.minionsSpawned >= 2) return; // Level 2 has 2 enemies
+    private spawnLevel2(monsterId: string) {
+        if (this.minionsSpawned >= this.totalMinionsThisLevel) return;
 
-        const enemy = new Enemy(this, 1100, this.SPAWN_Y, 'monster2');
-        enemy.on('death', () => this.handleEnemyDeath(enemy, 'boss'));
+        const enemy = new Enemy(this, 1100, this.SPAWN_Y, monsterId, this.currentLevel);
+        enemy.on('vanished', () => this.handleEnemyDeath(enemy, 'boss'));
 
         this.enemies?.add(enemy);
         this.physics.add.collider(enemy, this.enemyGround!);
 
         this.minionsSpawned++;
 
-        // Spawn second monster after delay
-        if (this.minionsSpawned < 2) {
+        if (this.minionsSpawned < this.totalMinionsThisLevel) {
             this.time.delayedCall(8000, () => {
-                if (!this.isPaused && !this.isLevelClearing) this.spawnLevel2();
+                if (!this.isPaused && !this.isLevelClearing) this.spawnLevel2(monsterId);
             });
+        }
+    }
+
+    private getMonsterIdForCurrentLevel(): string {
+        if (this.currentLevel === 1) {
+            switch (this.characterId) {
+                case '1': return 'monster1'; // Painter: 3-monster1
+                case '2': return 'monster4'; // Architect: 2-monster1 + 1-monster4
+                case '3': return 'monster3'; // DevOps: 2-monster1 + 1-monster3
+                // case 'generalist':
+                case '4': return 'monster5'; // Generalist: 2-monster1 + 1-monster5
+                default: return 'monster1';
+            }
+        } else {
+            switch (this.characterId) {
+                case '1': return 'monster2'; // Painter: 2-monster2
+                case '2': return 'monster4'; // Architect: 2-monster4
+                case '3': return 'monster3'; // DevOps: 2-monster3
+                // case 'generalist':
+                case '4': return 'monster5'; // Generalist: 2-monster5
+                default: return 'monster2';
+            }
         }
     }
 
@@ -260,6 +307,13 @@ export class BattleScene extends Phaser.Scene {
             'Controls:\n←→ Move | ↑ Jump\n[SPACE] Attack\n[K] Heavy Smash\n[L] Dodge', {
             fontSize: '16px', color: '#cccccc', backgroundColor: '#00000088', padding: { x: 10, y: 10 }
         });
+
+        this.add.text(1100, 20, '⏸ PAUSE', {
+            fontSize: '24px', color: '#ffff00', fontStyle: 'bold', backgroundColor: '#000000'
+        })
+            .setOrigin(1, 0)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => this.togglePause());
 
         this.add.text(1250, 20, '❌ QUIT', {
             fontSize: '24px', color: '#ff0000', fontStyle: 'bold', backgroundColor: '#000000'
@@ -350,11 +404,11 @@ export class BattleScene extends Phaser.Scene {
         if (this.minionsSpawned === 0) return;
 
         let levelComplete = false;
-        if (this.currentLevel === 1 && this.minionsKilled >= this.totalMinionsPerLevel) {
+        if (this.currentLevel === 1 && this.minionsKilled >= this.totalMinionsThisLevel) {
             levelComplete = true;
         } else if (this.currentLevel === 2) {
-            // Level 2: Check if 2 bosses are dead
-            if (this.minionsKilled >= 2) levelComplete = true;
+            // Level 2: Check if all minions are dead
+            if (this.minionsKilled >= this.totalMinionsThisLevel) levelComplete = true;
         }
 
         if (levelComplete) {
@@ -372,15 +426,20 @@ export class BattleScene extends Phaser.Scene {
             fontSize: '64px', color: '#ffffff', fontStyle: 'bold'
         }).setOrigin(0.5).setDepth(3001);
 
-        const chest = this.add.text(640, 500, '📦', { fontSize: '100px' })
+        const chest = this.add.text(640, 500, '🎁', { fontSize: '100px' })
             .setInteractive({ useHandCursor: true })
             .setOrigin(0.5)
             .setDepth(3005);
+
+        const chestHint = this.add.text(640, 580, "Click on box for reward", {
+            fontSize: '24px', color: '#ffffff', fontStyle: 'bold italic'
+        }).setOrigin(0.5).setDepth(3001);
 
         chest.once('pointerdown', () => {
             bg.destroy();
             title.destroy();
             chest.destroy();
+            chestHint.destroy();
             this.projectShown = false;
             this.showProjectDetails();
         });
@@ -478,5 +537,20 @@ export class BattleScene extends Phaser.Scene {
         // Dispatch event to GameComponent.tsx to show React Overlay
         // This solves Z-index issues with DOM elements (GIFs) overlaying Canvas
         window.dispatchEvent(new CustomEvent('game-over'));
+    }
+
+    public togglePause() {
+        this.isPaused = !this.isPaused;
+        if (this.isPaused) {
+            this.physics.pause();
+            if (this.bgMusic) this.bgMusic.pause();
+            this.add.rectangle(640, 360, 1280, 720, 0x000000, 0.5).setDepth(4000).setName('pause-overlay');
+            this.add.text(640, 360, 'GAME PAUSED', { fontSize: '64px', color: '#ffffff' }).setOrigin(0.5).setDepth(4001).setName('pause-text');
+        } else {
+            this.physics.resume();
+            if (this.bgMusic) this.bgMusic.resume();
+            this.children.getByName('pause-overlay')?.destroy();
+            this.children.getByName('pause-text')?.destroy();
+        }
     }
 }

@@ -1,10 +1,8 @@
 {
     "frontend": [
-        "HTML",
-        "CSS",
+        "HTML-CSS",
         "JavaScript",
-        "React",
-        "Redux",
+        "React & Redux",
         "TypeScript",
         "Tailwind CSS",
         "Next.js",
@@ -13,27 +11,23 @@
     ],
     "backend": [
         "Java Spring Boot",
-        "Node.js",
-        "Express.js",
+        "Node.js-Express.js",
         "TypeScript",
         "Python",
         "SQL",
-        "PostgreSQL",
+        "PostgreSQL-Prisma",
         "MySQL",
         "MongoDB",
-        "Prisma",
         "Redis",
-        "RabbitMQ",
-        "Kafka",
-        "REST API",
-        "GraphQL",
+        "Kafka & RabbitMQ",
+        "REST API & GraphQL",
         "Microservices"
     ],
     "devops": [
         "Docker",
         "GitHub Actions",
         "CI/CD",
-        "Git",
+        "Git & GitHub",
         "Linux",
         "Cloud Deployment"
     ],
@@ -44,5 +38,25 @@
         "Scripting",
         "Problem Solving",
         "Agile Methodology"
+    ],
+    "fullstack": [
+        "HTML-CSS",
+        "JavaScript/TypeScript",
+        "MERN Stack",
+        "Next.js",
+        "Responsive ui/ux Design",
+        "Java Spring Boot",
+        "Python",
+        "SQL",
+        "PostgreSQL-Prisma",
+        "Redis",
+        "Kafka & RabbitMQ",
+        "REST API & GraphQL",
+        "Microservices",
+        "Docker",
+        "Git/github",
+        "CI/CD-GitHub Actions",
+        "Linux",
+        "Cloud Deployment"
     ]
 }

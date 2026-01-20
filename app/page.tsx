@@ -40,7 +40,7 @@ export default function Home() {
 
     // Default: Landing Page
     return (
-      <div style={{ zoom: '70%' }} className="min-h-[145vh] bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+      <div style={{ zoom: '69%' }} className="min-h-[145vh] bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -4,6 +4,7 @@ export class BaseEntity extends Phaser.Physics.Arcade.Sprite {
     protected domElement?: Phaser.GameObjects.DOMElement;
     protected fixedBodyWidth: number;
     protected fixedBodyHeight: number;
+    protected baseScale: number = 1;
 
     constructor(
         scene: Phaser.Scene,
@@ -45,6 +46,7 @@ export class BaseEntity extends Phaser.Physics.Arcade.Sprite {
 
         this.domElement = this.scene.add.dom(this.x, this.y, img);
         this.domElement.setOrigin(0.5, 1);
+        this.baseScale = scale;
         this.domElement.setScale(scale);
         this.domElement.setDepth(this.depth);
 
@@ -63,14 +65,34 @@ export class BaseEntity extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
+    public setBaseScale(scale: number) {
+        // Kill any ongoing tweens to avoid conflicts
+        this.scene.tweens.killTweensOf(this);
+        this.baseScale = scale;
+        this.syncDOM();
+    }
+
+    public tweenBaseScale(startScale: number, endScale: number, duration: number) {
+        this.scene.tweens.killTweensOf(this);
+        this.baseScale = startScale;
+        this.syncDOM();
+
+        this.scene.tweens.add({
+            targets: this,
+            baseScale: endScale,
+            duration: duration,
+            onUpdate: () => this.syncDOM()
+        });
+    }
+
     public syncDOM() {
         if (this.domElement && this.active) {
             this.domElement.setPosition(this.x, this.y);
             this.domElement.setDepth(this.depth);
 
-            // Sync Flip
+            // Sync Flip using Phaser's scale instead of raw CSS to avoid conflicts
             const isFlipped = this.flipX;
-            (this.domElement.node as HTMLElement).style.transform = isFlipped ? 'scaleX(-1)' : 'scaleX(1)';
+            this.domElement.setScale(isFlipped ? -this.baseScale : this.baseScale, this.baseScale);
         }
     }
 

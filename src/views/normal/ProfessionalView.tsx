@@ -38,6 +38,7 @@ export const ProfessionalView: React.FC = () => {
     const [selectedProject, setSelectedProject] = React.useState<Project | null>(null);
     const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
     const [cursorVariant, setCursorVariant] = React.useState<'default' | 'text' | 'button' | 'card' | 'header'>('default');
+    const [activeSection, setActiveSection] = React.useState('hero');
 
     React.useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -45,6 +46,24 @@ export const ProfessionalView: React.FC = () => {
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
+    React.useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id || 'hero');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const sections = ['hero', 'about', 'skills', 'projects', 'contact'];
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
     }, []);
 
     const cursorvariants = {
@@ -162,8 +181,36 @@ export const ProfessionalView: React.FC = () => {
                     </div>
                 </nav>
 
+                {/* Side Navigation Dots */}
+                <div className="fixed right-8 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col gap-6">
+                    {['hero', 'about', 'skills', 'projects', 'contact'].map((section) => (
+                        <div key={section} className="relative group flex items-center justify-end">
+                            <span className={`
+                                absolute right-8 px-2 py-1 rounded bg-black/80 border border-white/10 text-[10px] 
+                                uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 
+                                transition-all duration-300 pointer-events-none whitespace-nowrap
+                                ${activeSection === section ? 'text-cyan-400 border-cyan-500/30' : ''}
+                            `}>
+                                {section}
+                            </span>
+                            <button
+                                onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' })}
+                                className={`
+                                    w-2 h-2 rounded-full transition-all duration-300
+                                    ${activeSection === section
+                                        ? 'bg-cyan-500 w-8 h-1'
+                                        : 'bg-white/20 hover:bg-white/60 hover:scale-125'}
+                                `}
+                                onMouseEnter={buttonEnter}
+                                onMouseLeave={buttonLeave}
+                                aria-label={`Scroll to ${section}`}
+                            />
+                        </div>
+                    ))}
+                </div>
+
                 {/* Hero Section */}
-                <section className="pt-32 pb-20 px-4">
+                <section id="hero" className="pt-32 pb-20 px-4">
                     <div className="max-w-7xl mx-auto text-center">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
@@ -331,38 +378,40 @@ export const ProfessionalView: React.FC = () => {
                     <div className="max-w-7xl mx-auto px-4">
                         <h2 className="text-6xl font-bold mb-12 text-center">Technical Arsenal</h2>
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {Object.entries(skillsData).map(([category, skills]) => (
-                                <motion.div
-                                    key={category}
-                                    initial="initial"
-                                    whileInView="animate"
-                                    viewport={{ once: true }}
-                                    variants={fadeInUp}
-                                    onMouseEnter={headerEnter}
-                                    onMouseLeave={headerLeave}
-                                    className="bg-gray-900 border border-gray-800 rounded-xl p-6"
-                                >
-                                    <h3
-                                        onMouseEnter={textEnter}
-                                        onMouseLeave={textLeave}
-                                        className="text-xl font-semibold mb-4 capitalize text-cyan-400"
+                            {Object.entries(skillsData)
+                                .filter(([category]) => category !== 'fullstack')
+                                .map(([category, skills]) => (
+                                    <motion.div
+                                        key={category}
+                                        initial="initial"
+                                        whileInView="animate"
+                                        viewport={{ once: true }}
+                                        variants={fadeInUp}
+                                        onMouseEnter={headerEnter}
+                                        onMouseLeave={headerLeave}
+                                        className="bg-gray-900 border border-gray-800 rounded-xl p-6"
                                     >
-                                        {category.replace(/([A-Z])/g, ' $1').trim()}
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {(skills as string[]).map((skill) => (
-                                            <span
-                                                key={skill}
-                                                onMouseEnter={textEnter}
-                                                onMouseLeave={textLeave}
-                                                className="px-3 py-1 bg-gray-800 rounded-full text-sm text-gray-300 hover:bg-gray-700 transition-colors"
-                                            >
-                                                {skill}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            ))}
+                                        <h3
+                                            onMouseEnter={textEnter}
+                                            onMouseLeave={textLeave}
+                                            className="text-xl font-semibold mb-4 capitalize text-cyan-400"
+                                        >
+                                            {category.replace(/([A-Z])/g, ' $1').trim()}
+                                        </h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {(skills as string[]).map((skill) => (
+                                                <span
+                                                    key={skill}
+                                                    onMouseEnter={textEnter}
+                                                    onMouseLeave={textLeave}
+                                                    className="px-3 py-1 bg-gray-800 rounded-full text-sm text-gray-300 hover:bg-gray-700 transition-colors"
+                                                >
+                                                    {skill}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                ))}
                         </div>
                     </div>
                 </section>
@@ -481,26 +530,35 @@ export const ProfessionalView: React.FC = () => {
                             >
                                 <h3 className="text-xl font-semibold mb-6 text-cyan-400">Connect with me</h3>
                                 <div className="flex flex-col gap-6">
-                                    {Object.entries(profileData.socials).map(([platform, link]) => (
-                                        <a
-                                            key={platform}
-                                            href={link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-4 text-gray-400 hover:text-white transition-colors group"
-                                        >
-                                            <span className="bg-gray-800 p-3 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
-                                                {/* Simple Icon Placeholders */}
-                                                {platform === 'github' && '🐙'}
-                                                {platform === 'Email' && '📧'}
-                                                {platform === 'whatsapp' && '📞'}
-                                                {platform === 'linkedin' && '💼'}
-                                                {platform === 'twitter' && '🐦'}
+                                    {Object.entries(profileData.socials).map(([platform, link]) => {
+                                        let href = link;
+                                        if (platform.toLowerCase() === 'email') {
+                                            href = `mailto:${link}`;
+                                        } else if (platform.toLowerCase() === 'whatsapp') {
+                                            // Handle phone/whatsapp link with tel: protocol as requested
+                                            href = `tel:${link.replace(/\s+/g, '')}`;
+                                        }
+                                        return (
+                                            <a
+                                                key={platform}
+                                                href={href}
+                                                target={platform.toLowerCase() === 'github' || platform.toLowerCase() === 'linkedin' || platform.toLowerCase() === 'twitter' ? "_blank" : undefined}
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-4 text-gray-400 hover:text-white transition-colors group"
+                                            >
+                                                <span className="bg-gray-800 p-3 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+                                                    {/* Simple Icon Placeholders */}
+                                                    {platform === 'github' && '🐙'}
+                                                    {platform === 'Email' && '📧'}
+                                                    {platform === 'whatsapp' && '📞'}
+                                                    {platform === 'linkedin' && '💼'}
+                                                    {platform === 'twitter' && '🐦'}
 
-                                            </span>
-                                            <span className="capitalize">{platform}</span>
-                                        </a>
-                                    ))}
+                                                </span>
+                                                <span className="capitalize">{platform}</span>
+                                            </a>
+                                        );
+                                    })}
                                 </div>
                             </motion.div>
 

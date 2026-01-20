@@ -12,10 +12,10 @@
             "WebSockets"
         ],
         "description": "A sophisticated simulation system managing multiple states in a country with real-time data updates,sworm election, historical tracking, and interactive UI with tab switching and sidebar responsiveness.",
-        "mockup": "/projects/sworm-sc.png",
+        "mockup": "/projects/sworm-sc.jpg",
         "images": [
-            "/projects/sworm-mockup.png",
-            "/projects/sworm-sc.png",
+            "/projects/sworm-mockup.jpg",
+            "/projects/sworm-sc.jpg",
             "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1470&auto=format&fit=crop"
         ],
         "liveLink": "",
@@ -34,12 +34,12 @@
             "Next.js"
         ],
         "description": "An interactive 2D RPG-style portfolio where users can select characters, explore a story, and battle monsters to reveal project details. Features custom mobile controls and responsive game design.",
-        "mockup": "/projects/game1.png",
+        "mockup": "/projects/game1.jpg",
         "images": [
-            "/projects/game1.png",
-            "/projects/game2.png",
-            "/projects/game3.png",
-            "/projects/game4.png"
+            "/projects/game1.jpg",
+            "/projects/game2.jpg",
+            "/projects/game3.jpg",
+            "/projects/game4.jpg"
         ],
         "liveLink": "",
         "repoLink": "https://github.com/Ganesh01110/gamifiedPortfolio"
@@ -58,11 +58,11 @@
             "REST API"
         ],
         "description": "A comprehensive parking management system with admin controls, real-time slot tracking, billing, and payment processing. Features include vehicle entry/exit management, automated billing, and dashboard analytics.",
-        "mockup": "/projects/parking-mockup.png",
+        "mockup": "/projects/parking-mockup.jpg",
         "images": [
-            "/projects/parking-mockup.png",
-            "/projects/carpark.png",
-            "/projects/carpark2.png"
+            "/projects/parking-mockup.jpg",
+            "/projects/carpark.jpg",
+            "/projects/carpark2.jpg"
         ],
         "liveLink": "",
         "repoLink": "https://github.com/Ganesh01110/projects"
@@ -81,9 +81,9 @@
             "PostgreSQL"
         ],
         "description": "Full-stack library management with CRUD operations for books, users, and borrow records. Features secure API integration, modern responsive UI, and comprehensive testing.",
-        "mockup": "/projects/library-mockup.png",
+        "mockup": "/projects/library-mockup.jpg",
         "images": [
-            "/projects/library-mockup.png",
+            "/projects/library-mockup.jpg",
             "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1528&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1590&auto=format&fit=crop"
         ],
@@ -103,9 +103,9 @@
             "Local Storage"
         ],
         "description": "Progressive web app for fitness tracking with workout streak visualization, health metrics, supplement tracking, and dynamic exercise sets. Includes GitHub Actions CI/CD pipeline.",
-        "mockup": "/projects/fitness-mockup.png",
+        "mockup": "/projects/fitness-mockup.jpg",
         "images": [
-            "/projects/fitness-mockup.png",
+            "/projects/fitness-mockup.jpg",
             "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1470&auto=format&fit=crop"
         ],
@@ -124,9 +124,9 @@
             "GitHub Actions"
         ],
         "description": "Complete containerization setup for multi-service applications with Docker Compose orchestration, CI/CD pipeline, and automated testing workflows.",
-        "mockup": "/projects/docker-mockup.png",
+        "mockup": "/projects/docker-mockup.jpg",
         "images": [
-            "/projects/docker-mockup.png",
+            "/projects/docker-mockup.jpg",
             "https://images.unsplash.com/photo-1605745341112-85968b193ef5?q=80&w=1471&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1667375639058-bf7c980314e3?q=80&w=1470&auto=format&fit=crop"
         ],
