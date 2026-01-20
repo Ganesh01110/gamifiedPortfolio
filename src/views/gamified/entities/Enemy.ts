@@ -20,13 +20,16 @@ export class Enemy extends BaseEntity {
         assets?: { idle: string; walk?: string; attack?: string; attack2?: string; special?: string;[key: string]: string | undefined };
         timings?: { prepareDuration?: number; hitDelay?: number; attackDuration?: number; deathDuration?: number };
         scale?: number;
+        animationScales?: { [key: string]: number | { start: number; end: number } };
         sounds?: { attack?: string; roar?: string; death?: string };
+        facing?: 'left' | 'right';
     } | undefined;
 
     // AI State
     private aiState: 'chase' | 'prepare' | 'attack' | 'defend' | 'death' = 'chase';
     private lastAttackTime: number = 0;
     private target?: Player; // Reference to player for tracking
+    private currentAnim: string = '';
 
     constructor(scene: Phaser.Scene, x: number, y: number, monsterId: string, level: number = 1) {
         // Determine size based on ID
@@ -45,7 +48,7 @@ export class Enemy extends BaseEntity {
     }
 
     private loadMonsterData(id: string) {
-        this.monsterData = monstersData.find(m => m.id === id);
+        this.monsterData = monstersData.find(m => m.id === id) as any;
         if (this.monsterData) {
             this.hp = this.monsterData.hp;
             this.damage = this.monsterData.damage;
@@ -72,10 +75,10 @@ export class Enemy extends BaseEntity {
             if (dist > 100) {
                 if (this.x < this.target.x) {
                     this.setVelocityX(this.speed);
-                    this.setFlipX(false);
+                    this.setFlipX(this.monsterData?.facing === 'left');
                 } else {
                     this.setVelocityX(-this.speed);
-                    this.setFlipX(true);
+                    this.setFlipX(this.monsterData?.facing !== 'left');
                 }
                 this.setAnimation('walk');
             } else if (time > this.lastAttackTime + 2000) {
@@ -184,19 +187,44 @@ export class Enemy extends BaseEntity {
         this.emit('death', this);
 
         this.scene.time.delayedCall(deathDuration, () => {
+            this.emit('vanished', this);
             this.destroy();
         });
     }
 
     private setAnimation(key: 'idle' | 'walk' | 'attack' | 'attack2' | 'prepare' | 'death') {
-        if (!this.monsterData?.assets) return;
+        if (!this.monsterData?.assets || this.currentAnim === key) return;
 
         let asset = this.monsterData.assets[key];
         if (!asset && key === 'prepare') asset = this.monsterData.assets.idle;
         if (!asset && key === 'attack2') asset = this.monsterData.assets.attack;
 
         if (asset) {
+            this.currentAnim = key;
             this.updateGif(asset);
+
+            // Apply animation-specific scaling
+            const animationScaleInfo = this.monsterData.animationScales?.[key];
+            const defaultScale = this.monsterData.scale || (this.type === 'boss' ? 1.2 : 0.8);
+
+            if (typeof animationScaleInfo === 'number') {
+                this.setBaseScale(defaultScale * animationScaleInfo);
+            } else if (animationScaleInfo && typeof animationScaleInfo === 'object') {
+                const info = animationScaleInfo as { start: number; end: number };
+                const start = info.start || 1.0;
+                const end = info.end || 1.0;
+
+                // Determine duration
+                let duration = 500; // Default
+                if (key === 'attack') duration = this.monsterData.timings?.attackDuration || 1000;
+                else if (key === 'attack2') duration = this.monsterData.timings?.attackDuration || 1000;
+                else if (key === 'prepare') duration = this.monsterData.timings?.prepareDuration || 1000;
+                else if (key === 'death') duration = this.monsterData.timings?.deathDuration || 2000;
+
+                this.tweenBaseScale(defaultScale * start, defaultScale * end, duration);
+            } else {
+                this.setBaseScale(defaultScale);
+            }
         }
     }
 }

@@ -22,6 +22,13 @@
             "attack2": "/assets/painter/attack2.gif",
             "dodge": "/assets/painter/defend.gif"
         },
+        "animationScales": {
+            "idle": 1.0,
+            "walk": 1.0,
+            "attack1": 1.0,
+            "attack2": 1.0,
+            "dodge": 1.0
+        },
         "timings": {
             "attack1Duration": 3000,
             "attack1HitDelay": 1000,
@@ -34,7 +41,8 @@
             "attack": "/assets/sounds/sword-slash.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
         },
-        "skills": "frontend"
+        "skills": "frontend",
+        "facing": "right"
     },
     {
         "id": "2",
@@ -59,6 +67,13 @@
             "attack2": "/assets/architect/ArchitectAttack2.gif",
             "dodge": "/assets/architect/ArchitectDodge.gif"
         },
+        "animationScales": {
+            "idle": 1.0,
+            "walk": 1.0,
+            "attack1": 1.0,
+            "attack2": 1.0,
+            "dodge": 1.0
+        },
         "timings": {
             "attack1Duration": 2500,
             "attack1HitDelay": 1200,
@@ -71,7 +86,8 @@
             "attack": "/assets/sounds/hammer-hit.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
         },
-        "skills": "backend"
+        "skills": "backend",
+        "facing": "right"
     },
     {
         "id": "3",
@@ -96,6 +112,13 @@
             "attack2": "/assets/wizard/wizardAttack2.gif",
             "dodge": "/assets/wizard/wizard dodge.gif"
         },
+        "animationScales": {
+            "idle": 1.0,
+            "walk": 1.0,
+            "attack1": 1.0,
+            "attack2": 1.0,
+            "dodge": 1.0
+        },
         "timings": {
             "attack1Duration": 2800,
             "attack1HitDelay": 900,
@@ -108,7 +131,8 @@
             "attack": "/assets/sounds/wizard-staff-attack.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
         },
-        "skills": "devops"
+        "skills": "devops",
+        "facing": "right"
     },
     {
         "id": "4",
@@ -127,11 +151,18 @@
         "encounter": "The Integration Nightmare was unlike any foe - its frontend head clashed with its backend body, while its DevOps tail thrashed wildly. Only someone who understood all layers could defeat it. The Generalist transformed his Omni-Tool rapidly, addressing each layer with expertise, until the beast finally integrated into a harmonious whole.",
         "assetPath": "/assets/the sage.jpg",
         "assets": {
-            "idle": "/assets/the_sage-removebg-preview.png",
-            "walk": "/assets/the_sage-removebg-preview.png",
-            "attack1": "/assets/the_sage-removebg-preview.png",
-            "attack2": "/assets/the_sage-removebg-preview.png",
-            "dodge": "/assets/the_sage-removebg-preview.png"
+            "idle": "/assets/sage/sagewalk.gif",
+            "walk": "/assets/sage/sagewalk.gif",
+            "attack1": "/assets/sage/sageattack1.gif",
+            "attack2": "/assets/sage/sageattack2.gif",
+            "dodge": "/assets/sage/sagedefend.gif"
+        },
+        "animationScales": {
+            "idle": 2.0,
+            "walk": 2.0,
+            "attack1": 2.0,
+            "attack2": 2.0,
+            "dodge": 2.0
         },
         "timings": {
             "attack1Duration": 3000,
@@ -142,9 +173,10 @@
             "walkSpeed": 250
         },
         "sounds": {
-            "attack": "/assets/sounds/sword-slash.mp3",
+            "attack": "/assets/sounds/portalopen.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
         },
-        "skills": "fullstack"
+        "skills": "fullstack",
+        "facing": "right"
     }
 ]

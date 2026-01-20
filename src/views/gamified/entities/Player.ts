@@ -12,7 +12,7 @@ export class Player extends BaseEntity {
     public health: number = 100;
     private walkSpeed: number = 250;
     private currentAnim: string = 'idle'; // Track current animation state
-    private character: { id: string; assets?: { idle: string; walk: string; attack1: string; attack2: string; dodge: string }; timings?: { walkSpeed: number; attack1Duration: number; attack2Duration: number; attack1HitDelay: number; attack2HitDelay: number; dodgeDuration: number }; sounds?: { attack: string; death: string } } | undefined;
+    private character: { id: string; facing?: 'left' | 'right'; assets?: { idle: string; walk: string; attack1: string; attack2: string; dodge: string }; animationScales?: { [key: string]: number | { start: number; end: number } }; timings?: { walkSpeed: number; attack1Duration: number; attack2Duration: number; attack1HitDelay: number; attack2HitDelay: number; dodgeDuration: number }; sounds?: { attack: string; death: string } } | undefined;
 
     private mobileMoveDir: 'left' | 'right' | 'none' = 'none';
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -66,7 +66,7 @@ export class Player extends BaseEntity {
     }
 
     private loadCharacterData(id: string) {
-        this.character = charactersData.find(c => c.id === id);
+        this.character = charactersData.find(c => c.id === id) as any;
         if (this.character) {
             // Initialize DOM with Idle asset
             if (this.character.assets?.idle) {
@@ -95,11 +95,11 @@ export class Player extends BaseEntity {
 
         if (left) {
             this.setVelocityX(-this.walkSpeed);
-            this.setFlipX(true);
+            this.setFlipX(this.character?.facing !== 'left');
             if (!this.isDodging) this.setAnimation('walk');
         } else if (right) {
             this.setVelocityX(this.walkSpeed);
-            this.setFlipX(false);
+            this.setFlipX(this.character?.facing === 'left');
             if (!this.isDodging) this.setAnimation('walk');
         } else {
             this.setVelocityX(0);
@@ -129,10 +129,9 @@ export class Player extends BaseEntity {
     }
 
     private setAnimation(key: 'idle' | 'walk' | 'atk1' | 'atk2' | 'dodge') {
-        if (!this.character?.assets) return;
-        if (this.currentAnim === key) return; // Prevent restarting same animation
+        if (!this.character?.assets || this.currentAnim === key) return;
 
-        this.currentAnim = key; // Update state
+        this.currentAnim = key;
 
         let asset = this.character.assets.idle;
         if (key === 'walk') asset = this.character.assets.walk;
@@ -142,8 +141,27 @@ export class Player extends BaseEntity {
 
         this.updateGif(asset);
 
-        // Also update Phaser texture key for reference (optional but good for debugging)
-        // this.setTexture(`player-${key}`); 
+        // Apply animation-specific scaling
+        const scaleKey = key === 'atk1' ? 'attack1' : (key === 'atk2' ? 'attack2' : key);
+        const animationScaleInfo = this.character.animationScales?.[scaleKey];
+        const baseScale = 0.8; // Default player base scale
+
+        if (typeof animationScaleInfo === 'number') {
+            this.setBaseScale(baseScale * animationScaleInfo);
+        } else if (animationScaleInfo && typeof animationScaleInfo === 'object') {
+            const info = animationScaleInfo as { start: number; end: number };
+            const start = info.start || 1.0;
+            const end = info.end || 1.0;
+
+            let duration = 500;
+            if (key === 'atk1') duration = this.character.timings?.attack1Duration || 1000;
+            else if (key === 'atk2') duration = this.character.timings?.attack2Duration || 1000;
+            else if (key === 'dodge') duration = this.character.timings?.dodgeDuration || 600;
+
+            this.tweenBaseScale(baseScale * start, baseScale * end, duration);
+        } else {
+            this.setBaseScale(baseScale);
+        }
     }
 
     private performAttack(type: 1 | 2, time: number) {
