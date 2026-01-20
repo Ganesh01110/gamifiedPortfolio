@@ -1,0 +1,79 @@
+till now whatever developement has done its working perfectly(stable till now) , so as i wants more update how can i manage the gitrepo i.e can i host 2 different branch for 2 different link in vercel , i want 2 branches a stable(initial level) and another is (advanced feature-multi viallain) , also i want o preserve previous works as have fear if anything goes wrong , how should i maintain/manage this  ?
+
+
+It is a very smart move to separate your stable build from your experimental "Advanced Feature" development. This is a standard industry practice called **Feature Branching**.
+
+Since you are using Vercel, this is actually very easy to manage. Vercel is designed to handle multiple branches and can even give you unique URLs for each one.
+
+Here is the best strategy to maintain your project without fear:
+
+---
+
+## 1. The Branching Strategy
+
+You should maintain two primary branches in your Git repository:
+
+* **`main` (or `master`):** This is your **Stable** branch. It should only contain code that is 100% working. This is what your "Production" link will point to.
+* **`advanced-features`:** This is your **Development** branch. You will commit all your new villain logic, axe mechanics, and experimental art here.
+
+### To create the new branch:
+
+Open your terminal in your project folder and run:
+
+```bash
+git checkout -b advanced-features
+git push -u origin advanced-features
+
+```
+
+---
+
+## 2. Hosting 2 Different Links in Vercel
+
+Vercel supports **Branch Domains**. You don't need two separate Vercel projects; you can host both branches from the same one.
+
+1. **Production Link:** By default, Vercel connects your `main` branch to your primary URL (e.g., `my-game.vercel.app`).
+2. **Preview Link:** Every time you push to the `advanced-features` branch, Vercel automatically generates a "Preview" URL.
+3. **Permanent Branch Link:** You can go to **Project Settings > Domains** in Vercel and assign a specific domain (like `beta.my-game.vercel.app`) specifically to the `advanced-features` branch.
+
+---
+
+## 3. How to "Preserve" Previous Work (No Fear)
+
+If you are worried about breaking things, follow these Git "safety net" rules:
+
+### A. Tagging (The "Save Point")
+
+Before you start the advanced features, create a **Git Tag**. This is like a "snapshot" in time that never changes, even if you delete branches.
+
+```bash
+git tag -a v1.0-stable -m "Original stable version before multi-villain update"
+git push origin v1.0-stable
+
+```
+
+### B. Never Merge without Testing
+
+Work on `advanced-features`. If it becomes a mess, you can simply delete that branch and go back to `main`. Your `main` branch remains untouched and "safe" until you explicitly decide to merge the new features into it.
+
+### C. Use "Feature Branches" for specific Villains
+
+If you want to be even safer, create a branch for *each* boss:
+
+* `feat/devops-boss`
+* `feat/backend-cobra`
+Once one boss is finished and tested, merge it into `advanced-features`.
+
+---
+
+## 4. Summary Workflow
+
+| Step | Action | Purpose |
+| --- | --- | --- |
+| **1** | `git checkout main` | Stay on the safe version. |
+| **2** | `git checkout -b advanced-features` | Create the "experimental" playground. |
+| **3** | *Develop & Commit* | Build your new bosses/axes here. |
+| **4** | `git push origin advanced-features` | Update the Vercel "Beta" link. |
+| **5** | *Check Vercel* | Verify the new features work on the live Beta URL. |
+
+**Would you like me to help you draft a specific "Release Note" or a `README` update for your new Advanced branch?**

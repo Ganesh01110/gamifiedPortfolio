@@ -1,0 +1,27 @@
+now all the previous requirements has been completed so i want to introduce different type of villains  for different types of character , 
+painter:: (
+    level1: 3-monster1(walk , attack1 and attack2 , scream/intimidate , dodge , die),
+    level2: 2-monster2(walk , attack1 and attack2 , scream/intimidate , dodge , die)
+)
+architect::(
+    level1: 2-monster1(walk, attack1 and 2 , scream, dodge , die)+1 monster4(walk, attack1(only) , dodge , die) ,
+    level2: 2-monster4(walk, attack1 and attack2 , scream/intimidate , dodge , die)
+)
+devops-wizard::(
+    level1: 2-monster1(walk, attack1 and 2 , scream, dodge , die)+1 monster3(walk, attack1(only) 
+     , dodge , die) ,
+    level2: 2-monster3(walk, attack1 and attack2 , scream/intimidate , dodge , die)
+)
+generalist(use the sage png for now)::(
+    level1: 2-monster1(walk, attack1 and 2 , scream, dodge , die)+1 monster3(walk, attack1(only) , dodge , die) ,
+    level2: 2-monster5(walk, attack1 and attack2 , scream/intimidate , dodge , die)
+)
+
+i already have assets (gif files in public > assets > monster >gif folder of monster3 and monster4 and monster5) , so accordingly update monsters.json adjust sound assests accorgingly
+
+the levels should be made something like a strategy based on character selection the monster will be choosen , follow solid principle , open for more level and more monster , follow best developer practices
+
+level sequence (currently in this pattern and after implementation also this sequence should be followed ):: ideal(should be):level 1 complete->game pauses and level clear popup comes ->clicking on box 1 project 1 reveal (closing that)->level clear popup of of level1 (with button to start level 2)->level 2 game with monster 2(2 monster with spawn delay) -> level 2 complete->game pauses and level clear popup comes ->clicking on box 1 project (2nd project) reveal (closing that)-> victory brief(final summary(should be mobile responsive) with back character selection button)
+
+add a pause button top right corner next to quit button , on clicking which game will pause and a sound button near the monster reveal section in storyComponent.tsx , so player can toggle the game sounds on or off before entering the actual game
+make these two buttons available in mobile also
