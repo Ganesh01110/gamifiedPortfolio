@@ -127,8 +127,10 @@ export class BattleScene extends Phaser.Scene {
 
         // Music
         if (!this.bgMusic) {
+            const isMuted = !!window.localStorage.getItem('game-muted');
             this.bgMusic = this.sound.add('bg-music', { loop: true, volume: 0.5 });
             this.bgMusic.play();
+            if (isMuted) this.bgMusic.pause();
         }
 
         window.addEventListener('resume-game', () => {
@@ -237,7 +239,8 @@ export class BattleScene extends Phaser.Scene {
                 case '1': return 'monster1'; // Painter: 3-monster1
                 case '2': return 'monster4'; // Architect: 2-monster1 + 1-monster4
                 case '3': return 'monster3'; // DevOps: 2-monster1 + 1-monster3
-                case 'generalist': return 'monster5'; // Generalist: 2-monster1 + 1-monster5
+                case 'generalist':
+                case '4': return 'monster5'; // Generalist: 2-monster1 + 1-monster5
                 default: return 'monster1';
             }
         } else {
@@ -245,7 +248,8 @@ export class BattleScene extends Phaser.Scene {
                 case '1': return 'monster2'; // Painter: 2-monster2
                 case '2': return 'monster4'; // Architect: 2-monster4
                 case '3': return 'monster3'; // DevOps: 2-monster3
-                case 'generalist': return 'monster5'; // Generalist: 2-monster5
+                case 'generalist':
+                case '4': return 'monster5'; // Generalist: 2-monster5
                 default: return 'monster2';
             }
         }

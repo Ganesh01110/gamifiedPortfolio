@@ -44,5 +44,25 @@
         "Scripting",
         "Problem Solving",
         "Agile Methodology"
+    ],
+    "fullstack": [
+        "HTML-CSS",
+        "JavaScript/TypeScript",
+        "MERN Stack",
+        "Next.js",
+        "Responsive ui/ux Design",
+        "Java Spring Boot",
+        "Python",
+        "SQL",
+        "PostgreSQL-Prisma",
+        "Redis",
+        "Kafka & RabbitMQ",
+        "REST API & GraphQL",
+        "Microservices",
+        "Docker",
+        "Git/github",
+        "CI/CD-GitHub Actions",
+        "Linux",
+        "Cloud Deployment"
     ]
 }

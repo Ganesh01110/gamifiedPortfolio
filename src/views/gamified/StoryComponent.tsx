@@ -95,7 +95,8 @@ export const StoryComponent: React.FC<StoryComponentProps> = ({ characterId, onC
             case '1': return "/assets/monster/monster1-readyToAttack.gif";
             case '2': return "/assets/monster/monster4/gifs/monster4screaming.gif";
             case '3': return "/assets/monster/monster3/gifs/monster3intemedate.gif";
-            case 'generalist': return "/assets/monster/monster5/gifs/monster5scream.gif";
+            case 'generalist':
+            case '4': return "/assets/monster/monster5/gifs/monster5scream.gif";
             default: return "/assets/monster/monster1-readyToAttack.gif";
         }
     };

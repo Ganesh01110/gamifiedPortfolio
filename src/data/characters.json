@@ -111,7 +111,7 @@
         "skills": "devops"
     },
     {
-        "id": "generalist",
+        "id": "4",
         "name": "The Generalist",
         "role": "Full Stack",
         "color": "green",
@@ -126,6 +126,25 @@
         },
         "encounter": "The Integration Nightmare was unlike any foe - its frontend head clashed with its backend body, while its DevOps tail thrashed wildly. Only someone who understood all layers could defeat it. The Generalist transformed his Omni-Tool rapidly, addressing each layer with expertise, until the beast finally integrated into a harmonious whole.",
         "assetPath": "/assets/the sage.jpg",
-        "skills": "frontend"
+        "assets": {
+            "idle": "/assets/the_sage-removebg-preview.png",
+            "walk": "/assets/the_sage-removebg-preview.png",
+            "attack1": "/assets/the_sage-removebg-preview.png",
+            "attack2": "/assets/the_sage-removebg-preview.png",
+            "dodge": "/assets/the_sage-removebg-preview.png"
+        },
+        "timings": {
+            "attack1Duration": 3000,
+            "attack1HitDelay": 1000,
+            "attack2Duration": 3000,
+            "attack2HitDelay": 1500,
+            "dodgeDuration": 1500,
+            "walkSpeed": 250
+        },
+        "sounds": {
+            "attack": "/assets/sounds/sword-slash.mp3",
+            "death": "/assets/sounds/hero-death-sound.mp3"
+        },
+        "skills": "fullstack"
     }
 ]
