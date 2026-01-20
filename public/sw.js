@@ -5,7 +5,7 @@ const ASSETS_TO_CACHE = [
     '/manifest.json',
     '/favicon.ico',
     '/assets/gamebackground.png',
-    '/logo2.png'
+    '/logo2.jpg'
 ];
 
 self.addEventListener('install', (event) => {

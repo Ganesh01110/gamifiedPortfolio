@@ -14,7 +14,7 @@
             "weakness": "Clean, semantic code and proper CSS architecture"
         },
         "encounter": "The Painter faced his first challenge when a messy bug created reality glitches across the interface. Layouts broke, colors clashed, and users were lost in a maze of broken UI. With precise slashes of his Brush Blade, he cut through the chaos, revealing clean, responsive designs beneath.",
-        "assetPath": "/assets/painter/thepainter(1).jpg",
+        "assetPath": "/assets/thepainter(1).jpg",
         "assets": {
             "idle": "/assets/painter/startwalk.gif",
             "walk": "/assets/painter/walk.gif",
@@ -59,7 +59,7 @@
             "weakness": "Strong encryption and ACID compliant transactions"
         },
         "encounter": "Deep in the server room, The Data Corruptor was weaving its dark web, tangling foreign keys and injecting malicious queries. The Architect, armed with the Database Hammer, stood firm. Each swing resonated with optimization, crushing latency and restoring integrity to the system core.",
-        "assetPath": "/assets/architect with hammer.png",
+        "assetPath": "/assets/thBackendArchitect.jpg",
         "assets": {
             "idle": "/assets/architect/architectWalk.gif",
             "walk": "/assets/architect/architectWalk.gif",
@@ -104,7 +104,7 @@
             "weakness": "Containerization, automated testing, and robust CI/CD pipelines"
         },
         "encounter": "The Unstable Server was chaos incarnate - random crashes, failed deployments, and broken builds plagued every release. The DevOps Wizard responded by casting his containers like shields, each one isolated and resilient. With automated pipelines and continuous integration, he tamed the chaos and brought stability to the realm.",
-        "assetPath": "/assets/wizard/wizardwithStaff.png",
+        "assetPath": "/assets/wizardwithStaff.jpg",
         "assets": {
             "idle": "/assets/wizard/wizardWalk.gif",
             "walk": "/assets/wizard/wizardWalk.gif",

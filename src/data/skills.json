@@ -19,8 +19,7 @@
         "MySQL",
         "MongoDB",
         "Redis",
-        "RabbitMQ",
-        "Kafka",
+        "Kafka & RabbitMQ",
         "REST API & GraphQL",
         "Microservices"
     ],
