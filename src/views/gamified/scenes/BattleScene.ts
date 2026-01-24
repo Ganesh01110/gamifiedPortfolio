@@ -2,16 +2,21 @@ import * as Phaser from 'phaser';
 import projectsData from '@/src/data/projects.json';
 import charactersData from '@/src/data/characters.json';
 import monstersData from '@/src/data/monsters.json';
+import backgroundsData from '@/src/data/backgrounds.json';
 import { Player } from '../entities/Player';
 import { Enemy } from '../entities/Enemy';
+import { DramaticRock } from '../entities/DramaticRock';
 
 interface Project {
     id: string;
     name: string;
     description: string;
     mockup: string;
-    liveLink: string;
-    repoLink: string;
+    image?: string;
+    demo?: string;
+    github?: string;
+    liveLink?: string;
+    repoLink?: string;
 }
 
 interface Character {
@@ -34,9 +39,10 @@ interface Monster {
 export class BattleScene extends Phaser.Scene {
     private player?: Player;
     private enemies?: Phaser.GameObjects.Group;
+    private rocks?: Phaser.GameObjects.Group;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private keys?: { [key: string]: Phaser.Input.Keyboard.Key };
-    private ground?: Phaser.GameObjects.Rectangle; // Invisible floor
+
 
     // Stats
     private characterId: string = '1';
@@ -55,15 +61,21 @@ export class BattleScene extends Phaser.Scene {
     private instructionsText?: Phaser.GameObjects.Text;
 
     // Fixed Gameplay Constants
-    // Adjusted for visual ground level
-    // Separate ground heights for protagonist and monsters as requested
-    private readonly ENEMY_GROUND_Y = 460;
-    private readonly PLAYER_GROUND_Y = 440; // Protagonist higher up
-    private readonly SPAWN_Y = 400; // Default spawn, gravity will settle them
+    // Unified Ground Level as per diagram analysis
+    // private readonly MASTER_GROUND_Y = 430;
 
-    private playerGround?: Phaser.GameObjects.Rectangle;
-    private enemyGround?: Phaser.GameObjects.Rectangle;
+    // // Spawn Y: High enough to fall onto ground.
+    // private readonly SPAWN_Y = 350;
 
+    // private ground?: Phaser.GameObjects.Rectangle;
+
+    // private bgMusic?: Phaser.Sound.BaseSound;
+
+    ///// CHANGED: Removed MASTER_GROUND_Y constant to allow per-level flexibility /////
+    public currentGroundY: number = 430;
+    private readonly SPAWN_Y = 300; // Spawn slightly higher to fall onto ground
+
+    private ground?: Phaser.GameObjects.Rectangle;
     private bgMusic?: Phaser.Sound.BaseSound;
 
     constructor() {
@@ -82,9 +94,23 @@ export class BattleScene extends Phaser.Scene {
     }
 
     preload() {
-        if (!this.textures.exists('bg-level1')) this.load.image('bg-level1', '/assets/gamebackground.png');
-        if (!this.textures.exists('bg-level2')) this.load.image('bg-level2', '/assets/gamebackground3.png');
-        if (!this.textures.exists('slash-effect')) this.load.image('slash-effect', '/assets/slash arc.jpg');
+        // Dynamic Background Loading
+        const isMobile = window.innerWidth < 768; // Simple check, or use this.scale.width
+
+        backgroundsData.forEach(bg => {
+            const key = `bg-level${bg.level}`;
+            const url = isMobile ? bg.mobile : bg.desktop;
+
+            // Load the remote image
+            this.load.image(key, url);
+
+            // Load fallback just in case, with a different key
+            this.load.image(`${key}-fallback`, bg.fallback);
+        });
+
+        if (!this.textures.exists('slash-effect')) this.load.image('slash-effect', '/assets/slash arc.png');
+        if (!this.textures.exists('chest-box')) this.load.image('chest-box', '/assets/chestbox.png');
+        if (!this.textures.exists('dramatic-rock')) this.load.image('dramatic-rock', '/assets/dramaticrock.png');
 
         // Sounds
         this.load.audio('bg-music', '/assets/sounds/background-music-piono.mp3');
@@ -156,31 +182,60 @@ export class BattleScene extends Phaser.Scene {
         this.minionsSpawned = 0;
         this.minionsKilled = 0;
 
+        ///// CHANGED: Dynamic Ground Y based on Level Background /////
+        // Level 2 artwork has a lower "horizon" grid than Level 1
+        this.currentGroundY = this.currentLevel === 1 ? 430 : 580; /////
+
         if (this.enemies) this.enemies.clear(true, true);
         this.enemies = this.add.group({ runChildUpdate: true });
 
-        const bgKey = this.currentLevel === 1 ? 'bg-level1' : 'bg-level2';
-        const bg = this.add.image(640, 360, bgKey).setDepth(-1);
+        if (this.rocks) this.rocks.clear(true, true);
+        this.rocks = this.add.group({ runChildUpdate: true });
+
+        const bgKey = `bg-level${this.currentLevel}`;
+        let textureToUse = bgKey;
+
+        // Check if the dynamic texture loaded successfully
+        // if (!this.textures.exists(bgKey)) {
+        //     console.warn(`Background ${bgKey} failed to load, utilizing fallback.`);
+        //     textureToUse = `${bgKey}-fallback`;
+        // } else {
+        //     // Also check if it's a valid texture (not a missing image placeholder if Phaser does that)
+        //     const texture = this.textures.get(bgKey);
+        //     if (texture.key === '__MISSING') {
+        //         textureToUse = `${bgKey}-fallback`;
+        //     }
+        // }
+
+        if (!this.textures.exists(bgKey)) {
+            textureToUse = `${bgKey}-fallback`;
+        }
+
+        const bg = this.add.image(640, 360, textureToUse).setDepth(-1);
         bg.setDisplaySize(1280, 720);
         bg.setScrollFactor(0);
 
-        // Ground Logic - Separate grounds for Player and Enemies
-        if (this.ground) this.ground.destroy(); // Cleanup old
-        if (this.playerGround) this.playerGround.destroy();
-        if (this.enemyGround) this.enemyGround.destroy();
+        // Ground Logic - Unified for all characters
+        if (this.ground) this.ground.destroy();
 
-        // Player Ground (Higher)
-        this.playerGround = this.add.rectangle(640, this.PLAYER_GROUND_Y, 1280, 56, 0x000000, 0);
-        this.physics.add.existing(this.playerGround, true);
+        // Single Invisible Ground Line
+        // x=640 (center), y=MASTER_GROUND_Y, width=1280, height=40
+        // Offset y by height/2 because default origin is center (0.5), but we want top of box at MASTER_GROUND_Y?
+        // Actually easiest is to place rect center at y = MASTER_GROUND_Y + height/2.
+        // So the "Top" of the rect is at MASTER_GROUND_Y.
+        // const groundHeight = 40;
+        // this.ground = this.add.rectangle(640, this.MASTER_GROUND_Y + (groundHeight / 2), 1280, groundHeight, 0x000000, 0);
+        // this.physics.add.existing(this.ground, true); // true = Static body
 
-        // Enemy Ground (Lower/Standard)
-        this.enemyGround = this.add.rectangle(640, this.ENEMY_GROUND_Y, 1280, 56, 0x000000, 0);
-        this.physics.add.existing(this.enemyGround, true);
+        ///// CHANGED: Ground rectangle now sits exactly at currentGroundY /////
+        const groundHeight = 20;
+        this.ground = this.add.rectangle(640, this.currentGroundY + (groundHeight / 2), 1280, groundHeight, 0x00ffff, 0);
+        this.physics.add.existing(this.ground, true);
 
         // Spawn Enemies
         const monsterId = this.getMonsterIdForCurrentLevel();
         if (this.currentLevel === 1) {
-            this.totalMinionsThisLevel = this.characterId === '1' ? 3 : 3; // Painter has 3, Others have 2+1
+            this.totalMinionsThisLevel = this.characterId === '1' ? 3 : 3;
             this.spawnWave(monsterId);
         } else {
             this.totalMinionsThisLevel = 2;
@@ -188,7 +243,7 @@ export class BattleScene extends Phaser.Scene {
         }
 
         // Collisions
-        this.physics.add.collider(this.enemies.getChildren(), this.enemyGround);
+        this.physics.add.collider(this.enemies.getChildren(), this.ground);
     }
 
     private spawnWave(monsterId: string) {
@@ -208,7 +263,7 @@ export class BattleScene extends Phaser.Scene {
         enemy.on('vanished', () => this.handleEnemyDeath(enemy, 'minion'));
 
         this.enemies?.add(enemy);
-        this.physics.add.collider(enemy, this.enemyGround!);
+        this.physics.add.collider(enemy, this.ground!);
 
         this.minionsSpawned++;
 
@@ -218,21 +273,47 @@ export class BattleScene extends Phaser.Scene {
             });
         }
     }
+    ///// NEW: Helper to fix Monster Hitbox Sync /////
+    private syncEnemyHitbox(enemy: Enemy) {
+        enemy.setOrigin(0.5, 1); // Feet anchor
+        const body = enemy.body as Phaser.Physics.Arcade.Body;
+
+        // This is the fix for Level 2: 
+        // Force the physics body to align with the visual bottom
+        body.updateFromGameObject(); /////
+        this.physics.add.collider(enemy, this.ground!); /////
+    }
 
     private spawnLevel2(monsterId: string) {
         if (this.minionsSpawned >= this.totalMinionsThisLevel) return;
 
-        const enemy = new Enemy(this, 1100, this.SPAWN_Y, monsterId, this.currentLevel);
+        // const enemy = new Enemy(this, 1100, this.SPAWN_Y, monsterId, this.currentLevel);/
+        ///// CHANGED: Force spawn at currentGroundY /////
+        const enemy = new Enemy(this, 1100, this.currentGroundY, monsterId, this.currentLevel);
+        this.syncEnemyHitbox(enemy); // Apply the fix /////
         enemy.on('vanished', () => this.handleEnemyDeath(enemy, 'boss'));
 
         this.enemies?.add(enemy);
-        this.physics.add.collider(enemy, this.enemyGround!);
+        // this.physics.add.collider(enemy, this.enemyGround!);
 
         this.minionsSpawned++;
 
         if (this.minionsSpawned < this.totalMinionsThisLevel) {
             this.time.delayedCall(8000, () => {
                 if (!this.isPaused && !this.isLevelClearing) this.spawnLevel2(monsterId);
+            });
+        }
+
+        // Randomly spawn a Dramatic Rock (Higher probability for Level 2)
+        if (Phaser.Math.Between(0, 100) > 30) { // 70% chance
+            const rockX = Phaser.Math.Between(100, 1100);
+            // Spawn closer to ground (between 100 and 300px above ground)
+            const rockY = this.currentGroundY - Phaser.Math.Between(100, 300);
+            const rock = new DramaticRock(this, rockX, rockY);
+            rock.setScrollFactor(1);
+            this.rocks?.add(rock);
+            this.physics.add.collider(rock, this.ground!, () => {
+                rock.destroyRock(true);
             });
         }
     }
@@ -266,7 +347,13 @@ export class BattleScene extends Phaser.Scene {
         }
 
         this.player = new Player(this, 200, this.SPAWN_Y, this.characterId);
-        this.physics.add.collider(this.player, this.playerGround!);
+        ///// CHANGED: Force Bottom-Center Origin for Player /////
+        this.player.setOrigin(0.5, 1); /////
+        const body = this.player.body as Phaser.Physics.Arcade.Body;
+        body.setCollideWorldBounds(true);
+        // Ensure the physics body matches the bottom origin
+        body.setOffset(0, 0); /////
+        this.physics.add.collider(this.player, this.ground!);
 
         // Restore controls
         if (this.cursors && this.keys) {
@@ -351,13 +438,82 @@ export class BattleScene extends Phaser.Scene {
         });
 
         this.checkGameState();
+        this.renderDebug();
+    }
+
+    private debugGraphics?: Phaser.GameObjects.Graphics;
+
+    /**
+     * DEBUG RENDERER (BOXES)
+     * Used for future debugging of hitboxes and ground alignment.
+     * To toggle off, remove call in update() or check currentGroundY logic.
+     */
+    private renderDebug() {
+        if (!this.debugGraphics) {
+            this.debugGraphics = this.add.graphics().setDepth(9999);
+        }
+        this.debugGraphics.clear();
+
+        // 1. Imaginary Ground Line (Cyan)
+        this.debugGraphics.lineStyle(2, 0x00ffff, 1);
+        // this.debugGraphics.lineBetween(0, this.MASTER_GROUND_Y, 1280, this.MASTER_GROUND_Y);
+        this.debugGraphics.lineBetween(0, this.currentGroundY, 1280, this.currentGroundY); /////
+
+        // 2. Player Hitbox (Green)
+        if (this.player && this.player.active) {
+            this.debugGraphics.lineStyle(2, 0x00ff00, 1);
+            // Height is approx 120, Width 60
+            // this.debugGraphics.strokeRect(this.player.x - 30, this.player.y - 120, 60, 120);
+            const body = this.player.body as Phaser.Physics.Arcade.Body;
+            ///// CHANGED: Draw from feet up using bottom-alignment logic /////
+            this.debugGraphics.strokeRect(body.x, body.y, body.width, body.height); /////
+        }
+
+        // 3. Enemy Hitboxes (Red)
+        // this.enemies?.children.iterate((child) => {
+        //     const enemy = child as Enemy;
+        //     if (enemy.active) {
+        //         this.debugGraphics!.lineStyle(2, 0xff0000, 1);
+        //         const w = (enemy.body as Phaser.Physics.Arcade.Body).width || 80;
+        //         const h = (enemy.body as Phaser.Physics.Arcade.Body).height || 120;
+        //         // Bodies are anchored at center-bottom usually? No, Phaser default is center.
+        //         // But simplified for visual check:
+        //         this.debugGraphics!.strokeRect(enemy.x - w / 2, enemy.y - h / 2, w, h);
+        //     }
+        //     return true;
+        // });/
+
+        // Enemy Hitboxes (Red)
+        this.enemies?.children.iterate((child) => {
+            const enemy = child as Enemy;
+            if (enemy.active) {
+                this.debugGraphics!.lineStyle(2, 0xff0000, 1);
+                const body = enemy.body as Phaser.Physics.Arcade.Body;
+                ///// CHANGED: Phaser Physics Bodies should now sit on ground /////
+                this.debugGraphics!.strokeRect(body.x, body.y, body.width, body.height); /////
+            }
+            return true;
+        });
+
+        // 4. Console Log positions (Throttled)
+        if (this.game.loop.frame % 60 === 0) {
+            console.log(`[DEBUG] Level ${this.currentLevel}`);
+            if (this.player) console.log(`Player Y: ${Math.round(this.player.y)} | Ground: ${this.currentGroundY}`);
+            this.enemies?.children.iterate((child) => {
+                const enemy = child as Enemy;
+                console.log(`Enemy ${enemy.id} Y: ${Math.round(enemy.y)} | Ground: ${this.currentGroundY}`);
+                return true;
+            });
+        }
     }
 
     private checkPlayerAttackHit(type: 1 | 2) {
         if (!this.player) return;
         const damage = type === 1 ? 25 : 50;
         const range = type === 1 ? 150 : 250;
-        const yTolerance = 50; // Allow 30-50px difference in Y (height) per drawing
+        // const yTolerance = 50; // Allow 30-50px difference in Y (height) per drawing
+        ///// CHANGED: Lowered yTolerance because they are now on same ground /////
+        const yTolerance = 80; // Handles height variation of sprites /////
 
         this.enemies?.children.iterate((child) => {
             const enemy = child as Enemy;
@@ -368,9 +524,30 @@ export class BattleScene extends Phaser.Scene {
                 const dy = Math.abs(this.player.y - enemy.y);
 
                 // Attack hits if within horizontal range AND vertical tolerance
+                // if (dx < range && dy <= yTolerance) {
+                //     enemy.takeDamage(damage);
+                //     this.createHitEffect(enemy.x, enemy.y);
+                // }
                 if (dx < range && dy <= yTolerance) {
                     enemy.takeDamage(damage);
-                    this.createHitEffect(enemy.x, enemy.y);
+                    this.createHitEffect(enemy.x, enemy.y - (enemy.height / 2));
+                }
+            }
+            return true;
+        });
+
+        // Check Rock Hits
+        this.rocks?.children.iterate((child) => {
+            const rock = child as DramaticRock;
+            if (rock.active && this.player) {
+                const dx = Math.abs(this.player.x - rock.x);
+                const dy = Math.abs(this.player.y - rock.y);
+
+                // Rock is usually high up (parallax), so hit box might be tricky.
+                // Assuming wide range for now since it's a "screen effect" object or give it a bigger hitbox
+                if (dx < 100 && dy < 400) { // Allow hitting even if high up for dramatic effect
+                    rock.takeDamage();
+                    this.createHitEffect(rock.x, rock.y);
                 }
             }
             return true;
@@ -426,10 +603,11 @@ export class BattleScene extends Phaser.Scene {
             fontSize: '64px', color: '#ffffff', fontStyle: 'bold'
         }).setOrigin(0.5).setDepth(3001);
 
-        const chest = this.add.text(640, 500, '🎁', { fontSize: '100px' })
+        const chest = this.add.image(640, 500, 'chest-box')
             .setInteractive({ useHandCursor: true })
             .setOrigin(0.5)
-            .setDepth(3005);
+            .setDepth(3005)
+            .setScale(0.5); // Adjust scale as needed based on image size
 
         const chestHint = this.add.text(640, 580, "Click on box for reward", {
             fontSize: '24px', color: '#ffffff', fontStyle: 'bold italic'

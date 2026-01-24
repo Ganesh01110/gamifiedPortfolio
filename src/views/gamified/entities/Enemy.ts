@@ -23,6 +23,7 @@ export class Enemy extends BaseEntity {
         animationScales?: { [key: string]: number | { start: number; end: number } };
         sounds?: { attack?: string; roar?: string; death?: string };
         facing?: 'left' | 'right';
+        visualOffset?: { x: number; y: number };
     } | undefined;
 
     // AI State
@@ -57,6 +58,11 @@ export class Enemy extends BaseEntity {
             if (this.monsterData.assets?.idle) {
                 const scale = this.monsterData.scale || (this.type === 'boss' ? 1.2 : 0.8);
                 this.createDOMElement(this.monsterData.assets.idle, scale);
+                // Apply visual offset
+                if (this.monsterData.visualOffset) {
+                    this.visualOffset = this.monsterData.visualOffset;
+                    this.syncDOM();
+                }
             }
         }
     }
