@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { useThemeStore } from '@/src/store/themeStore';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { IDCard } from '@/src/components/IDCard';
+import { sendEmail } from '@/src/actions/sendEmail';
 
 interface Project {
     id: string;
@@ -668,8 +669,6 @@ function ContactForm({
 
         const formData = new FormData(event.currentTarget);
 
-        // Dynamic import to avoid server-action issues/hydration mismatches if simple component
-        const { sendEmail } = await import('@/src/actions/sendEmail');
         const result = await sendEmail(null, formData);
 
         setIsSubmitting(false);

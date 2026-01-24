@@ -9,9 +9,9 @@ const formSchema = z.object({
     message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function sendEmail(prevState: unknown, formData: FormData) {
+    console.log('--- sendEmail action triggered ---');
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const validatedFields = formSchema.safeParse({
         name: formData.get('name'),
         email: formData.get('email'),

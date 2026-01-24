@@ -26,5 +26,10 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
     },
     audio: {
         disableWebAudio: false
+    },
+    input: {
+        touch: {
+            capture: false
+        }
     }
 };

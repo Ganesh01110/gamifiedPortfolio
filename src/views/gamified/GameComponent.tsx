@@ -132,7 +132,7 @@ export const GameComponent: React.FC<GameComponentProps> = ({
                     <p className="text-gray-400">This game is best experienced in Landscape mode.</p>
                 </div>
             )}
-            <div id="game-container" className="w-full h-full" />
+            <div id="game-container" className="w-full h-full" style={{ touchAction: 'none' }} />
 
             {isGameOver && (
                 <div className="absolute inset-0 z-[200] flex flex-col items-center justify-center bg-[#0a192f]/85 backdrop-blur-sm animate-in fade-in duration-500">
