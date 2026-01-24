@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as Phaser from 'phaser';
 import { gameConfig } from './gameConfig';
+import { PreloaderScene } from './scenes/PreloaderScene';
 import { BattleScene } from './scenes/BattleScene';
 import { RewardScene } from './scenes/RewardScene';
 import { ProjectModal } from '@/src/components/ProjectModal';
@@ -63,23 +64,22 @@ export const GameComponent: React.FC<GameComponentProps> = ({
                 console.log('Initializing Phaser Game');
                 const config = {
                     ...gameConfig,
-                    scene: [BattleScene, RewardScene] // Register all scenes here
+                    scene: [] // Start with empty scene list to prevent auto-boot without data
                 };
 
                 // Create Phaser Game Instance
                 gameInstance = new Phaser.Game(config);
                 gameRef.current = gameInstance;
 
-                // Pass initial data to the scene once it's ready
+                // Manually add and start scenes to guarantee data injection
                 gameInstance.events.once('ready', () => {
-                    const scene = gameInstance?.scene.getScene('BattleScene');
-                    if (scene) {
-                        scene.data.set('characterId', characterId);
-                        // Trigger init manually if needed, or rely on scene flow
-                        if (scene.scene.key === 'BattleScene') {
-                            scene.scene.start('BattleScene', { characterId: characterId });
-                        }
-                    }
+                    console.log('[GameComponent] Phaser ready, mounting scenes with ID:', characterId);
+                    gameInstance?.scene.add('PreloaderScene', PreloaderScene, false);
+                    gameInstance?.scene.add('BattleScene', BattleScene, false);
+                    gameInstance?.scene.add('RewardScene', RewardScene, false);
+
+                    // Now start the preloader with the data
+                    gameInstance?.scene.start('PreloaderScene', { characterId });
                 });
 
                 // Listen for 'open-project-modal' event from Phaser Scene

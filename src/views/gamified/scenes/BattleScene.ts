@@ -1,40 +1,10 @@
 import * as Phaser from 'phaser';
 import projectsData from '@/src/data/projects.json';
-import charactersData from '@/src/data/characters.json';
-import monstersData from '@/src/data/monsters.json';
-import backgroundsData from '../../../data/backgrounds.json';
 import { Player } from '../entities/Player';
 import { Enemy } from '../entities/Enemy';
 import { DramaticRock } from '../entities/DramaticRock';
 
-interface Project {
-    id: string;
-    name: string;
-    description: string;
-    mockup: string;
-    image?: string;
-    demo?: string;
-    github?: string;
-    liveLink?: string;
-    repoLink?: string;
-}
 
-interface Character {
-    id: string;
-    sounds?: {
-        attack?: string;
-        death?: string;
-    };
-}
-
-interface Monster {
-    id: string;
-    sounds?: {
-        attack?: string;
-        roar?: string;
-        death?: string;
-    };
-}
 
 export class BattleScene extends Phaser.Scene {
     private player?: Player;
@@ -60,6 +30,23 @@ export class BattleScene extends Phaser.Scene {
     private levelText?: Phaser.GameObjects.Text;
     private instructionsText?: Phaser.GameObjects.Text;
 
+    // Bound Event Handlers for Cleanup
+    private handleResumeGame = () => {
+        if (!this.scene.isActive()) return;
+        this.projectShown = true;
+        this.resumeGame();
+    };
+
+    private handleToggleSound = (e: Event) => {
+        if (!this.sound) return;
+        const muted = (e as CustomEvent).detail.muted;
+        this.sound.mute = muted;
+        if (this.bgMusic) {
+            if (muted) this.bgMusic.pause();
+            else if (!this.isPaused) this.bgMusic.resume();
+        }
+    };
+
     // Fixed Gameplay Constants
     // Unified Ground Level as per diagram analysis
     // private readonly MASTER_GROUND_Y = 430;
@@ -83,6 +70,7 @@ export class BattleScene extends Phaser.Scene {
     }
 
     init(data: { characterId: string }) {
+        console.log('[BattleScene] Initializing with protagonist ID:', data.characterId);
         this.characterId = data.characterId || '1';
         this.currentLevel = 1;
         this.minionsSpawned = 0;
@@ -94,55 +82,7 @@ export class BattleScene extends Phaser.Scene {
     }
 
     preload() {
-        // Dynamic Background Loading
-        const isMobile = window.innerWidth < 768; // Simple check, or use this.scale.width
-
-        backgroundsData.forEach(bg => {
-            const key = `bg-level${bg.level}`;
-            const url = isMobile ? bg.mobile : bg.desktop;
-
-            // Load the remote image
-            this.load.image(key, url);
-
-            // Load fallback just in case, with a different key
-            this.load.image(`${key}-fallback`, bg.fallback);
-        });
-
-        if (!this.textures.exists('slash-effect')) this.load.image('slash-effect', '/assets/slash arc.png');
-        if (!this.textures.exists('chest-box')) this.load.image('chest-box', '/assets/chestbox.png');
-        if (!this.textures.exists('dramatic-rock')) this.load.image('dramatic-rock', '/assets/dramaticrock.png');
-
-        // Sounds
-        this.load.audio('bg-music', '/assets/sounds/background-music-piono.mp3');
-        this.load.audio('level-complete', '/assets/sounds/level-complete.mp3');
-
-        // Load character specific sounds
-        const char = (charactersData as unknown as Character[]).find(c => c.id === this.characterId);
-        if (char?.sounds?.attack) {
-            this.load.audio(`player-attack-${this.characterId}`, char.sounds.attack);
-        }
-        if (char?.sounds?.death) {
-            this.load.audio(`player-death`, char.sounds.death);
-        }
-
-        // Load monster sounds
-        (monstersData as unknown as Monster[]).forEach(m => {
-            if (m.sounds?.attack) this.load.audio(`monster-attack-${m.id}`, m.sounds.attack);
-            if (m.sounds?.roar) this.load.audio(`monster-roar-${m.id}`, m.sounds.roar);
-            if (m.sounds?.death) this.load.audio(`monster-death-${m.id}`, m.sounds.death);
-        });
-
-        // Note: Actual character assets are loaded via IMG tags in DOM, 
-        // but we load placeholders here to avoid Phaser warning if needed.
-        if (!this.textures.exists('player-idle')) this.load.image('player-idle', '/assets/characters/hero1/Idle.gif');
-        if (!this.textures.exists('monster1-idle')) this.load.image('monster1-idle', '/assets/monsters/minion/Idle.gif');
-        if (!this.textures.exists('monster2-idle')) this.load.image('monster2-idle', '/assets/monsters/boss/Idle.gif');
-
-        projectsData.forEach((project: Project) => {
-            if (project.mockup && !this.textures.exists(project.id)) {
-                this.load.image(project.id, project.mockup);
-            }
-        });
+        // Assets are now managed by PreloaderScene
     }
 
     create() {
@@ -162,18 +102,13 @@ export class BattleScene extends Phaser.Scene {
             }
         }
 
-        window.addEventListener('resume-game', () => {
-            this.projectShown = true;
-            this.resumeGame();
-        });
+        window.addEventListener('resume-game', this.handleResumeGame);
+        window.addEventListener('toggle-sound', this.handleToggleSound);
 
-        window.addEventListener('toggle-sound', (e: Event) => {
-            const muted = (e as CustomEvent).detail.muted;
-            this.sound.mute = muted;
-            if (this.bgMusic) {
-                if (muted) this.bgMusic.pause();
-                else if (!this.isPaused) this.bgMusic.resume();
-            }
+        // Cleanup on Shutdown
+        this.events.once('shutdown', () => {
+            window.removeEventListener('resume-game', this.handleResumeGame);
+            window.removeEventListener('toggle-sound', this.handleToggleSound);
         });
     }
 
@@ -657,7 +592,7 @@ export class BattleScene extends Phaser.Scene {
         } else if (this.currentLevel === 2) {
             // Resume after Level 2 project reveal
             this.isPaused = false;
-            this.physics.resume();
+            this.physics?.resume();
             this.isLevelClearing = false;
 
             // Go to Victory Scene

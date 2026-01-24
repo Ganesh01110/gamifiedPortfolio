@@ -42,11 +42,11 @@ body {
 
 @layer utilities {
   .animate-marquee-slow {
-    animation: marquee 60s linear infinite;
+    animation: marquee 40s linear infinite;
   }
 
   .animate-marquee-slow-reverse {
-    animation: marquee-reverse 60s linear infinite;
+    animation: marquee-reverse 40s linear infinite;
   }
 }
 

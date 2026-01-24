@@ -452,14 +452,14 @@ export const ProfessionalView: React.FC = () => {
                 <section id="projects" className={`py-20 relative overflow-hidden transition-colors duration-500 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-200'}`}>
                     {/* Criss-Cross Quote Loop */}
                     <div className="absolute inset-0 pointer-events-none opacity-10 flex flex-col justify-between py-4 lg:justify-center lg:gap-12 overflow-hidden criss-cross-container">
-                        <div className="whitespace-nowrap flex gap-8 animate-marquee-slow lg:rotate-[11deg] lg:scale-150 criss-cross-top">
+                        <div className="whitespace-nowrap flex gap-8 animate-marquee-slow lg:rotate-[12deg] lg:scale-150 criss-cross-top">
                             {[...quotes, ...quotes].map((quote, i) => (
-                                <span key={i} className={`text-2xl lg:text-4xl font-black uppercase criss-cross-item ${theme === 'dark' ? 'text-white/50' : 'text-black/10'}`}>{quote}</span>
+                                <span key={i} className={`text-2xl lg:text-4xl font-black uppercase criss-cross-item ${theme === 'dark' ? 'text-[#07CEE5]/90' : 'text-[#00838F]/90'}`}>{quote}</span>
                             ))}
                         </div>
-                        <div className="whitespace-nowrap flex gap-8 animate-marquee-slow-reverse lg:-rotate-[11deg] lg:scale-150 criss-cross-bottom">
+                        <div className="whitespace-nowrap flex gap-8 animate-marquee-slow-reverse lg:-rotate-[10deg] lg:scale-150 criss-cross-bottom">
                             {[...quotes, ...quotes].map((quote, i) => (
-                                <span key={i} className={`text-2xl lg:text-4xl font-black uppercase criss-cross-item ${theme === 'dark' ? 'text-white/50' : 'text-black/10'}`}>{quote}</span>
+                                <span key={i} className={`text-2xl lg:text-4xl font-black uppercase criss-cross-item ${theme === 'dark' ? 'text-[#07CEE5]/90' : 'text-[#00838F]/90'}`}>{quote}</span>
                             ))}
                         </div>
                     </div>
@@ -664,12 +664,15 @@ function ContactForm({
     // Simple client-side submission wrapper
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        console.log('[ContactForm] Submitting form data to network...');
         setIsSubmitting(true);
         setStatus({ type: null, message: '' });
 
         const formData = new FormData(event.currentTarget);
+        console.log('[ContactForm] Fields:', Object.fromEntries(formData.entries()));
 
         const result = await sendEmail(null, formData);
+        console.log('[ContactForm] Server response received:', result);
 
         setIsSubmitting(false);
 
