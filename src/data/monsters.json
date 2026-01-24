@@ -188,6 +188,10 @@
             "roar": "/assets/sounds/monster-roar.mp3",
             "death": "/assets/sounds/hero-death-sound.mp3"
         },
-        "facing": "left"
+        "facing": "left",
+        "visualOffset": {
+            "x": 0,
+            "y": -65
+        }
     }
 ]

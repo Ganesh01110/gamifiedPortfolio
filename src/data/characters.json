@@ -166,7 +166,7 @@
         },
         "timings": {
             "attack1Duration": 3000,
-            "attack1HitDelay": 1000,
+            "attack1HitDelay": 1200,
             "attack2Duration": 3000,
             "attack2HitDelay": 1500,
             "dodgeDuration": 1500,

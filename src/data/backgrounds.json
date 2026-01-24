@@ -1,0 +1,14 @@
+[
+    {
+        "level": 1,
+        "desktop": "https://res.cloudinary.com/dyrcjeti2/image/upload/v1768981350/desktopbackground1_1_b5efcv.jpg",
+        "mobile": "https://res.cloudinary.com/dyrcjeti2/image/upload/v1768981350/mobilebackground1_tnj6bu.jpg",
+        "fallback": "/assets/gamebackground.png"
+    },
+    {
+        "level": 2,
+        "desktop": "https://res.cloudinary.com/dyrcjeti2/image/upload/v1768980198/desktopBackground1_xicraz.jpg",
+        "mobile": "https://res.cloudinary.com/dyrcjeti2/image/upload/v1768980197/mobileBackground2_zoyd0c.jpg",
+        "fallback": "/assets/gamebackground3.png"
+    }
+]

@@ -25,3 +25,16 @@ level sequence (currently in this pattern and after implementation also this seq
 
 add a pause button top right corner next to quit button , on clicking which game will pause and a sound button near the monster reveal section in storyComponent.tsx , so player can toggle the game sounds on or off before entering the actual game
 make these two buttons available in mobile also
+
+
+
+i want the background image to be dynamic i.e not fixed for desktop and mobile(based on screen ratio) , so prepare a json to add thse background image (some i uploaded in cloudinary  use that i have given the list , also for fall back there has to a local image for background ...till background load dont start game as it will hamper the game experience) 
+mobilebackground2 :https://res.cloudinary.com/dyrcjeti2/image/upload/v1768980197/mobileBackground2_zoyd0c.jpg
+desktopbackground2:https://res.cloudinary.com/dyrcjeti2/image/upload/v1768980198/desktopBackground1_xicraz.jpg
+desktopbackground1:https://res.cloudinary.com/dyrcjeti2/image/upload/v1768981350/desktopbackground1_1_b5efcv.jpg
+desktopbackground1:https://res.cloudinary.com/dyrcjeti2/image/upload/v1768981350/mobilebackground1_tnj6bu.jpg 
+
+also tell be how i can make the contact form of mine to be funtional is it resend api key is enough or i need to do something else or anything manually i have to do (as i have no idea) , i want on entering all the data and clicking on send button it should send the mail to my mail id and a success message should be displayed AND THE form itself clears after sending the message
+
+
+BattleScene2.ts is working good so remove unneccesary files , i have added chestbox png(have to add in the place of 🎁 emoji for level end reward scene) and a dramaticrock png (you have to create a component where this png should give a  parallax effect in  level 2 like rock at random place in suspension mode oscilating up and down but when it touches the ground or the protagonist's attck touches it it destroys with a lighting effect disintigrating into smaller rocks) , do it and then i will manually check if its working or not

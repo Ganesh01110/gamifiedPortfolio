@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useThemeStore } from '@/src/store/themeStore';
 
 interface ButtonProps {
     children: React.ReactNode;
@@ -26,6 +27,7 @@ export const Button: React.FC<ButtonProps> = ({
     onMouseEnter,
     onMouseLeave
 }) => {
+    const { theme } = useThemeStore();
     const baseStyles = 'rounded-lg font-bold transition-all duration-300 transform disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center';
 
     const sizeStyles = {
@@ -35,10 +37,10 @@ export const Button: React.FC<ButtonProps> = ({
     };
 
     const variantStyles = {
-        primary: 'bg-white text-black hover:bg-gray-200',
-        secondary: 'bg-gray-800 text-white border-2 border-gray-600 hover:border-white',
-        outline: 'bg-transparent text-white border-2 border-white hover:bg-white/10',
-        ghost: 'bg-transparent text-gray-400 hover:text-white hover:bg-white/5',
+        primary: theme === 'dark' ? 'bg-white text-black hover:bg-gray-200' : 'bg-gray-900 text-white hover:bg-gray-800',
+        secondary: theme === 'dark' ? 'bg-gray-800 text-white border-2 border-gray-600 hover:border-white' : 'bg-gray-100 text-gray-900 border-2 border-gray-300 hover:border-gray-900',
+        outline: theme === 'dark' ? 'bg-transparent text-white border-2 border-white hover:bg-white/10' : 'bg-transparent text-gray-900 border-2 border-gray-900 hover:bg-gray-900/5',
+        ghost: theme === 'dark' ? 'bg-transparent text-gray-400 hover:text-white hover:bg-white/5' : 'bg-transparent text-gray-600 hover:text-black hover:bg-black/5',
         'neon-cyan': 'bg-cyan-500 text-black hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]',
         'neon-amber': 'bg-amber-500 text-black hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.6)]',
         'neon-purple': 'bg-purple-500 text-white hover:bg-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.6)]',

@@ -5,6 +5,7 @@ export class BaseEntity extends Phaser.Physics.Arcade.Sprite {
     protected fixedBodyWidth: number;
     protected fixedBodyHeight: number;
     protected baseScale: number = 1;
+    protected visualOffset: { x: number, y: number } = { x: 0, y: 0 };
 
     constructor(
         scene: Phaser.Scene,
@@ -87,7 +88,7 @@ export class BaseEntity extends Phaser.Physics.Arcade.Sprite {
 
     public syncDOM() {
         if (this.domElement && this.active) {
-            this.domElement.setPosition(this.x, this.y);
+            this.domElement.setPosition(this.x + this.visualOffset.x, this.y + this.visualOffset.y);
             this.domElement.setDepth(this.depth);
 
             // Sync Flip using Phaser's scale instead of raw CSS to avoid conflicts

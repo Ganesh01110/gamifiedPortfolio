@@ -37,7 +37,7 @@ export async function sendEmail(prevState: unknown, formData: FormData) {
 
         await resend.emails.send({
             from: 'Portfolio Contact <onboarding@resend.dev>',
-            to: 'sahuganesh@gmail.com', // Replace with your email
+            to: 'ganeshsahu0108@gmail.com', // Replace with your email
             subject: `New Message from Portfolio: ${name}`,
             text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
         });

@@ -41,11 +41,33 @@
             "/projects/game3.jpg",
             "/projects/game4.jpg"
         ],
-        "liveLink": "",
+        "liveLink": "https://gamified-portfolio-one.vercel.app/",
         "repoLink": "https://github.com/Ganesh01110/gamifiedPortfolio"
     },
     {
         "id": "project-3",
+        "name": "Fitness Tracker PWA",
+        "category": "frontend",
+        "problem": "Tracking workouts, health metrics, and fitness progress",
+        "techStack": [
+            "React",
+            "Firebase",
+            "PWA",
+            "Chart.js",
+            "Local Storage"
+        ],
+        "description": "Progressive web app for fitness tracking with workout streak visualization, health metrics, supplement tracking, and dynamic exercise sets. Includes GitHub Actions CI/CD pipeline.",
+        "mockup": "/projects/fitness-mockup.jpg",
+        "images": [
+            "/projects/fitness-mockup.jpg",
+            "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1470&auto=format&fit=crop"
+        ],
+        "liveLink": "https://workout-tracking-39e60-beta.web.app",
+        "repoLink": "https://github.com/Ganesh01110/workout-tracker"
+    },
+    {
+        "id": "project-4",
         "name": "Smart Car Parking System",
         "category": "fullstack",
         "problem": "Inefficient parking management and lack of real-time slot availability",
@@ -68,7 +90,7 @@
         "repoLink": "https://github.com/Ganesh01110/projects"
     },
     {
-        "id": "project-4",
+        "id": "project-5",
         "name": "Library Management System",
         "category": "fullstack",
         "problem": "Streamlining book borrowing and library operations",
@@ -89,28 +111,6 @@
         ],
         "liveLink": "",
         "repoLink": "https://github.com/Ganesh01110/projects"
-    },
-    {
-        "id": "project-5",
-        "name": "Fitness Tracker PWA",
-        "category": "frontend",
-        "problem": "Tracking workouts, health metrics, and fitness progress",
-        "techStack": [
-            "React",
-            "Firebase",
-            "PWA",
-            "Chart.js",
-            "Local Storage"
-        ],
-        "description": "Progressive web app for fitness tracking with workout streak visualization, health metrics, supplement tracking, and dynamic exercise sets. Includes GitHub Actions CI/CD pipeline.",
-        "mockup": "/projects/fitness-mockup.jpg",
-        "images": [
-            "/projects/fitness-mockup.jpg",
-            "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1470&auto=format&fit=crop"
-        ],
-        "liveLink": "https://workout-tracking-39e60-beta.web.app",
-        "repoLink": "https://github.com/Ganesh01110/workout-tracker"
     },
     {
         "id": "project-6",
