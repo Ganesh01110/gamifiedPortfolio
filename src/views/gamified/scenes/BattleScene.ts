@@ -2,7 +2,7 @@ import * as Phaser from 'phaser';
 import projectsData from '@/src/data/projects.json';
 import charactersData from '@/src/data/characters.json';
 import monstersData from '@/src/data/monsters.json';
-import backgroundsData from '@/src/data/backgrounds.json';
+import backgroundsData from '../../../data/backgrounds.json';
 import { Player } from '../entities/Player';
 import { Enemy } from '../entities/Enemy';
 import { DramaticRock } from '../entities/DramaticRock';

@@ -43,6 +43,7 @@
                 "description": "Built a comprehensive system with secure role-based access, real-time WebSocket notifications for doctors, and financial tracking modules. Optimized backend performance by resolving CLOSE_WAIT issues and implementing automation scripts.",
                 "problem": "Inefficient hospital workflows and lack of real-time coordination between departments."
             },
+            "github": "https://github.com/talk2taksh/hms.git",
             "image": "/projects/hospitalmanagement.jpg",
             "image1": "/projects/hospitalmanagement.jpg",
             "demo": "https://www.linkedin.com/posts/ganesh-sahu-59a00b223_node-frontend-backend-activity-7369750031064608771-WSoz?utm_source=share&utm_medium=member_desktop&rcm=ACoAADgQfYYBbU_VZi93TdyoBiRMzBIH-1seu-8"
@@ -62,6 +63,7 @@
                 "description": "Implemented complex cloud integration patterns to ensure high availability and seamless data flow across distributed systems.",
                 "problem": "Synchronizing real-time data across multiple cloud providers with minimal latency."
             },
+            "github": "https://github.com/talk2taksh/hms.git",
             "image": "/projects/hospitalmanagement.jpg"
         }
     ],

@@ -372,9 +372,9 @@ export const ProfessionalView: React.FC = () => {
                                                     role: exp.role,
                                                     id: `experience-${idx}`,
                                                     category: 'experience',
-                                                    mockup: exp.image || exp.project.mockup || '',
+                                                    mockup: exp.image || (exp.project as { mockup?: string }).mockup || '',
                                                     liveLink: exp.demo || '',
-                                                    repoLink: exp.github || ''
+                                                    repoLink: exp?.github || ''
                                                 })}
                                             >
                                                 <div className={`absolute left-0 top-2 w-2 h-2 rounded-full border transition-colors ${theme === 'dark' ? 'border-gray-400 group-hover:border-cyan-500' : 'border-gray-500 group-hover:border-cyan-600'}`} />

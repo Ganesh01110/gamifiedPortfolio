@@ -36,10 +36,10 @@
         "description": "An interactive 2D RPG-style portfolio where users can select characters, explore a story, and battle monsters to reveal project details. Features custom mobile controls and responsive game design.",
         "mockup": "/projects/game1.jpg",
         "images": [
+            "/projects/game4.jpg",
             "/projects/game1.jpg",
             "/projects/game2.jpg",
-            "/projects/game3.jpg",
-            "/projects/game4.jpg"
+            "/projects/game3.jpg"
         ],
         "liveLink": "https://gamified-portfolio-one.vercel.app/",
         "repoLink": "https://github.com/Ganesh01110/gamifiedPortfolio"
