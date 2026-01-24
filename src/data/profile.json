@@ -26,7 +26,7 @@
         {
             "company": "Taksh software",
             "role": "Full Stack Developer Intern",
-            "description": "Led the implementation of a Hospital Management System that streamlined patient, doctor, and appointment management. Implemented secure authentication, RESTful APIs, and real-time notifications.",
+            "description": "Led the implementation of a Hospital Management System that streamlined patient, doctor, and appointment management. Implemented secure authentication, RESTful APIs, and real-time notifications with websockets while handlening close_wait stacks in server. Also implemented automation scripts to resolve the issue.",
             "duration": "11/2024 – 05/2025",
             "project": {
                 "name": "Hospital Management System",
@@ -44,6 +44,7 @@
                 "problem": "Inefficient hospital workflows and lack of real-time coordination between departments."
             },
             "image": "/projects/hospitalmanagement.jpg",
+            "image1": "/projects/hospitalmanagement.jpg",
             "demo": "https://www.linkedin.com/posts/ganesh-sahu-59a00b223_node-frontend-backend-activity-7369750031064608771-WSoz?utm_source=share&utm_medium=member_desktop&rcm=ACoAADgQfYYBbU_VZi93TdyoBiRMzBIH-1seu-8"
         },
         {
@@ -65,5 +66,6 @@
         }
     ],
     "resumeLink": "/assets/ganeshsahuresume291225.pdf",
-    "profileImage": "/assets/the sage.jpg"
+    "profileImage": "/assets/the sage.jpg",
+    "TotalExperience": "1"
 }

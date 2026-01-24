@@ -10,6 +10,9 @@ import skillsData from '@/src/data/skills.json';
 import { ProjectModal } from '@/src/components/ProjectModal';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
+import { useThemeStore } from '@/src/store/themeStore';
+import { ThemeToggle } from '@/src/components/ThemeToggle';
+import { IDCard } from '@/src/components/IDCard';
 
 interface Project {
     id: string;
@@ -19,6 +22,9 @@ interface Project {
     techStack: string[];
     description: string;
     mockup: string;
+    image?: string;
+    demo?: string;
+    github?: string;
     images?: string[];
     liveLink: string;
     repoLink: string;
@@ -28,6 +34,7 @@ interface Project {
 
 export const ProfessionalView: React.FC = () => {
     const { setView } = useViewStore();
+    const { theme } = useThemeStore();
 
     const fadeInUp = {
         initial: { opacity: 0, y: 20 },
@@ -133,12 +140,12 @@ export const ProfessionalView: React.FC = () => {
         <>
             {/* Cursor Trail */}
             <motion.div
-                className="fixed top-0 left-0 rounded-full border border-white pointer-events-none z-[9999] mix-blend-difference"
+                className={`fixed top-0 left-0 rounded-full border pointer-events-none z-[9999] mix-blend-difference ${theme === 'dark' ? 'border-white' : 'border-black'}`}
                 animate={cursorVariant === 'default' ? cursorvariants.default : cursorvariants[cursorVariant]}
                 transition={{ type: 'spring', damping: 25, stiffness: 250, mass: 0.5 }}
             />
             <motion.div
-                className="fixed top-0 left-0 w-3 h-3 rounded-full bg-cyan-500 pointer-events-none z-[9999] mix-blend-difference"
+                className={`fixed top-0 left-0 w-3 h-3 rounded-full pointer-events-none z-[9999] mix-blend-difference ${theme === 'dark' ? 'bg-cyan-500' : 'bg-cyan-600'}`}
                 animate={{
                     x: mousePos.x - 1.5,
                     y: mousePos.y - 1.5,
@@ -146,12 +153,21 @@ export const ProfessionalView: React.FC = () => {
                 transition={{ type: 'spring', damping: 30, stiffness: 450, mass: 0.2 }}
             />
 
-            <div style={{ zoom: '80%' }} className="min-h-[125vh] bg-black text-white selection:bg-cyan-500/30 overflow-x-hidden professional-view">
+            <div
+                style={{ zoom: '80%' }}
+                className={`
+                    min-h-[125vh] transition-colors duration-500 overflow-x-hidden professional-view selection:bg-cyan-500/30
+                    ${theme === 'dark' ? 'bg-black text-white' : 'bg-[#f8f9fa] text-[#1a1a1a]'}
+                `}
+            >
                 {/* Navigation */}
                 <nav
                     onMouseEnter={headerEnter}
                     onMouseLeave={headerLeave}
-                    className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800"
+                    className={`
+                        fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-colors duration-500
+                        ${theme === 'dark' ? 'bg-black/80 border-gray-800' : 'bg-white/80 border-gray-200'}
+                    `}
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center h-16">
@@ -163,9 +179,10 @@ export const ProfessionalView: React.FC = () => {
                                 {profileData.name}
                             </div>
                             <div className="flex items-center gap-6">
-                                <a href="#about" onMouseEnter={textEnter} onMouseLeave={textLeave} className="text-gray-400 hover:text-white transition-colors">About</a>
-                                <a href="#skills" onMouseEnter={textEnter} onMouseLeave={textLeave} className="text-gray-400 hover:text-white transition-colors">Skills</a>
-                                <a href="#projects" onMouseEnter={textEnter} onMouseLeave={textLeave} className="text-gray-400 hover:text-white transition-colors">Projects</a>
+                                <a href="#about" onMouseEnter={textEnter} onMouseLeave={textLeave} className={`transition-colors ${theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}>About</a>
+                                <a href="#skills" onMouseEnter={textEnter} onMouseLeave={textLeave} className={`transition-colors ${theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}>Skills</a>
+                                <a href="#projects" onMouseEnter={textEnter} onMouseLeave={textLeave} className={`transition-colors ${theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}>Projects</a>
+                                <ThemeToggle />
                                 <Button
                                     variant="outline"
                                     size="sm"
@@ -186,21 +203,22 @@ export const ProfessionalView: React.FC = () => {
                     {['hero', 'about', 'skills', 'projects', 'contact'].map((section) => (
                         <div key={section} className="relative group flex items-center justify-end">
                             <span className={`
-                                absolute right-8 px-2 py-1 rounded bg-black/80 border border-white/10 text-[10px] 
-                                uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 
-                                transition-all duration-300 pointer-events-none whitespace-nowrap
-                                ${activeSection === section ? 'text-cyan-400 border-cyan-500/30' : ''}
-                            `}>
+                                    absolute right-8 px-2 py-1 rounded border text-[10px] 
+                                    uppercase tracking-widest opacity-0 group-hover:opacity-100 
+                                    transition-all duration-300 pointer-events-none whitespace-nowrap
+                                    ${activeSection === section ? 'text-cyan-400 border-cyan-500/30' : ''}
+                                    ${theme === 'dark' ? 'bg-black/80 border-white/10 text-white' : 'bg-white/80 border-black/10 text-black'}
+                                `}>
                                 {section}
                             </span>
                             <button
                                 onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' })}
                                 className={`
-                                    w-2 h-2 rounded-full transition-all duration-300
-                                    ${activeSection === section
+                                        w-2 h-2 rounded-full transition-all duration-300
+                                        ${activeSection === section
                                         ? 'bg-cyan-500 w-8 h-1'
-                                        : 'bg-white/20 hover:bg-white/60 hover:scale-125'}
-                                `}
+                                        : theme === 'dark' ? 'bg-white/20 hover:bg-white/60 hover:scale-125' : 'bg-black/20 hover:bg-black/60 hover:scale-125'}
+                                    `}
                                 onMouseEnter={buttonEnter}
                                 onMouseLeave={buttonLeave}
                                 aria-label={`Scroll to ${section}`}
@@ -210,68 +228,81 @@ export const ProfessionalView: React.FC = () => {
                 </div>
 
                 {/* Hero Section */}
-                <section id="hero" className="pt-32 pb-20 px-4">
-                    <div className="max-w-7xl mx-auto text-center">
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <h1
-                                onMouseEnter={textEnter}
-                                onMouseLeave={textLeave}
-                                className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
+                <section id="hero" className="pt-40 pb-20 px-4 md:px-12 relative">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-24 items-center">
+                            {/* Left: ID Card */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="flex justify-center order-2 lg:order-1 lg:col-span-2"
                             >
-                                Building digital <br />
-                                <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-amber-400 bg-clip-text text-transparent">
-                                    experiences that matter
-                                </span>
-                            </h1>
-                            <p
-                                onMouseEnter={textEnter}
-                                onMouseLeave={textLeave}
-                                className="text-xl text-gray-400 max-w-2xl mx-auto mb-10"
+                                <IDCard />
+                            </motion.div>
+
+                            {/* Right: Hero Text */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="text-center lg:text-left order-1 lg:order-2 relative z-30 lg:col-span-3"
                             >
-                                {profileData.tagline}
-                            </p>
-                            <div className="flex justify-center gap-4">
-                                <Button
-                                    variant="primary"
-                                    size="sm"
-                                    className="px-6 py-2.5 text-base font-medium rounded-full"
-                                    onMouseEnter={buttonEnter}
-                                    onMouseLeave={buttonLeave}
-                                    onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                                <h1
+                                    onMouseEnter={textEnter}
+                                    onMouseLeave={textLeave}
+                                    className="text-4xl md:text-6xl lg:text-7xl font-black mb-2 tracking-tighter leading-tight md:leading-[0.8] lg:leading-[0.7] text-wrap"
                                 >
-                                    View Work
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="px-6 py-2.5 text-base font-medium rounded-full border-white/20 hover:border-white"
-                                    onMouseEnter={buttonEnter}
-                                    onMouseLeave={buttonLeave}
-                                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                                    Building digital <span className="text-2xl md:text-4xl lg:text-5xl bg-gradient-to-r from-[#11A4BA] via-purple-500 to-[#6B78CF] bg-clip-text text-transparent block lg:inline-block mt-0">
+                                        experiences that matter
+                                    </span>
+                                </h1>
+                                <p
+                                    onMouseEnter={textEnter}
+                                    onMouseLeave={textLeave}
+                                    className={`text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-12 transition-colors ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}
                                 >
-                                    Contact Me
-                                </Button>
-                                <a
-                                    href={profileData.resumeLink || '#'}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
+                                    {profileData.tagline}
+                                </p>
+                                <div className="flex flex-wrap justify-center lg:justify-start gap-6">
                                     <Button
-                                        variant="secondary"
+                                        variant="primary"
                                         size="sm"
-                                        className="px-6 py-2.5 text-base font-medium rounded-full border-gray-800"
+                                        className="px-6 py-2.5 text-base font-medium rounded-full"
                                         onMouseEnter={buttonEnter}
                                         onMouseLeave={buttonLeave}
+                                        onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                                     >
-                                        Resume
+                                        View Work
                                     </Button>
-                                </a>
-                            </div>
-                        </motion.div>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className={`px-6 py-2.5 text-base font-medium rounded-full transition-all duration-300 ${theme === 'dark' ? 'border-white/20 hover:border-white' : 'border-black/20 hover:border-black'}`}
+                                        onMouseEnter={buttonEnter}
+                                        onMouseLeave={buttonLeave}
+                                        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                                    >
+                                        Contact Me
+                                    </Button>
+                                    <a
+                                        href={profileData.resumeLink || '#'}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Button
+                                            variant="secondary"
+                                            size="sm"
+                                            className={`px-6 py-2.5 text-base font-medium rounded-full ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}
+                                            onMouseEnter={buttonEnter}
+                                            onMouseLeave={buttonLeave}
+                                        >
+                                            Resume
+                                        </Button>
+                                    </a>
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
                 </section>
 
@@ -280,7 +311,7 @@ export const ProfessionalView: React.FC = () => {
                     id="about"
                     onMouseEnter={headerEnter}
                     onMouseLeave={headerLeave}
-                    className="py-24 bg-gray-900/30"
+                    className={`py-24 transition-colors duration-500 ${theme === 'dark' ? 'bg-gray-900/30' : 'bg-gray-200'}`}
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid grid-cols-1 lg:grid-cols-10 gap-x-12 gap-y-16 items-start">
@@ -300,12 +331,12 @@ export const ProfessionalView: React.FC = () => {
                                     variants={fadeInUp}
                                     onMouseEnter={cardEnter}
                                     onMouseLeave={cardLeave}
-                                    className="bg-black/40 border border-gray-800 p-8 rounded-3xl backdrop-blur-sm min-h-[400px] flex flex-col justify-center"
+                                    className={`border p-8 rounded-3xl backdrop-blur-sm min-h-[400px] flex flex-col justify-center transition-colors duration-500 ${theme === 'dark' ? 'bg-black/40 border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}
                                 >
                                     <p
                                         onMouseEnter={textEnter}
                                         onMouseLeave={textLeave}
-                                        className="text-xl text-gray-300 leading-relaxed"
+                                        className={`text-xl leading-relaxed transition-colors duration-500 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
                                     >
                                         {profileData.bio}
                                     </p>
@@ -328,7 +359,7 @@ export const ProfessionalView: React.FC = () => {
                                     variants={fadeInUp}
                                     onMouseEnter={cardEnter}
                                     onMouseLeave={cardLeave}
-                                    className="bg-black/40 border border-gray-800 p-8 rounded-3xl backdrop-blur-sm min-h-[400px] flex flex-col relative"
+                                    className={`border p-8 rounded-3xl backdrop-blur-sm min-h-[400px] flex flex-col relative transition-colors duration-500 ${theme === 'dark' ? 'bg-black/40 border-gray-800' : 'bg-white border-gray-200 shadow-sm'}`}
                                 >
                                     <div className="space-y-8 flex-grow">
                                         {profileData.experience?.map((exp, idx) => (
@@ -341,29 +372,29 @@ export const ProfessionalView: React.FC = () => {
                                                     role: exp.role,
                                                     id: `experience-${idx}`,
                                                     category: 'experience',
-                                                    mockup: '',
-                                                    liveLink: '',
-                                                    repoLink: ''
+                                                    mockup: exp.image || exp.project.mockup || '',
+                                                    liveLink: exp.demo || '',
+                                                    repoLink: exp.github || ''
                                                 })}
                                             >
-                                                <div className="absolute left-0 top-2 w-2 h-2 rounded-full border border-gray-400 group-hover:border-cyan-500 transition-colors" />
+                                                <div className={`absolute left-0 top-2 w-2 h-2 rounded-full border transition-colors ${theme === 'dark' ? 'border-gray-400 group-hover:border-cyan-500' : 'border-gray-500 group-hover:border-cyan-600'}`} />
                                                 <div className="flex justify-between items-start">
                                                     <div className="pr-4">
-                                                        <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors leading-tight">
+                                                        <h3 className={`text-lg font-bold transition-colors leading-tight ${theme === 'dark' ? 'text-white group-hover:text-cyan-400' : 'text-gray-900 group-hover:text-cyan-600'}`}>
                                                             {exp.company} <br />
-                                                            <span className="text-[10px] text-gray-500 font-normal uppercase tracking-widest">({exp.role})</span>
+                                                            <span className={`text-[10px] font-normal uppercase tracking-widest ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>({exp.role})</span>
                                                         </h3>
                                                     </div>
-                                                    <div className="p-1.5 rounded-full border border-gray-800 group-hover:border-cyan-500 group-hover:bg-cyan-500/10 transition-all duration-300 transform group-hover:rotate-12">
-                                                        <ArrowUpRight className="w-4 h-4 text-gray-400 group-hover:text-cyan-400" />
+                                                    <div className={`p-1.5 rounded-full border transition-all duration-300 transform group-hover:rotate-12 ${theme === 'dark' ? 'border-gray-800 group-hover:border-cyan-500 group-hover:bg-cyan-500/10' : 'border-gray-200 group-hover:border-cyan-600 group-hover:bg-cyan-600/5'}`}>
+                                                        <ArrowUpRight className={`w-4 h-4 transition-colors ${theme === 'dark' ? 'text-gray-400 group-hover:text-cyan-400' : 'text-gray-500 group-hover:text-cyan-600'}`} />
                                                     </div>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <div className="mt-8 pt-6 border-t border-gray-800/50">
-                                        <p className="text-[10px] text-center text-gray-500 uppercase tracking-widest font-medium">
+                                    <div className={`mt-8 pt-6 border-t transition-colors ${theme === 'dark' ? 'border-gray-800/50' : 'border-gray-200'}`}>
+                                        <p className={`text-[10px] text-center uppercase tracking-widest font-medium transition-colors ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
                                             Click to view details
                                         </p>
                                     </div>
@@ -389,12 +420,12 @@ export const ProfessionalView: React.FC = () => {
                                         variants={fadeInUp}
                                         onMouseEnter={headerEnter}
                                         onMouseLeave={headerLeave}
-                                        className="bg-gray-900 border border-gray-800 rounded-xl p-6"
+                                        className={`border rounded-xl p-6 transition-all duration-500 ${theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-gray-300 border-gray-200 shadow-sm'}`}
                                     >
                                         <h3
                                             onMouseEnter={textEnter}
                                             onMouseLeave={textLeave}
-                                            className="text-xl font-semibold mb-4 capitalize text-cyan-400"
+                                            className={`text-xl font-semibold mb-4 capitalize text-cyan-400 ${theme === 'dark' ? 'text-cyan-400' : 'text-cyan-600'}`}
                                         >
                                             {category.replace(/([A-Z])/g, ' $1').trim()}
                                         </h3>
@@ -404,7 +435,7 @@ export const ProfessionalView: React.FC = () => {
                                                     key={skill}
                                                     onMouseEnter={textEnter}
                                                     onMouseLeave={textLeave}
-                                                    className="px-3 py-1 bg-gray-800 rounded-full text-sm text-gray-300 hover:bg-gray-700 transition-colors"
+                                                    className={`px-3 py-1 rounded-full text-sm transition-colors ${theme === 'dark' ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
                                                 >
                                                     {skill}
                                                 </span>
@@ -417,17 +448,17 @@ export const ProfessionalView: React.FC = () => {
                 </section>
 
                 {/* Projects Section */}
-                <section id="projects" className="py-20 bg-gray-900/50 relative overflow-hidden">
+                <section id="projects" className={`py-20 relative overflow-hidden transition-colors duration-500 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-200'}`}>
                     {/* Criss-Cross Quote Loop */}
                     <div className="absolute inset-0 pointer-events-none opacity-10 flex flex-col justify-between py-4 lg:justify-center lg:gap-12 overflow-hidden criss-cross-container">
                         <div className="whitespace-nowrap flex gap-8 animate-marquee-slow lg:rotate-[11deg] lg:scale-150 criss-cross-top">
                             {[...quotes, ...quotes].map((quote, i) => (
-                                <span key={i} className="text-2xl lg:text-4xl font-black uppercase text-white/50 criss-cross-item">{quote}</span>
+                                <span key={i} className={`text-2xl lg:text-4xl font-black uppercase criss-cross-item ${theme === 'dark' ? 'text-white/50' : 'text-black/10'}`}>{quote}</span>
                             ))}
                         </div>
                         <div className="whitespace-nowrap flex gap-8 animate-marquee-slow-reverse lg:-rotate-[11deg] lg:scale-150 criss-cross-bottom">
                             {[...quotes, ...quotes].map((quote, i) => (
-                                <span key={i} className="text-2xl lg:text-4xl font-black uppercase text-white/50 criss-cross-item">{quote}</span>
+                                <span key={i} className={`text-2xl lg:text-4xl font-black uppercase criss-cross-item ${theme === 'dark' ? 'text-white/50' : 'text-black/10'}`}>{quote}</span>
                             ))}
                         </div>
                     </div>
@@ -445,9 +476,9 @@ export const ProfessionalView: React.FC = () => {
                                     onClick={() => setSelectedProject(project)}
                                     onMouseEnter={cardEnter}
                                     onMouseLeave={cardLeave}
-                                    className="group bg-black border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-colors cursor-pointer"
+                                    className={`group border rounded-xl overflow-hidden transition-all duration-500 cursor-pointer ${theme === 'dark' ? 'bg-black border-gray-800 hover:border-cyan-500/50' : 'bg-white border-gray-200 hover:border-cyan-500 shadow-sm'}`}
                                 >
-                                    <div className="h-48 bg-gray-800 relative overflow-hidden flex items-center justify-center">
+                                    <div className={`h-48 relative overflow-hidden flex items-center justify-center transition-colors ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}>
                                         {/* Project Mockup Image */}
                                         {project.mockup ? (
                                             <Image
@@ -463,7 +494,7 @@ export const ProfessionalView: React.FC = () => {
                                         )}
 
                                         {/* Category Emoji at Corner */}
-                                        <div className="absolute top-3 left-3 text-xl bg-black/60 backdrop-blur-md rounded-full w-10 h-10 flex items-center justify-center z-20 border border-white/10 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                                        <div className={`absolute top-3 left-3 text-xl backdrop-blur-md rounded-full w-10 h-10 flex items-center justify-center z-20 border group-hover:scale-110 transition-all duration-300 shadow-lg ${theme === 'dark' ? 'bg-black/60 border-white/10' : 'bg-white/80 border-black/5'}`}>
                                             {project.category === 'frontend' && '🎨'}
                                             {project.category === 'backend' && '⚙️'}
                                             {project.category === 'fullstack' && '⚡'}
@@ -472,15 +503,15 @@ export const ProfessionalView: React.FC = () => {
                                         </div>
                                     </div>
                                     <div className="p-6">
-                                        <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">
+                                        <h3 className={`text-xl font-bold mb-2 transition-colors ${theme === 'dark' ? 'group-hover:text-cyan-400' : 'group-hover:text-cyan-600'}`}>
                                             {project.name}
                                         </h3>
-                                        <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                                        <p className={`text-sm mb-4 line-clamp-3 transition-colors ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                                             {project.description}
                                         </p>
                                         <div className="flex flex-wrap gap-2 mb-4">
                                             {project.techStack.slice(0, 3).map((tech) => (
-                                                <span key={tech} className="text-xs text-gray-500 border border-gray-800 px-2 py-1 rounded">
+                                                <span key={tech} className={`text-xs border px-2 py-1 rounded transition-colors ${theme === 'dark' ? 'text-gray-500 border-gray-800' : 'text-gray-500 border-gray-200'}`}>
                                                     {tech}
                                                 </span>
                                             ))}
@@ -515,7 +546,7 @@ export const ProfessionalView: React.FC = () => {
                             className="text-center mb-12"
                         >
                             <h2 className="text-3xl font-bold mb-8">Let&apos;s Work Together</h2>
-                            <p className="text-lg text-gray-400">
+                            <p className={`text-lg transition-colors ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                                 I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
                             </p>
                         </motion.div>
@@ -544,9 +575,9 @@ export const ProfessionalView: React.FC = () => {
                                                 href={href}
                                                 target={platform.toLowerCase() === 'github' || platform.toLowerCase() === 'linkedin' || platform.toLowerCase() === 'twitter' ? "_blank" : undefined}
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-4 text-gray-400 hover:text-white transition-colors group"
+                                                className={`flex items-center gap-4 transition-colors group ${theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}
                                             >
-                                                <span className="bg-gray-800 p-3 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+                                                <span className={`p-3 rounded-lg transition-colors ${theme === 'dark' ? 'bg-gray-800 group-hover:bg-cyan-500/20' : 'bg-gray-300 group-hover:bg-cyan-600/10'}`}>
                                                     {/* Simple Icon Placeholders */}
                                                     {platform === 'github' && '🐙'}
                                                     {platform === 'Email' && '📧'}
@@ -570,7 +601,7 @@ export const ProfessionalView: React.FC = () => {
                                 transition={{ delay: 0.4 }}
                                 onMouseEnter={cardEnter}
                                 onMouseLeave={cardLeave}
-                                className="bg-gray-900/50 p-8 rounded-2xl border border-gray-800"
+                                className={`p-8 rounded-2xl border transition-all duration-500 ${theme === 'dark' ? 'bg-gray-900/50 border-gray-800' : 'bg-white border-gray-200 shadow-lg'}`}
                             >
                                 <ContactForm
                                     buttonEnter={buttonEnter}
@@ -586,7 +617,7 @@ export const ProfessionalView: React.FC = () => {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.6 }}
-                            className="text-gray-500 text-sm text-center mt-20"
+                            className={`text-sm text-center mt-20 transition-colors ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}
                         >
                             © {new Date().getFullYear()} {profileData.name}. All rights reserved.
                         </motion.p>
@@ -625,6 +656,7 @@ function ContactForm({
     textEnter: () => void;
     textLeave: () => void;
 }) {
+    const { theme } = useThemeStore();
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [status, setStatus] = React.useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
 
@@ -658,7 +690,7 @@ function ContactForm({
     return (
         <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-1">Name</label>
+                <label htmlFor="name" className={`block text-sm font-medium mb-1 transition-colors ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Name</label>
                 <input
                     type="text"
                     id="name"
@@ -667,12 +699,12 @@ function ContactForm({
                     minLength={2}
                     onMouseEnter={textEnter}
                     onMouseLeave={textLeave}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                    className={`w-full border rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-500 transition-colors ${theme === 'dark' ? 'bg-gray-800 border-gray-700 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`}
                     placeholder="Your Name"
                 />
             </div>
             <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                <label htmlFor="email" className={`block text-sm font-medium mb-1 transition-colors ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Email</label>
                 <input
                     type="email"
                     id="email"
@@ -680,12 +712,12 @@ function ContactForm({
                     required
                     onMouseEnter={textEnter}
                     onMouseLeave={textLeave}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                    className={`w-full border rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-500 transition-colors ${theme === 'dark' ? 'bg-gray-800 border-gray-700 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`}
                     placeholder="your@email.com"
                 />
             </div>
             <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-1">Message</label>
+                <label htmlFor="message" className={`block text-sm font-medium mb-1 transition-colors ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Message</label>
                 <textarea
                     id="message"
                     name="message"
@@ -694,7 +726,7 @@ function ContactForm({
                     rows={4}
                     onMouseEnter={textEnter}
                     onMouseLeave={textLeave}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors resize-none"
+                    className={`w-full border rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-500 transition-colors resize-none ${theme === 'dark' ? 'bg-gray-800 border-gray-700 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`}
                     placeholder="Tell me about your project..."
                 />
             </div>
