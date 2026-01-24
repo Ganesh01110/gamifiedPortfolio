@@ -438,7 +438,7 @@ export class BattleScene extends Phaser.Scene {
         });
 
         this.checkGameState();
-        this.renderDebug();
+        // this.renderDebug(); // Commented out for deployment; uncomment for hitbox debugging
     }
 
     private debugGraphics?: Phaser.GameObjects.Graphics;

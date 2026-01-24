@@ -43,9 +43,10 @@ export async function sendEmail(prevState: unknown, formData: FormData) {
         });
 
         return { success: true, message: 'Email sent successfully!' };
-    } catch {
+    } catch (error) {
+        console.error('Error sending email via Resend:', error);
         return {
-            message: 'Database Error: Failed to send email.',
+            message: error instanceof Error ? error.message : 'Failed to send email. Please check your Resend configuration.',
         };
     }
 }
