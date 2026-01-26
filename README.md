@@ -60,7 +60,14 @@ An interactive, dual-mode portfolio website built with **Next.js**, **Phaser.js*
 5.  **Open in Browser:**
     Navigate to `http://localhost:3000`.
 
-## � Secondary Documentation
+## 📊 Monitoring & Documentation
+
+View real-time technical data and interactive API maps:
+
+- **[📖 API Documentation](./api-docs)**: Interactive Swagger UI showing all backend routes and specifications.
+- **[📈 Observability Metrics](./api/metrics)**: Real-time Prometheus data tracking page views and game sessions.
+
+##  Secondary Documentation
 
 For a deeper dive into the technical architecture and pipeline, check out:
 

@@ -74,5 +74,6 @@ To activate the pipeline, go to **Settings > Secrets and Variables > Actions** a
 
 ---
 
-## 📊 Monitoring
-View real-time Prometheus data at `/api/metrics`. This tracks custom events like `game_starts_total` to provide business-level observability.
+## 📊 Monitoring & Documentation
+- **API Metrics**: View real-time Prometheus data at [`/api/metrics`](./api/metrics). This tracks custom events like `game_starts_total`.
+- **API Spec**: Interactive documentation is available at [`/api-docs`](./api-docs) (OpenAPI / Swagger).
