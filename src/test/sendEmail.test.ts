@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import { sendEmail } from '../actions/sendEmail';
-import { Resend } from 'resend';
 
 // Mock Resend
 vi.mock('resend', () => {
