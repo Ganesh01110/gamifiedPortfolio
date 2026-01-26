@@ -9,7 +9,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest"
+    "test": "vitest",
+    "monitor:start": "docker-compose -f docker-compose.monitoring.yml up -d",
+    "monitor:stop": "docker-compose -f docker-compose.monitoring.yml stop",
+    "monitor:clean": "docker-compose -f docker-compose.monitoring.yml down -v"
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",

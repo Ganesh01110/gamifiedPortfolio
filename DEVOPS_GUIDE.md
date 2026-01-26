@@ -13,8 +13,9 @@ This repository has been transformed into a professional-grade DevOps showcase, 
 ### Infrastructure-as-Code ([`terraform/main.tf`](./terraform/main.tf)):
 - Your Vercel setup is now version-controlled using Terraform.
 
-### Observability ([`metrics/route.js`](./app/api/metrics/route.js)):
-- Implemented a Prometheus-compatible metrics endpoint to track site usage and "Game Starts."
+### Observability ([`metrics/route.ts`](./app/api/metrics/route.ts)):
+- Implemented a Prometheus-compatible metrics endpoint.
+- **Grafana Stack**: Added a Dockerized monitoring stack for professional data visualization.
 
 ## 🗺 Dependency Map
 
@@ -26,6 +27,7 @@ graph TD
     B -->|Deploy| E(Vercel Infrastructure)
     E -->|Manage| F(Terraform IaC)
     E -->|Monitor| G(Prometheus Metrics)
+    G -->|Visualize| H(Grafana Dashboards)
 ```
 
 ---
@@ -77,3 +79,11 @@ To activate the pipeline, go to **Settings > Secrets and Variables > Actions** a
 ## 📊 Monitoring & Documentation
 - **API Metrics**: View real-time Prometheus data at [`/api/metrics`](./api/metrics). This tracks custom events like `game_starts_total`.
 - **API Spec**: Interactive documentation is available at [`/api-docs`](./api-docs) (OpenAPI / Swagger).
+- **Visualization**: Use `docker-compose -f docker-compose.monitoring.yml up` to spin up a local **Grafana** dashboard connected to your metrics.
+
+
+   -docker-compose -f docker-compose.monitoring.yml up -d
+
+-**local monitoring** : Prometheus: Visit http://localhost:9090 to see the raw metrics.
+Grafana: Visit http://localhost:3001 (login: admin / admin).
+Tip: In Grafana, add a "Prometheus" data source and set the URL to http://prometheus:9090. You can then create beautiful charts for your "Game Starts" or "API Hits"!   
