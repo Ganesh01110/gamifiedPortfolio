@@ -741,6 +741,7 @@ function ContactForm({
 
             <Button
                 variant="primary"
+                type="submit"
                 className="w-full"
                 disabled={isSubmitting}
                 onMouseEnter={buttonEnter}
