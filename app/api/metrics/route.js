@@ -1,5 +1,5 @@
 import { register, apiHits } from '@/src/lib/metrics';
-
+import { NextResponse } from 'next/server';
 
 /**
  * @openapi
@@ -12,13 +12,44 @@ import { register, apiHits } from '@/src/lib/metrics';
  *         description: Success
  *         content:
  *           text/plain:
- *             example: "# HELP portfolio_page_views_total Total number of page views..."
+ *             example: "# HELP portfolio_api_hits_total Total number of hits to the metrics endpoint..."
  */
-export default async function handler(req, res) {
-    res.setHeader('Content-Type', register.contentType);
+export async function GET() {
+    console.log('[API] /api/metrics called');
 
     // Automatically track whenever this endpoint is called
     apiHits.inc();
 
-    res.send(await register.metrics());
+    const metrics = await register.metrics();
+    return new NextResponse(metrics, {
+        headers: {
+            'Content-Type': register.contentType,
+        },
+    });
 }
+
+/**
+ * @openapi
+ * /api/contact:
+ *   post:
+ *     summary: Send a contact form email
+ *     description: Submits a message to the portfolio owner using the Resend service.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [name, email, message]
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               message:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Email sent successfully
+ */
