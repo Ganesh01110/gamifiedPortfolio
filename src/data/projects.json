@@ -34,10 +34,10 @@
             "Next.js"
         ],
         "description": "An interactive 2D RPG-style portfolio where users can select characters, explore a story, and battle monsters to reveal project details. Features custom mobile controls and responsive game design.",
-        "mockup": "/projects/game1.jpg",
+        "mockup": "/projects/game1.webp",
         "images": [
             "/projects/game4.jpg",
-            "/projects/game1.jpg",
+            "/projects/game1.webp",
             "/projects/game2.jpg",
             "/projects/game3.jpg"
         ],

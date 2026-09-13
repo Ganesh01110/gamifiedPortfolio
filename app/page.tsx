@@ -8,6 +8,7 @@ import { CharacterSelection } from '@/src/views/gamified/CharacterSelection';
 import { ProfessionalView } from '@/src/views/normal/ProfessionalView';
 import { VerticalBlindTransition } from '@/src/components/VerticalBlindTransition';
 import profileData from '@/src/data/profile.json';
+import themeData from '@/src/data/theme.json';
 
 export default function Home() {
   const { currentView, setView } = useViewStore();
@@ -55,7 +56,10 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="text-center mb-16"
             >
-              <h1 className="text-6xl md:text-8xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-purple-500 to-amber-400 bg-clip-text text-transparent">
+              <h1 
+                className="text-6xl md:text-8xl font-bold mb-4 bg-clip-text text-transparent"
+                style={{ backgroundImage: themeData.textGradients.primary }}
+              >
                 {profileData.name}
               </h1>
               <p className="text-2xl md:text-3xl text-gray-300 mb-2">{profileData.title}</p>
@@ -89,18 +93,21 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
                 whileHover={{ scale: 1.05 }}
-                className="bg-gradient-to-br from-purple-900 via-gray-900 to-cyan-900 border-2 border-purple-700 rounded-2xl p-8 cursor-pointer hover:border-cyan-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.4)] transition-all duration-300"
+                className={`${themeData.cards.gamifiedCard.background} border-2 ${themeData.cards.gamifiedCard.border} rounded-2xl p-8 cursor-pointer ${themeData.cards.gamifiedCard.hoverBorder} ${themeData.cards.gamifiedCard.hoverShadow} transition-all duration-300`}
                 onClick={handleStartAdventure}
               >
                 <div className="text-center">
                   <div className="text-6xl mb-4">🎮</div>
-                  <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                  <h2 
+                    className="text-3xl font-bold mb-4 bg-clip-text text-transparent"
+                    style={{ backgroundImage: themeData.textGradients.secondary }}
+                  >
                     Gamified Experience
                   </h2>
                   <p className="text-gray-300 mb-6">
                     Embark on an interactive journey through skills and projects. Choose your character and battle through challenges!
                   </p>
-                  <Button variant="neon-purple">Start the Adventure</Button>
+                  <Button variant={(themeData.cards.gamifiedCard.buttonVariant as any) || "neon-cyan"}>Start the Adventure</Button>
                 </div>
               </motion.div>
             </div>

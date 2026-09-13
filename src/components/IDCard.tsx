@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import profileData from '@/src/data/profile.json';
+import themeData from '@/src/data/theme.json';
 import { useThemeStore } from '@/src/store/themeStore';
 import Image from 'next/image';
 
@@ -115,8 +116,8 @@ export const IDCard: React.FC = () => {
                     w-full h-full rounded-[24px] overflow-hidden relative flex flex-col shadow-[inset_0_2px_8px_rgba(0,0,0,0.4)]
                     ${theme === 'dark' ? 'bg-[#151515]' : 'bg-[#ffffff]'}
                 `}>
-                    {/* Vibrant Card Top (Orange gradient) */}
-                    <div className="absolute top-0 left-0 right-0 h-[58%] bg-gradient-to-br from-[#00838F] to-[#07CEE5] z-0" />
+                    {/* Vibrant Card Top Header */}
+                    <div className={`absolute top-0 left-0 right-0 h-[58%] bg-gradient-to-br ${themeData.cards.idCard.topBannerGradient} z-0`} />
 
                     {/* Content Section */}
                     <div className="relative z-10 flex flex-col h-full p-6">
@@ -148,7 +149,10 @@ export const IDCard: React.FC = () => {
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                                     {/* Overlay Label */}
                                     <div className="absolute bottom-3 left-0 right-0 text-center">
-                                        <span className="bg-white text-[#037582] text-[9px] font-black uppercase px-3 py-1 rounded-full shadow-md">
+                                        <span 
+                                            className="bg-white text-[9px] font-black uppercase px-3 py-1 rounded-full shadow-md"
+                                            style={{ color: themeData.cards.idCard.tagText }}
+                                        >
                                             Fullstack developer
                                         </span>
                                     </div>

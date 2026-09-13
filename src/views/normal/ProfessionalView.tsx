@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/src/components/Button';
 import { useViewStore } from '@/src/store/viewStore';
 import profileData from '@/src/data/profile.json';
+import themeData from '@/src/data/theme.json';
 import projectsData from '@/src/data/projects.json';
 import skillsData from '@/src/data/skills.json';
 import { ProjectModal } from '@/src/components/ProjectModal';
@@ -175,7 +176,8 @@ export const ProfessionalView: React.FC = () => {
                             <div
                                 onMouseEnter={textEnter}
                                 onMouseLeave={textLeave}
-                                className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent"
+                                className="text-xl font-bold bg-clip-text text-transparent"
+                                style={{ backgroundImage: themeData.textGradients.secondary }}
                             >
                                 {profileData.name}
                             </div>
@@ -254,7 +256,10 @@ export const ProfessionalView: React.FC = () => {
                                     onMouseLeave={textLeave}
                                     className="text-4xl md:text-6xl lg:text-7xl font-black mb-2 tracking-tighter leading-tight md:leading-[0.8] lg:leading-[0.7] text-wrap"
                                 >
-                                    Building digital <span className="text-2xl md:text-4xl lg:text-5xl bg-gradient-to-r from-[#11A4BA] via-purple-500 to-[#6B78CF] bg-clip-text text-transparent block lg:inline-block mt-0">
+                                    Building digital <span 
+                                        className="text-2xl md:text-4xl lg:text-5xl bg-clip-text text-transparent block lg:inline-block mt-0"
+                                        style={{ backgroundImage: themeData.textGradients.primary }}
+                                    >
                                         experiences that matter
                                     </span>
                                 </h1>

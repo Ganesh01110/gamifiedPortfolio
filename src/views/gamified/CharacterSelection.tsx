@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import { StoryComponent } from './StoryComponent';
 import charactersData from '@/src/data/characters.json';
 import skillsData from '@/src/data/skills.json';
+import themeData from '@/src/data/theme.json';
 
 const GameComponent = dynamic(() => import('./GameComponent').then(mod => mod.GameComponent), {
     ssr: false,
@@ -93,7 +94,10 @@ export const CharacterSelection: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-8"
                 >
-                    <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-purple-500 to-amber-400 bg-clip-text text-transparent">
+                    <h1 
+                        className="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent"
+                        style={{ backgroundImage: themeData.textGradients.primary }}
+                    >
                         Choose Your Path
                     </h1>
                     <p className="text-gray-400 text-lg">Select a character to begin your journey</p>

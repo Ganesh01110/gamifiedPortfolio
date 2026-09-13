@@ -1,0 +1,30 @@
+{
+  "themeName": "Cyan Teal Metallic",
+  "colors": {
+    "primary": "#07CEE5",
+    "primaryDark": "#00838F",
+    "primaryDeep": "#037582",
+    "primaryMuted": "#00ACC1",
+    "glow": "rgba(7, 206, 229, 0.4)",
+    "glowSubtle": "rgba(7, 206, 229, 0.2)"
+  },
+  "textGradients": {
+    "primary": "linear-gradient(135deg, #07CEE5 0%, #00ACC1 50%, #00838F 100%)",
+    "secondary": "linear-gradient(135deg, #07CEE5 0%, #00838F 100%)",
+    "tailwindPrimary": "from-[#07CEE5] via-[#00ACC1] to-[#00838F]",
+    "tailwindSecondary": "from-[#07CEE5] to-[#00838F]"
+  },
+  "cards": {
+    "idCard": {
+      "topBannerGradient": "from-[#00838F] to-[#07CEE5]",
+      "tagText": "#037582"
+    },
+    "gamifiedCard": {
+      "background": "bg-gradient-to-br from-[#00838F]/30 via-gray-900 to-[#07CEE5]/15",
+      "border": "border-[#00838F]/50",
+      "hoverBorder": "hover:border-[#07CEE5]",
+      "hoverShadow": "hover:shadow-[0_0_40px_rgba(7,206,229,0.35)]",
+      "buttonVariant": "neon-cyan"
+    }
+  }
+}
