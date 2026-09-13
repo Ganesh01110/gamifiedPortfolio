@@ -14,6 +14,8 @@ import Image from 'next/image';
 import { useThemeStore } from '@/src/store/themeStore';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { IDCard } from '@/src/components/IDCard';
+import { InteractivePretext } from '@/src/components/InteractivePretext';
+import { Chatbot } from '@/src/components/Chatbot';
 import { sendEmail } from '@/src/actions/sendEmail';
 
 interface Project {
@@ -231,8 +233,9 @@ export const ProfessionalView: React.FC = () => {
                 </div>
 
                 {/* Hero Section */}
-                <section id="hero" className="pt-40 pb-20 px-4 md:px-12 relative">
-                    <div className="max-w-7xl mx-auto">
+                <section id="hero" className="pt-40 pb-20 px-4 md:px-12 relative overflow-hidden">
+                    <InteractivePretext />
+                    <div className="max-w-7xl mx-auto relative z-10">
                         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-24 items-center">
                             {/* Left: ID Card */}
                             <motion.div
@@ -295,6 +298,11 @@ export const ProfessionalView: React.FC = () => {
                                         href={profileData.resumeLink || '#'}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        onClick={() => {
+                                            try {
+                                                fetch('/api/track-resume', { method: 'POST' }).catch(() => {});
+                                            } catch {}
+                                        }}
                                     >
                                         <Button
                                             variant="secondary"
@@ -637,10 +645,13 @@ export const ProfessionalView: React.FC = () => {
                 />
 
                 {/* Floating Action Button for Mobile */}
-                <div className="fixed bottom-6 right-6 md:hidden z-50">
+                {/* Floating Chatbot */}
+                <Chatbot />
+
+                <div className="fixed bottom-24 right-6 md:hidden z-40">
                     <Button
                         variant="neon-cyan"
-                        className="rounded-full w-14 h-14 flex items-center justify-center p-0 shadow-lg"
+                        className="rounded-full w-12 h-12 flex items-center justify-center p-0 shadow-lg text-sm"
                         onClick={() => setView('gamified')}
                     >
                         🎮
