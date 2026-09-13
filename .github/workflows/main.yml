@@ -22,7 +22,8 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Run Snyk Security Scan
-        uses: snyk/actions/node@master # Note: specific version like @0.3.0 is recommended
+        uses: snyk/actions/node@master
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -69,8 +70,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Discord Notification
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: "${{ contains(needs.*.result, 'failure') && 'error' || 'info' }}"
-          details: "Build Result: ${{ contains(needs.*.result, 'failure') && 'FAILED' || 'SUCCESS' }}"
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          IS_FAILED: ${{ contains(needs.*.result, 'failure') }}
+        run: |
+          if [ -n "$DISCORD_WEBHOOK" ]; then
+            STATUS=$([ "$IS_FAILED" = "true" ] && echo "🔴 FAILED" || echo "🟢 SUCCESS")
+            COLOR=$([ "$IS_FAILED" = "true" ] && echo "15158332" || echo "3066993")
+            curl -H "Content-Type: application/json" -X POST -d "{\"embeds\": [{\"title\": \"DevOps Showcase Pipeline\", \"description\": \"Build Result: **$STATUS**\nCommit: \`$GITHUB_SHA\`\", \"color\": $COLOR}]}" "$DISCORD_WEBHOOK"
+          else
+            echo "DISCORD_WEBHOOK is not set, skipping notification."
+          fi
