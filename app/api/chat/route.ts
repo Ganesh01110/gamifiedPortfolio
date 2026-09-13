@@ -3,12 +3,7 @@ import profileData from '@/src/data/profile.json';
 import projectsData from '@/src/data/projects.json';
 import skillsData from '@/src/data/skills.json';
 
-interface ChatMessage {
-    role: 'user' | 'assistant' | 'system';
-    content: string;
-}
-
-// Fallback intelligent intent matcher for 100% reliable offline operation
+// Intelligent grounded response engine for 100% reliable responses
 function getLocalGroundedResponse(prompt: string): string {
     const q = prompt.toLowerCase();
 
@@ -21,44 +16,133 @@ function getLocalGroundedResponse(prompt: string): string {
         return "I am Ganesh Sahu's Portfolio Assistant. I can only assist you with questions regarding Ganesh's background, technical skills, projects, experience, and contact information. Feel free to ask about his work!";
     }
 
-    // Who is Ganesh / About
-    if (q.includes('who') || q.includes('about') || q.includes('introduce') || q.includes('bio') || q.includes('tell me about you')) {
-        return `Ganesh Sahu is a ${profileData.title} with a Master's degree from Aurora's PG College (2022-2024). He specializes in modern web architectures, Next.js, React, Node.js, and agentic development, focusing on high performance, clean code, and scalable systems.`;
+    // 1. Hospital Management System (HMS)
+    if (q.includes('hms') || q.includes('hospital')) {
+        const exp = profileData.experience[0];
+        const hms = exp.project;
+        return `🏥 **Hospital Management System (HMS)**\n\n` +
+            `• **Overview**: Developed at ${exp.company} (${exp.duration}) by Ganesh as ${exp.role}.\n` +
+            `• **Key Features**:\n` +
+            `  - Role-based access control for doctors, receptionists, and patients.\n` +
+            `  - Real-time WebSocket notifications and live scheduling.\n` +
+            `  - Financial billing tracking and record management.\n` +
+            `  - **Performance Engineering**: Resolved critical server \`CLOSE_WAIT\` socket leak bottlenecks and implemented automated recovery scripts.\n` +
+            `• **Tech Stack**: React, Redux, Node.js, Express.js, SQL, WebSockets, Python, TailwindCSS.\n` +
+            `• **Repository**: ${exp.github}\n` +
+            `• **Demo/Post**: [View LinkedIn Demo](${exp.demo})`;
     }
 
-    // Skills / Tech stack
-    if (q.includes('skill') || q.includes('tech') || q.includes('stack') || q.includes('language') || q.includes('frontend') || q.includes('backend') || q.includes('devops')) {
-        const frontendSkills = skillsData.frontend.slice(0, 6).join(', ');
-        const backendSkills = skillsData.backend.slice(0, 6).join(', ');
-        const devopsSkills = skillsData.devops.join(', ');
-        return `Ganesh's core technical stack includes:\n• Frontend: ${frontendSkills}\n• Backend: ${backendSkills}\n• DevOps & Cloud: ${devopsSkills}`;
+    // 2. Sworm / Simulation
+    if (q.includes('sworm') || q.includes('simulation') || q.includes('swarm')) {
+        const sworm = projectsData.find(p => p.id === 'project-1') || projectsData[0];
+        return `🌐 **${sworm.name}**\n\n` +
+            `• **Description**: ${sworm.description}\n` +
+            `• **Problem Solved**: ${sworm.problem}\n` +
+            `• **Tech Stack**: ${sworm.techStack.join(', ')}\n` +
+            `• **Repository**: ${sworm.repoLink}`;
     }
 
-    // Projects / HMS
-    if (q.includes('project') || q.includes('work') || q.includes('hospital') || q.includes('game') || q.includes('portfolio') || q.includes('hms')) {
-        const projectNames = projectsData.map(p => `• ${p.name}: ${p.description}`).join('\n');
-        return `Here are key projects built by Ganesh:\n\n${projectNames}\n\nNotable highlight: Hospital Management System (HMS) with role-based access, real-time WebSocket notifications, and automated server CLOSE_WAIT connection optimization.`;
+    // 3. Gamified Portfolio
+    if (q.includes('gamified') || q.includes('rpg') || (q.includes('game') && !q.includes('parking'))) {
+        const game = projectsData.find(p => p.id === 'project-2') || projectsData[1];
+        return `🎮 **${game.name}**\n\n` +
+            `• **Description**: ${game.description}\n` +
+            `• **Features**: 2D Phaser battle scene, custom mobile controls, sound effects, and character selection.\n` +
+            `• **Tech Stack**: ${game.techStack.join(', ')}\n` +
+            `• **Live Demo**: ${game.liveLink}\n` +
+            `• **Repository**: ${game.repoLink}`;
     }
 
-    // Experience / Taksh
+    // 4. Fitness Tracker PWA
+    if (q.includes('fitness') || q.includes('workout') || q.includes('pwa')) {
+        const fit = projectsData.find(p => p.id === 'project-3') || projectsData[2];
+        return `💪 **${fit.name}**\n\n` +
+            `• **Description**: ${fit.description}\n` +
+            `• **Key Features**: Workout streak visualization, health metrics, supplement tracking, PWA offline caching.\n` +
+            `• **Tech Stack**: ${fit.techStack.join(', ')}\n` +
+            `• **Live URL**: ${fit.liveLink}\n` +
+            `• **Repository**: ${fit.repoLink}`;
+    }
+
+    // 5. Smart Car Parking System
+    if (q.includes('parking') || q.includes('car') || q.includes('spring boot')) {
+        const park = projectsData.find(p => p.id === 'project-4') || projectsData[3];
+        return `🚗 **${park.name}**\n\n` +
+            `• **Description**: ${park.description}\n` +
+            `• **Highlights**: Real-time parking slot occupancy, automated fee calculation, entry/exit gates, and admin dashboard.\n` +
+            `• **Tech Stack**: ${park.techStack.join(', ')}\n` +
+            `• **Repository**: ${park.repoLink}`;
+    }
+
+    // 6. Library Management System
+    if (q.includes('library') || q.includes('django') || q.includes('book')) {
+        const lib = projectsData.find(p => p.id === 'project-5') || projectsData[4];
+        return `📚 **${lib.name}**\n\n` +
+            `• **Description**: ${lib.description}\n` +
+            `• **Key Features**: Comprehensive CRUD for books/members, borrowing lifecycle, overdue tracking, and PostgreSQL database.\n` +
+            `• **Tech Stack**: ${lib.techStack.join(', ')}\n` +
+            `• **Repository**: ${lib.repoLink}`;
+    }
+
+    // 7. Docker & DevOps
+    if (q.includes('docker') || q.includes('container') || q.includes('devops') || q.includes('ci/cd') || q.includes('pipeline')) {
+        const dock = projectsData.find(p => p.id === 'project-6') || projectsData[5];
+        return `🐳 **${dock.name} & DevOps Architecture**\n\n` +
+            `• **Setup**: Multi-service Docker Compose orchestration, Next.js Standalone optimization, and GitHub Actions CI/CD pipelines.\n` +
+            `• **Observability**: Real-time Prometheus metrics endpoint (\`/api/metrics\`) and Grafana monitoring stack.\n` +
+            `• **Tech Stack**: ${dock.techStack.join(', ')}`;
+    }
+
+    // 8. General Projects Overview
+    if (q.includes('project') || q.includes('work') || q.includes('portfolio') || q.includes('built') || q.includes('apps')) {
+        const list = projectsData.map(p => `• **${p.name}** (${p.category}): ${p.description}`).join('\n\n');
+        return `Here are the key featured projects created by Ganesh Sahu:\n\n${list}\n\n• **Hospital Management System (HMS)**: Enterprise role-based healthcare portal with WebSockets & CLOSE_WAIT automation.\n\nAsk me about any specific project for details and links!`;
+    }
+
+    // 9. Experience / Taksh Software
     if (q.includes('experience') || q.includes('company') || q.includes('taksh') || q.includes('intern') || q.includes('job') || q.includes('history')) {
         const exp = profileData.experience[0];
-        return `Ganesh has ${profileData.TotalExperience}+ years of professional experience. At ${exp.company} (${exp.duration}) as a ${exp.role}, he led the development of a comprehensive Hospital Management System, implemented secure auth, RESTful APIs, real-time WebSockets, and resolved critical CLOSE_WAIT connection bottlenecks with custom automation scripts.`;
+        return `Ganesh has **${profileData.TotalExperience}+ years** of software engineering experience.\n\n` +
+            `• **Company**: ${exp.company}\n` +
+            `• **Role**: ${exp.role} (${exp.duration})\n` +
+            `• **Key Contribution**: Led the development of an enterprise Hospital Management System, resolved server socket leaks (\`CLOSE_WAIT\`) through automated monitoring, and built real-time WebSocket communication pipelines.`;
     }
 
-    // Education
-    if (q.includes('education') || q.includes('college') || q.includes('degree') || q.includes('study') || q.includes('university')) {
-        const edu = profileData.education[0];
-        return `Ganesh completed his ${edu.degree} at ${edu.institution} (${edu.year}), with a core curriculum focusing on software engineering, algorithms, and system design.`;
+    // 10. Skills
+    if (q.includes('skill') || q.includes('stack') || q.includes('language') || q.includes('frontend') || q.includes('backend')) {
+        return `🛠️ **Ganesh's Core Technical Skills**:\n\n` +
+            `• **Frontend**: ${skillsData.frontend.join(', ')}\n` +
+            `• **Backend**: ${skillsData.backend.join(', ')}\n` +
+            `• **DevOps & Cloud**: ${skillsData.devops.join(', ')}\n` +
+            `• **Specializations**: System Design, Microservices, Agentic AI Workflows, WebSockets, High-Performance UI.`;
     }
 
-    // Contact / Email / Socials
+    // 11. Who is Ganesh / Bio
+    if (q.includes('who') || q.includes('about') || q.includes('introduce') || q.includes('bio') || q.includes('ganesh')) {
+        return `👋 **Ganesh Sahu** is a **${profileData.title}** based in India.\n\n` +
+            `• **Bio**: ${profileData.bio}\n` +
+            `• **Education**: ${profileData.education[0].degree} from ${profileData.education[0].institution} (${profileData.education[0].year})\n` +
+            `• **Tagline**: "${profileData.tagline}"\n\n` +
+            `Feel free to ask about his projects, skills, or experience!`;
+    }
+
+    // 12. Contact / Resume
     if (q.includes('contact') || q.includes('email') || q.includes('hire') || q.includes('reach') || q.includes('phone') || q.includes('linkedin') || q.includes('github') || q.includes('resume')) {
-        return `You can reach Ganesh directly via:\n• Email: ${profileData.contact.email}\n• Phone: ${profileData.contact.phone}\n• LinkedIn: ${profileData.socials.linkedin}\n• GitHub: ${profileData.socials.github}\n• Resume: Available via the "Resume" button on the hero section!`;
+        return `📬 **Get in touch with Ganesh**:\n\n` +
+            `• **Email**: ${profileData.contact.email}\n` +
+            `• **Phone/WhatsApp**: ${profileData.contact.phone}\n` +
+            `• **LinkedIn**: ${profileData.socials.linkedin}\n` +
+            `• **GitHub**: ${profileData.socials.github}\n` +
+            `• **Resume**: Click the "Resume" button on the hero section to view/download!`;
     }
 
-    // Default polite grounded response
-    return `Ganesh Sahu is a ${profileData.title} proficient in React, Next.js, Node.js, and TypeScript. You can ask me about his work experience, top projects (like HMS or Gamified Portfolio), technical skills, or how to contact him.`;
+    // Default polite response
+    return `Hello! I'm Ganesh's AI Assistant. I can tell you about:\n` +
+        `• **Featured Projects**: Hospital Management System (HMS), Sworm Simulation, Gamified Portfolio, Fitness PWA, Car Parking System\n` +
+        `• **Experience**: Full Stack Developer at Taksh Software\n` +
+        `• **Skills & Tech Stack**: Next.js, React, TypeScript, Node.js, Spring Boot, WebSockets, Docker\n` +
+        `• **Contact & Resume details**\n\n` +
+        `What would you like to know?`;
 }
 
 export async function POST(req: NextRequest) {
@@ -75,7 +159,7 @@ export async function POST(req: NextRequest) {
 
         if (geminiKey) {
             try {
-                const systemPrompt = `You are Ganesh Sahu's dedicated Portfolio AI Assistant. You must speak in a professional, friendly, and concise first/third-person supportive tone.
+                const systemPrompt = `You are Ganesh Sahu's dedicated Portfolio AI Assistant. You speak in a helpful, knowledgeable, and polite tone.
 Your knowledge is STRICTLY constrained to Ganesh Sahu's background:
 - Name: ${profileData.name}
 - Title: ${profileData.title}
@@ -84,13 +168,14 @@ Your knowledge is STRICTLY constrained to Ganesh Sahu's background:
 - Experience: ${JSON.stringify(profileData.experience)}
 - Education: ${JSON.stringify(profileData.education)}
 - Skills: ${JSON.stringify(skillsData)}
-- Projects: ${JSON.stringify(projectsData)}
+- All Projects: ${JSON.stringify(projectsData)}
 - Contact: Email: ${profileData.contact.email}, Phone: ${profileData.contact.phone}, LinkedIn: ${profileData.socials.linkedin}, GitHub: ${profileData.socials.github}
 
 CRITICAL RULES:
-1. ONLY answer questions about Ganesh Sahu, his technical skills, projects, experience, education, and contact channels.
-2. If the user asks about unrelated topics (e.g. general coding tasks, recipes, politics, weather, math, other people, trivia), politely refuse and state: "I'm Ganesh's Portfolio Assistant and can only answer questions about Ganesh Sahu's background, skills, and projects."
-3. Keep answers concise, informative, and formatted with clean bullet points where appropriate.`;
+1. When asked about the Hospital Management System (HMS), explain the role-based system, real-time doctor notifications with WebSockets, and resolving CLOSE_WAIT socket issues at Taksh Software.
+2. When asked about any project in the project section (Sworm Simulation, Gamified Portfolio, Fitness Tracker PWA, Smart Car Parking System, Library Management, Docker DevOps), give clear details about its features and tech stack.
+3. If the user asks about unrelated topics (e.g. recipes, politics, weather, math, general non-portfolio queries), politely refuse: "I'm Ganesh's Portfolio Assistant and can only answer questions about Ganesh Sahu's background, skills, and projects."
+4. Format responses cleanly with bullet points where helpful.`;
 
                 const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
                     method: 'POST',
@@ -100,8 +185,8 @@ CRITICAL RULES:
                             { role: 'user', parts: [{ text: `${systemPrompt}\n\nUser Question: ${lastUserMessage}` }] }
                         ],
                         generationConfig: {
-                            temperature: 0.3,
-                            maxOutputTokens: 300
+                            temperature: 0.2,
+                            maxOutputTokens: 400
                         }
                     })
                 });

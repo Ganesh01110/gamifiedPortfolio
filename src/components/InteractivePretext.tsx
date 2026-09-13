@@ -36,14 +36,18 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
         let particles: Particle[] = [];
 
         const phrases = [
-            "// ARCHITECTURE & SYSTEM DESIGN",
-            "Full-Stack Engineering • Next.js 16 • React 19 • TypeScript • Microservices",
-            "Real-Time WebSockets • Scalable Cloud APIs • High Performance UI",
-            "Agentic AI Workflows • PostgreSQL • TailwindCSS • System Optimization",
-            "Gamified Interfaces • Phaser Engine • Secure Backend Architecture",
-            "Turning complex ideas into seamless digital experiences through clean code",
-            "const developer = { name: 'Ganesh Sahu', status: 'Building the Future' };",
-            "// RESILIENT • SCALABLE • INTERACTIVE • PRODUCTION-READY"
+            "// GANESH SAHU • FULL STACK ARCHITECTURE & SYSTEM DESIGN",
+            "import { ScalableSystems, HighPerformance, ResilientArchitecture } from '@ganesh/core';",
+            "Next.js 16 • React 19 • TypeScript • Node.js • Express • Spring Boot • PHP • Python",
+            "WebSockets • PostgreSQL • MariaDB • Prisma ORM • Redis Cache • Docker Compose",
+            "const mission = 'Crafting digital experiences with precision, clean code, and passion';",
+            "Hospital Management System • 2D Gamified Engine • Socio-Political Simulation Swarm",
+            "Microservices • Real-Time Data Pipelines • Automated CLOSE_WAIT Resolution • Prometheus",
+            "Fitness Tracker PWA • Smart Car Parking System • Library Management • CI/CD Pipelines",
+            "export async function buildTomorrow() { return await Innovation.scale({ mode: 'production' }); }",
+            "const dev = { status: 'Available', focus: 'High-Impact Engineering', location: 'India' };",
+            "// INTERACTIVE TYPOGRAPHY • PHYSICS-DRIVEN PARTICLES • REACTIVE CANVAS MATRIX",
+            "// PERFORMANCE • OBSERVABILITY • CLEAN CODE • AGENTIC WORKFLOWS • USER CENTRIC"
         ];
 
         const initParticles = () => {
@@ -54,18 +58,18 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
             ctx.scale(dpr, dpr);
 
             particles = [];
-            const fontSize = Math.max(11, Math.min(13, rect.width / 80));
-            const lineHeight = fontSize * 2.2;
-            const charSpacing = fontSize * 0.72;
+            const fontSize = Math.max(10, Math.min(12.5, rect.width / 80));
+            const lineHeight = fontSize * 2.1;
+            const charSpacing = fontSize * 0.7;
 
-            ctx.font = `${fontSize}px "JetBrains Mono", "Fira Code", monospace`;
+            ctx.font = `${fontSize}px "JetBrains Mono", "Courier New", monospace`;
 
             const totalHeight = phrases.length * lineHeight;
-            const startY = Math.max(20, (rect.height - totalHeight) / 2);
+            const startY = Math.max(15, (rect.height - totalHeight) / 2);
 
             phrases.forEach((phrase, lineIdx) => {
                 const lineWidth = phrase.length * charSpacing;
-                const startX = Math.max(20, (rect.width - lineWidth) / 2);
+                const startX = Math.max(16, (rect.width - lineWidth) / 2);
                 const y = startY + lineIdx * lineHeight;
 
                 for (let i = 0; i < phrase.length; i++) {
@@ -73,7 +77,7 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
                     if (char === ' ') continue;
 
                     const x = startX + i * charSpacing;
-                    const baseAlpha = theme === 'dark' ? 0.16 : 0.22;
+                    const baseAlpha = theme === 'dark' ? 0.18 : 0.25;
 
                     particles.push({
                         char,
@@ -92,17 +96,17 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
             });
         };
 
-        const handleMouseMove = (e: MouseEvent) => {
+        const handleGlobalMouseMove = (e: MouseEvent) => {
             const rect = container.getBoundingClientRect();
-            mouseRef.current = {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top,
-                active: true
-            };
-        };
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
-        const handleMouseLeave = () => {
-            mouseRef.current.active = false;
+            // Active when cursor is anywhere over or slightly around the container
+            if (x >= -80 && x <= rect.width + 80 && y >= -80 && y <= rect.height + 80) {
+                mouseRef.current = { x, y, active: true };
+            } else {
+                mouseRef.current.active = false;
+            }
         };
 
         const handleResize = () => {
@@ -114,13 +118,13 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
             ctx.clearRect(0, 0, rect.width, rect.height);
 
             const mouse = mouseRef.current;
-            const radius = 110;
+            const radius = 130;
             const radiusSq = radius * radius;
-            const spring = 0.08;
+            const spring = 0.09;
             const friction = 0.82;
 
-            const fontSize = Math.max(11, Math.min(13, rect.width / 80));
-            ctx.font = `500 ${fontSize}px "JetBrains Mono", "Fira Code", monospace`;
+            const fontSize = Math.max(11, Math.min(13, rect.width / 75));
+            ctx.font = `500 ${fontSize}px "JetBrains Mono", "Courier New", monospace`;
 
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
@@ -132,11 +136,11 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
 
                     if (distSq < radiusSq && distSq > 0) {
                         const dist = Math.sqrt(distSq);
-                        const force = (1 - dist / radius) * 18;
+                        const force = (1 - dist / radius) * 24;
                         const angle = Math.atan2(dy, dx);
                         p.vx += Math.cos(angle) * force;
                         p.vy += Math.sin(angle) * force;
-                        p.alpha = Math.min(1, p.baseAlpha + (1 - dist / radius) * 0.85);
+                        p.alpha = Math.min(1, p.baseAlpha + (1 - dist / radius) * 0.82);
                     } else {
                         p.alpha += (p.baseAlpha - p.alpha) * 0.05;
                     }
@@ -158,12 +162,12 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
                 // Render character
                 ctx.save();
                 ctx.globalAlpha = p.alpha;
-                ctx.fillStyle = p.alpha > p.baseAlpha + 0.2 ? p.highlightColor : p.color;
+                ctx.fillStyle = p.alpha > p.baseAlpha + 0.15 ? p.highlightColor : p.color;
                 
-                // Add soft glow for activated characters
-                if (p.alpha > p.baseAlpha + 0.3) {
+                // Add electric glow when activated
+                if (p.alpha > p.baseAlpha + 0.25) {
                     ctx.shadowColor = themeData.colors.primary || '#07CEE5';
-                    ctx.shadowBlur = 8;
+                    ctx.shadowBlur = 10;
                 }
 
                 ctx.fillText(p.char, p.x, p.y);
@@ -175,14 +179,12 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
 
         initParticles();
         window.addEventListener('resize', handleResize);
-        container.addEventListener('mousemove', handleMouseMove);
-        container.addEventListener('mouseleave', handleMouseLeave);
+        window.addEventListener('mousemove', handleGlobalMouseMove);
         render();
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            container.removeEventListener('mousemove', handleMouseMove);
-            container.removeEventListener('mouseleave', handleMouseLeave);
+            window.removeEventListener('mousemove', handleGlobalMouseMove);
             cancelAnimationFrame(animationFrameId);
         };
     }, [theme]);
@@ -190,7 +192,7 @@ export const InteractivePretext: React.FC<{ className?: string }> = ({ className
     return (
         <div 
             ref={containerRef} 
-            className={`absolute inset-0 pointer-events-auto overflow-hidden select-none z-0 ${className}`}
+            className={`absolute inset-0 pointer-events-none overflow-hidden select-none z-0 ${className}`}
         >
             <canvas ref={canvasRef} className="w-full h-full block" />
         </div>
